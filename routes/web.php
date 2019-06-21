@@ -11,6 +11,17 @@
 |
 */
 
+
+Route::get('testB', function() {
+    return view("test");
+});
 Route::get('/', function () {
-    return view('index');
+    return view('layout/index');
+});
+
+
+Route::group(['prefix' => 'taikhoan'], function () {
+    Route::get('/', "MyControllers\TaiKhoanController@index");
+    Route::get('destroy/{v}', "MyControllers\TaiKhoanController@destroy");
+    Route::post('update', "MyControllers\TaiKhoanController@update");
 });
