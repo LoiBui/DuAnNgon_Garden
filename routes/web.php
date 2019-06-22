@@ -25,3 +25,7 @@ Route::group(['prefix' => 'taikhoan'], function () {
     Route::get('destroy/{v}', "MyControllers\TaiKhoanController@destroy");
     Route::post('update', "MyControllers\TaiKhoanController@update");
 });
+
+Route::get('danhsachthucdon',function(){
+    return view('Pages/ThucDon/DanhSachThucDon');
+});
