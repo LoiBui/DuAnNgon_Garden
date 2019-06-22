@@ -31,6 +31,26 @@
             @include('Layout.sliderbar')  
             <div class="app-main__outer">
                 <div class="app-main__inner">
+                        <div id="thongbao">
+                            @if(session('thongbao'))
+                                <div class="alert alert-success">
+                                    <strong>Thông Báo!</strong>
+                                    {!!session('thongbao')['msg']!!}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+
+                            @if(count($errors) > 0)
+                                @foreach($errors->all() as $er)
+                                    <div class="alert alert-danger">
+                                        <strong>Thông Báo!</strong>
+                                        {!!$er!!}
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
                     @yield('content')
                 </div>
                 @include('Layout.footer')
@@ -39,4 +59,11 @@
         </div>
     </div>
 <script type="text/javascript" src="assets/scripts/main.js"></script></body>
+<script>
+setTimeout(function(){ 
+		document.getElementById('thongbao').remove();
+}, 3000);
+</script>
 </html>
+
+@yield('modal')
