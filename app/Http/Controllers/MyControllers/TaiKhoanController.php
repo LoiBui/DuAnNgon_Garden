@@ -22,7 +22,7 @@ class TaiKhoanController extends BaseController
     }
     public function index()
     {
-        $data = $this->taikhoan->all();
+        $data = $this->taikhoan->paginate(10);
         return view('Pages.TaiKhoan.DanhSach', compact("data"));
     }
 
@@ -93,8 +93,8 @@ class TaiKhoanController extends BaseController
     public function destroy($id)
     {
         if($this->taikhoan->destroy($id)){
-            return $this->response["SUCCESS"];
+            return redirect("taikhoan")->with("thongbao", $this->response["SUCCESS"]);
         }
-        return $this->response["FAIL"];
+        return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]);
     }
 }
