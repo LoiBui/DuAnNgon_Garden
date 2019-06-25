@@ -63,7 +63,10 @@
 setTimeout(function(){ 
 		document.getElementById('thongbao').remove();
 }, 3000);
+
 </script>
+<script src="js/jquery.js"></script>
+@yield('script')
 </html>
 
 @yield('modal')

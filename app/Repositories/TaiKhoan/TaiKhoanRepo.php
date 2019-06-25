@@ -16,6 +16,14 @@ class TaiKhoanRepo extends BaseRepository implements TaiKhoanRepoInterFace{
 		$tk = TaiKhoan::find($data["id"]);
 		
 		$tk->tennguoidung = $data["tennguoidung"];
+		$tk->gioitinh = $data["gioitinh"];
+		$tk->socmnd = $data["socmnd"];
+		$tk->email = $data["email"];
+		$tk->sdt = $data["sdt"];
+		$tk->quequan = $data["quequan"];
+		if (isset($data["matkhau"])){
+			$tk->matkhau = $data["matkhau"];
+		}
 		return $tk->save();
 	}
 }

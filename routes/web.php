@@ -23,5 +23,5 @@ Route::get('/', function () {
 Route::group(['prefix' => 'taikhoan'], function () {
     Route::get('/', "MyControllers\TaiKhoanController@index");
     Route::get('destroy/{v}', "MyControllers\TaiKhoanController@destroy");
-    Route::post('update', "MyControllers\TaiKhoanController@update");
+    Route::post('update', "MyControllers\TaiKhoanController@update")->name('taikhoan.update');
 });

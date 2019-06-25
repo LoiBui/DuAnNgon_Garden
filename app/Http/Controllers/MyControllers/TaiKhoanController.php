@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MyControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\TaiKhoan\TaiKhoanRepoInterFace;
+use Hash;
 
 class TaiKhoanController extends BaseController
 {
@@ -78,10 +79,26 @@ class TaiKhoanController extends BaseController
      */
     public function update(Request $request)
     {
-        if($this->taikhoan->update($request->data)){
-            return $this->response["SUCCESS"];
+        
+        $arr = array(
+            "id"=>$request->id,
+            'tennguoidung' => $request->tennguoidung,
+            'gioitinh' => $request->gioitinh,
+            'socmnd' => $request->socmnd,
+            'email' => $request->email,
+            'sdt' => $request->sdt,
+            'quequan' => $request->quequan,
+
+        );
+        
+        if ($request->isSua == 1){
+            $arr["matkhau"] = Hash::make($request->matkhau);
         }
-        return $this->response["FAIL"];
+        
+        if($this->taikhoan->update($arr)){
+            return redirect("taikhoan")->with("thongbao", $this->response["SUCCESS"]);
+        }
+        return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]);
     }
 
     /**
