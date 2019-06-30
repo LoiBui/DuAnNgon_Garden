@@ -19,6 +19,15 @@ Route::get('/', function () {
     return view('layout/index');
 });
 
+Route::get('dangnhap', function () {
+    return view("Pages.TaiKhoan.DangNhap");
+});
+
+Route::get('taotaikhoan', function () {
+    return view("Pages.TaiKhoan.TaoTaiKhoan");
+});
+Route::post('dangnhap', "MyControllers\TaiKhoanController@dangnhap")->name("dangnhap");
+Route::post('taotaikhoan', "MyControllers\TaiKhoanController@store")->name("taotaikhoan");
 
 Route::group(['prefix' => 'taikhoan'], function () {
     Route::get('/', "MyControllers\TaiKhoanController@index");

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\TaiKhoan\TaiKhoanRepoInterFace;
 use Hash;
 
+
 class TaiKhoanController extends BaseController
 {
     /**
@@ -32,6 +33,13 @@ class TaiKhoanController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+    public function dangnhap(Request $request){
+        if (\Auth::attempt(['tendangnhap' => $request->tendangnhap, 'matkhau' => $request->matkhau])){
+            return ok;
+        }else{
+            return "fail";
+        }
+    }
     public function create()
     {
         //
@@ -45,7 +53,23 @@ class TaiKhoanController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $arr = array(
+            'tendangnhap'=>$request->tendangnhap,
+            'matkhau'=>$request->matkhau,
+            'tennguoidung' => $request->tennguoidung,
+            'gioitinh' => $request->gioitinh,
+            'socmnd' => $request->socmnd,
+            'email' => $request->email,
+            'sdt' => $request->sdt,
+            'quequan' => $request->quequan,
+            'quyen' => $request->quyen,
+
+        );
+        if($this->taikhoan->store($arr)){
+            return redirect("taikhoan")->with("thongbao", $this->response["SUCCESS"]);
+        }
+        return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]);
+        
     }
 
     /**
@@ -114,4 +138,6 @@ class TaiKhoanController extends BaseController
         }
         return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]);
     }
+
+    
 }
