@@ -1,9 +1,9 @@
 <?php  
-namespace App\Repositories\TaiKhoan;
+namespace App\Repositories\PhieuOrder;
 
 use App\Repositories\BaseRepositoryInterface;
 
-interface TaiKhoanRepoInterFace extends BaseRepositoryInterface{
+interface PhieuOrderRepoInterface extends BaseRepositoryInterface{
 	public function update(Array $data);
 	public function store(Array $data);
 }

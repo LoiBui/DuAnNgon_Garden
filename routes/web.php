@@ -19,11 +19,21 @@ Route::get('/', function () {
     return view('layout/index');
 });
 
+Route::get('dangnhap', function () {
+    return view("Pages.TaiKhoan.DangNhap");
+});
+
+Route::get('taotaikhoan', function () {
+    return view("Pages.TaiKhoan.TaoTaiKhoan");
+});
+Route::get('nhabep', "MyControllers\NhaBepController@index");
+Route::post('dangnhap', "MyControllers\TaiKhoanController@dangnhap")->name("dangnhap");
+Route::post('taotaikhoan', "MyControllers\TaiKhoanController@store")->name("taotaikhoan");
 
 Route::group(['prefix' => 'taikhoan'], function () {
     Route::get('/', "MyControllers\TaiKhoanController@index");
     Route::get('destroy/{v}', "MyControllers\TaiKhoanController@destroy");
-    Route::post('update', "MyControllers\TaiKhoanController@update");
+    Route::post('update', "MyControllers\TaiKhoanController@update")->name('taikhoan.update');
 });
 
 

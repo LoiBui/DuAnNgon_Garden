@@ -1,58 +1,85 @@
 @extends('Layout.index')
 
 @section('content')
+    
+<div class="row">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body"><h5 class="card-title">Tạo Tài Khoản</h5>
+            <form action="{{route("taotaikhoan")}}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="position-relative form-group">
+                                <label for="exampleAddress" class="">Tên Đăng Nhập</label>
+                                <input name="tendangnhap" id="exampleAddress" placeholder="1234 Main St" type="text" class="form-control">
+                            </div>
+    
+                            <div class="position-relative form-group">
+                                <label for="examplePassword" class="">Mật Khẩu</label>
+                                <input name="matkhau" id="examplePassword" placeholder="password placeholder" type="password" class="form-control">
+                            </div>
+    
+                            <div class="position-relative form-group">
+                                <label for="examplePassword" class="">Xác Nhận Mật Khẩu</label>
+                                <input name="xacnhanmatkhau" id="examplePassword" placeholder="password placeholder" type="password" class="form-control">
+                            </div>
+    
+                            <div class="position-relative form-group">
+                                <label for="exampleAddress" class="">Tên Người Dùng</label>
+                                <input name="tennguoidung" id="exampleAddress" placeholder="1234 Main St" type="text" class="form-control">
+                            </div>
+    
+                            <div class="position-relative form-group">
+                                <label for="exampleSelect" class="">Giới Tính</label>
+                                <select name="gioitinh" id="exampleSelect" class="form-control">
+                                    <option value="{{GIOITINH_NAM}}">Nam</option>
+                                    <option value="{{GIOITINH_NU}}">Nữ</option>
+                                    <option value="{{GIOITINH_KHAC}}">Khác</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="position-relative form-group">
+                                <label for="exampleAddress" class="">Số Chứng Minh Nhân Dân</label>
+                                <input name="socmnd" id="exampleAddress" placeholder="1234 Main St" type="text" class="form-control">
+                            </div>
+    
+                            <div class="position-relative form-group">
+                                <label for="exampleAddress" class="">Quên Quán</label>
+                                <input name="quequan" id="exampleAddress" placeholder="1234 Main St" type="text" class="form-control">
+                            </div>
+    
+                            <div class="position-relative form-group">
+                                <label for="exampleAddress" class="">Số Điện thoại</label>
+                                <input name="sdt" id="exampleAddress" placeholder="1234 Main St" type="text" class="form-control">
+                            </div>
+    
+                            <div class="position-relative form-group">
+                                <label for="exampleAddress" class="">Email</label>
+                                <input name="email" id="exampleAddress" placeholder="1234 Main St" type="text" class="form-control">
+                            </div>
 
-	<div class="peers ai-s fxw-nw h-100vh">
-        <div class="peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style="background-image:url(assets/static/images/bg.jpg)">
-            <div class="pos-a centerXY">
-                <div class="bgc-white bdrs-50p pos-r" style="width:120px;height:120px"><img class="pos-a centerXY" src="assets/static/images/logo.png" alt=""></div>
+                            <div class="position-relative form-group">
+                                <label for="exampleSelect" class="">Quyền</label>
+                                <select name="quyen" id="exampleSelect" class="form-control">
+                                    <option value="{{TIEPTAN}}">Tiếp Tân</option>
+                                    <option value="{{PHUCVU}}">Phục Vụ</option>
+                                    <option value="{{NHABEP}}">Nhà Bếp</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                        
+                    
+                    <button class="mt-1 btn btn-primary">Thêm</button>
+                </form>
             </div>
         </div>
-        <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width:320px">
-            <h2 class="fw-300 c-grey-900 mB-40">Tạo Tài Khoản</h2>
-            <form>
-                <div class="form-group">
-                    <label class="text-normal text-dark">Tên Đăng Nhập</label>
-                    <input type="text" class="form-control" placeholder="John Doe">
-                </div>
-                <div class="form-group">
-                    <label class="text-normal text-dark">Mật Khẩu</label>
-                    <input type="email" class="form-control" placeholder="name@email.com">
-                </div>
-                <div class="form-group">
-                    <label class="text-normal text-dark">Tên Nhân Viên</label>
-                    <input type="text" class="form-control" placeholder="Nhân Viên 3">
-                </div>
-                <div class="form-group">
-                    <label class="text-normal text-dark">Số Điện Thoại</label>
-                    <input type="text" class="form-control" placeholder="0939273824">
-                </div>
-                <div class="form-group">
-                    <label class="text-normal text-dark">Số CMND/ Thẻ căn cước</label>
-                    <input type="text" class="form-control" placeholder="32423423">
-                </div>
-                <div class="row">
-                	<div class="form-group col-md-4">
-	                	<label for="inputState">Giới Tính</label> 
-	                	<select id="inputState" class="form-control">
-	                		<option selected="selected">Nam</option>
-	                		<option>Nữ</option>
-	                		<option>Khác</option>
-	                	</select>
-	                </div>
-	                <div class="form-group col-md-8">
-					  <label for="comment">Ghi Chú</label>
-					  <textarea class="form-control" rows="5" placeholder="Ghi chú về nhân viên này" id="comment"></textarea>
-					</div>
-                </div>
-                
-				<hr>
-                
-                <div class="form-group">
-                    <button class="btn btn-primary">Cập Nhật</button>
-                </div>
-            </form>
-        </div>
     </div>
+</div>
 
 @endsection
+
+

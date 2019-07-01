@@ -20,7 +20,8 @@
     =========================================================
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
-<link href="main.css" rel="stylesheet"></head>
+<link href="main.css" rel="stylesheet">
+</head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         @include("Layout.header");
@@ -63,7 +64,11 @@
 setTimeout(function(){ 
 		document.getElementById('thongbao').remove();
 }, 3000);
+
 </script>
+<script src="js/jquery.js"></script>
+<script src="js/vue.js"></script>
+@yield('script')
 </html>
 
 @yield('modal')
