@@ -26,6 +26,7 @@ Route::get('dangnhap', function () {
 Route::get('taotaikhoan', function () {
     return view("Pages.TaiKhoan.TaoTaiKhoan");
 });
+Route::get('nhabep', "MyControllers\NhaBepController@index");
 Route::post('dangnhap', "MyControllers\TaiKhoanController@dangnhap")->name("dangnhap");
 Route::post('taotaikhoan', "MyControllers\TaiKhoanController@store")->name("taotaikhoan");
 

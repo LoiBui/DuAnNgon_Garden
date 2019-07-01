@@ -67,6 +67,7 @@ setTimeout(function(){
 
 </script>
 <script src="js/jquery.js"></script>
+<script src="js/vue.js"></script>
 @yield('script')
 </html>
 

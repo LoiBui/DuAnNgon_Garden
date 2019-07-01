@@ -14,9 +14,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-         $this->app->bind(
+        $this->app->bind(
             'App\Repositories\TaiKhoan\TaiKhoanRepoInterFace',
             'App\Repositories\TaiKhoan\TaiKhoanRepo'
+        );
+
+        $this->app->bind(
+            'App\Repositories\PhieuOrder\PhieuOrderRepoInterface',
+            'App\Repositories\PhieuOrder\PhieuOrderRepo'
         );
     }
 
