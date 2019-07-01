@@ -25,6 +25,10 @@ class BaseRepository implements BaseRepositoryInterface
     	return $this->model->get();
     }
 
+    public function paginate($limit){
+        return $this->model->paginate($limit);
+    }
+
     public function destroy($id){
         return $this->model->find($id)->delete();
     }

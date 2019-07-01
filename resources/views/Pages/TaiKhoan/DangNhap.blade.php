@@ -5,107 +5,179 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <title>Sign In</title>
-    <style>
-        #loader {
-            transition: all .3s ease-in-out;
-            opacity: 1;
-            visibility: visible;
-            position: fixed;
-            height: 100vh;
-            width: 100%;
-            background: #fff;
-            z-index: 90000
-        }
-        
-        #loader.fadeOut {
-            opacity: 0;
-            visibility: hidden
-        }
-        
-        .spinner {
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top: calc(50% - 20px);
-            left: calc(50% - 20px);
-            background-color: #333;
-            border-radius: 100%;
-            -webkit-animation: sk-scaleout 1s infinite ease-in-out;
-            animation: sk-scaleout 1s infinite ease-in-out
-        }
-        
-        @-webkit-keyframes sk-scaleout {
-            0% {
-                -webkit-transform: scale(0)
-            }
-            100% {
-                -webkit-transform: scale(1);
-                opacity: 0
-            }
-        }
-        
-        @keyframes sk-scaleout {
-            0% {
-                -webkit-transform: scale(0);
-                transform: scale(0)
-            }
-            100% {
-                -webkit-transform: scale(1);
-                transform: scale(1);
-                opacity: 0
-            }
-        }
-    </style>
     <link href="style.css" rel="stylesheet">
+    <style>
+        :root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: .75rem;
+}
+
+body {
+  background: #007bff;
+  background: linear-gradient(to right, #0062E6, #33AEFF);
+}
+
+.card-signin {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-signin .card-title {
+  margin-bottom: 2rem;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.card-signin .card-body {
+  padding: 2rem;
+}
+
+.form-signin {
+  width: 100%;
+}
+
+.form-signin .btn {
+  font-size: 80%;
+  border-radius: 5rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group input {
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown)~label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+.btn-google {
+  color: white;
+  background-color: #ea4335;
+}
+
+.btn-facebook {
+  color: white;
+  background-color: #3b5998;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+    </style>
+<link href="main.css" rel="stylesheet">
 </head>
 
-<body class="app">
-    <div id="loader">
-        <div class="spinner"></div>
-    </div>
-    <script>
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            setTimeout(() => {
-                loader.classList.add('fadeOut');
-            }, 300);
-        });
-    </script>
-    <div class="peers ai-s fxw-nw h-100vh">
-        <div class="d-n@sm- peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style="background-image:url(assets/static/images/bg.jpg)">
-            <div class="pos-a centerXY">
-                <div class="bgc-white bdrs-50p pos-r" style="width:120px;height:120px; background-color: #ffffff7a!important"><img class="pos-a centerXY" src="assets/static/images/logo.png" alt=""></div>
+<body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card card-signin my-5">
+            <div class="card-body">
+              <h5 class="card-title text-center">Đăng Nhập</h5>
+            <form action="{{route("dangnhap")}}" method="POST" class="form-signin">
+                  @csrf
+                <div class="form-label-group">
+                  <input name="tendangnhap" type="text" id="inputEmail" class="form-control" placeholder="Tên Đăng Nhập" required autofocus>
+                  <label for="inputEmail">Tên Đăng Nhập</label>
+                </div>
+  
+                <div class="form-label-group">
+                  <input name="matkhau" type="password" id="inputPassword" class="form-control" placeholder="Mật Khẩu" required>
+                  <label for="inputPassword">Mật Khẩu</label>
+                </div>
+  
+                <div class="custom-control custom-checkbox mb-3">
+                  <input type="checkbox" class="custom-control-input" id="customCheck1">
+                  <label class="custom-control-label" for="customCheck1">Ghi Nhớ Đăng Nhập</label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Đăng Nhập</button>
+               
+              </form>
             </div>
+          </div>
         </div>
-        <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width:320px">
-            <h4 class="fw-300 c-grey-900 mB-40">Đăng Nhập</h4>
-            <form>
-                <div class="form-group">
-                    <label class="text-normal text-dark">Tên Đăng Nhập</label>
-                    <input type="email" class="form-control" placeholder="example@example.com">
-                </div>
-                <div class="form-group">
-                    <label class="text-normal text-dark">Mật Khẩu</label>
-                    <input type="password" class="form-control" placeholder="********">
-                </div>
-                <div class="form-group">
-                    <div class="peers ai-c jc-sb fxw-nw">
-                        <div class="peer">
-                            <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                                <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                                <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Nhớ tài khoản</span></label>
-                            </div>
-                        </div>
-                        <div class="peer">
-                            <button class="btn btn-primary">Đăng Nhập</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
+      </div>
     </div>
-    <script type="text/javascript" src="vendor.js"></script>
-    <script type="text/javascript" src="bundle.js"></script>
-</body>
+    <script type="text/javascript" src="assets/scripts/main.js"></script></body>
+  </body>
 
 </html>

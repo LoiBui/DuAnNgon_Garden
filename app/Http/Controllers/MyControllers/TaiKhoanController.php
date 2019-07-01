@@ -5,6 +5,8 @@ namespace App\Http\Controllers\MyControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\TaiKhoan\TaiKhoanRepoInterFace;
+use Hash;
+
 
 class TaiKhoanController extends BaseController
 {
@@ -22,7 +24,7 @@ class TaiKhoanController extends BaseController
     }
     public function index()
     {
-        $data = $this->taikhoan->all();
+        $data = $this->taikhoan->paginate(10);
         return view('Pages.TaiKhoan.DanhSach', compact("data"));
     }
 
@@ -31,6 +33,13 @@ class TaiKhoanController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+    public function dangnhap(Request $request){
+        if (\Auth::attempt(['tendangnhap' => $request->tendangnhap, 'matkhau' => $request->matkhau])){
+            return ok;
+        }else{
+            return "fail";
+        }
+    }
     public function create()
     {
         //
@@ -44,7 +53,23 @@ class TaiKhoanController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $arr = array(
+            'tendangnhap'=>$request->tendangnhap,
+            'matkhau'=>$request->matkhau,
+            'tennguoidung' => $request->tennguoidung,
+            'gioitinh' => $request->gioitinh,
+            'socmnd' => $request->socmnd,
+            'email' => $request->email,
+            'sdt' => $request->sdt,
+            'quequan' => $request->quequan,
+            'quyen' => $request->quyen,
+
+        );
+        if($this->taikhoan->store($arr)){
+            return redirect("taikhoan")->with("thongbao", $this->response["SUCCESS"]);
+        }
+        return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]);
+        
     }
 
     /**
@@ -78,10 +103,26 @@ class TaiKhoanController extends BaseController
      */
     public function update(Request $request)
     {
-        if($this->taikhoan->update($request->data)){
-            return $this->response["SUCCESS"];
+        
+        $arr = array(
+            "id"=>$request->id,
+            'tennguoidung' => $request->tennguoidung,
+            'gioitinh' => $request->gioitinh,
+            'socmnd' => $request->socmnd,
+            'email' => $request->email,
+            'sdt' => $request->sdt,
+            'quequan' => $request->quequan,
+
+        );
+        
+        if ($request->isSua == 1){
+            $arr["matkhau"] = Hash::make($request->matkhau);
         }
-        return $this->response["FAIL"];
+        
+        if($this->taikhoan->update($arr)){
+            return redirect("taikhoan")->with("thongbao", $this->response["SUCCESS"]);
+        }
+        return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]);
     }
 
     /**
@@ -93,8 +134,10 @@ class TaiKhoanController extends BaseController
     public function destroy($id)
     {
         if($this->taikhoan->destroy($id)){
-            return $this->response["SUCCESS"];
+            return redirect("taikhoan")->with("thongbao", $this->response["SUCCESS"]);
         }
-        return $this->response["FAIL"];
+        return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]);
     }
+
+    
 }
