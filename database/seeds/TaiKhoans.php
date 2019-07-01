@@ -11,28 +11,34 @@ class TaiKhoans extends Seeder
      */
     public function run()
     {
-        // DB::table('TaiKhoans')->insert([
-        //     'tendangnhap' => 'admin',
-        //     'matkhau' => Hash::make('12345678'),
-        //     'tennguoidung' => 'admin',
-        //     'gioitinh' => '1',
-        //     'socmnd' => '0831263712',
-        //     'sdt' => '069696969696',
-        //     'quyen' => '0',
-        // ]);
-
-        // DB::table('TaiKhoans')->insert([
-        //     'tendangnhap' => 'tester1',
-        //     'matkhau' => Hash::make('12345678'),
-        //     'tennguoidung' => 'tester1',
-        //     'gioitinh' => '0',
-        //     'socmnd' => '078216332',
-        //     'sdt' => '0821398172',
-        //     'quyen' => '1',
-        // ]);
         $faker = Faker\Factory::create();
 
         $limit = 100;
+        
+        DB::table('TaiKhoans')->insert([
+            'tendangnhap' => 'admin',
+            'matkhau' => Hash::make('12345678'),
+            'tennguoidung' => 'admin',
+            'gioitinh' => '1',
+            'socmnd' => '0831263712',
+            'quequan'=>Str::random(10),
+            'sdt' => '069696969696',
+            'email'=>$faker->email,
+            'quyen' => '0',
+        ]);
+
+        DB::table('TaiKhoans')->insert([
+            'tendangnhap' => 'tester1',
+            'matkhau' => Hash::make('12345678'),
+            'tennguoidung' => 'tester1',
+            'gioitinh' => '0',
+            'socmnd' => '078216332',
+            'quequan'=>Str::random(10),
+            'email'=>$faker->email,
+            'sdt' => '0821398172',
+            'quyen' => '1',
+        ]);
+       
 
         for ($i = 0; $i < $limit; $i++) {
             DB::table('TaiKhoans')->insert([

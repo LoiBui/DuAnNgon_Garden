@@ -35,3 +35,11 @@ Route::group(['prefix' => 'taikhoan'], function () {
     Route::get('destroy/{v}', "MyControllers\TaiKhoanController@destroy");
     Route::post('update', "MyControllers\TaiKhoanController@update")->name('taikhoan.update');
 });
+
+
+/*  Le Tan */
+Route::group(['prefix' => 'letan'], function () {
+    Route::get('/', "MyControllers\LeTanController@index")->name('letan');
+    Route::post('taophieu/{idban}', "MyControllers\LeTanController@taophieu")->name('letan.taophieu')->where('idban', '[0-9]+');
+});
+/* End  Le Tan */
