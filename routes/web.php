@@ -26,6 +26,9 @@ Route::group(['prefix' => 'taikhoan'], function () {
     Route::post('update', "MyControllers\TaiKhoanController@update");
 });
 
-Route::get('danhsachthucdon',function(){
-    return view('Pages/ThucDon/DanhSachThucDon');
+
+
+Route::group(['prefix' => 'thucdon'], function () {
+    Route::get('/',"MyControllers\ThucDonController@index");
+    
 });
