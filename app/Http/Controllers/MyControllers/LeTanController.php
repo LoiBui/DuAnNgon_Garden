@@ -64,6 +64,7 @@ class LeTanController extends Controller
                 ]);
             }
         }
+        
         // dd($bans);
         if(empty($data))
             $data = [];

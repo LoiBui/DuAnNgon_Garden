@@ -43,3 +43,11 @@ Route::get('getPhieuOrder', "MyControllers\NhaBepController@getPhieuorder");
 Route::get('getChiTietPhieubyIdPhieuOrder/{id}', "MyControllers\NhaBepController@getChiTietPhieubyIdPhieuOrder");
 Route::post('thaydoitrangthaichitietphieu', "MyControllers\NhaBepController@thaydoitrangthaichitietphieu");
 Route::post('thaydoitrangthaiphieuorder', "MyControllers\NhaBepController@thaydoitrangthaiphieuorder");
+
+
+/*  Le Tan */
+Route::group(['prefix' => 'letan'], function () {
+    Route::get('/', "MyControllers\LeTanController@index")->name('letan');
+    Route::post('taophieu/{idban}', "MyControllers\LeTanController@taophieu")->name('letan.taophieu')->where('idban', '[0-9]+');
+});
+/* End  Le Tan */
