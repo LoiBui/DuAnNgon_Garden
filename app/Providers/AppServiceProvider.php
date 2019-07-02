@@ -23,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\PhieuOrder\PhieuOrderRepoInterface',
             'App\Repositories\PhieuOrder\PhieuOrderRepo'
         );
+
+        $this->app->bind(
+            'App\Repositories\ThucDon\ThucDonRepoInterFace',
+            'App\Repositories\ThucDon\ThucDonRepo'
+        );
     }
 
     /**

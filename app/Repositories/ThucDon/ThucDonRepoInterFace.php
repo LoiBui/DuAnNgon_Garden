@@ -3,7 +3,7 @@ namespace App\Repositories\ThucDon;
 
 use App\Repositories\BaseRepositoryInterface;
 
-interface TaiKhoanRepoInterFace extends BaseRepositoryInterface{
+interface ThucDonRepoInterFace extends BaseRepositoryInterface{
 	
 }
 

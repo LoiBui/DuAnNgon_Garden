@@ -20,7 +20,7 @@
     =========================================================
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
-<link href="main.css" rel="stylesheet">
+<link href="{{asset('main.css')}}" rel="stylesheet">
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -59,15 +59,15 @@
                 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
-<script type="text/javascript" src="assets/scripts/main.js"></script></body>
+<script type="text/javascript" src="{{asset('assets/scripts/main.js')}}"></script></body>
 <script>
 setTimeout(function(){ 
 		document.getElementById('thongbao').remove();
 }, 3000);
 
 </script>
-<script src="js/jquery.js"></script>
-<script src="js/vue.js"></script>
+<script src="{{asset('js/jquery.js')}}"></script>
+<script src="{{asset('js/vue.js')}}"></script>
 @yield('script')
 </html>
 
