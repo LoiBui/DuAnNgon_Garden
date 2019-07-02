@@ -19,7 +19,7 @@
 						<tr v-for = "(item, index) in phieuorder" v-if = "item.trangthai == 0 || item.trangthai == 1" @click = "chooseOrder(item.id, item.trangthai)" :class = "{choose: item.id == currentOrder}">
 							<td>@{{item.idban}}</td>
 							<td>@{{item.tennhanvien}}</td>
-							<td>@{{item.thoigiantao}}</td>
+							<td>@{{convertDate(item.thoigiantao)}}</td>
 							<td>
 								<div class="status statusDanger" v-if = "item.trangthai == 0" @click = "start(item.id)">Chưa Làm</div>	
 								<div class="status statusPending" v-if = "item.trangthai == 1" @click = "start(item.id)">Đang Làm</div>	
@@ -174,6 +174,9 @@
 					console.log(data);
                 }
             });
+		},
+		convertDate(value){
+			return value.split(" ")[1]; 
 		}
 	}
 
