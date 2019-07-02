@@ -22,6 +22,10 @@
     -->
     @yield('style')
 <link href="main.css" rel="stylesheet">
+
+<!-- bootstrap-daterangepicker -->
+<link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -37,7 +41,7 @@
                             @if(session('thongbao'))
                                 <div class="alert alert-success">
                                     <strong>Thông Báo!</strong>
-                                    {!!session('thongbao')['msg']!!}
+                                    {!!session('thongbao')!!}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -70,6 +74,10 @@ setTimeout(function(){
 <script src="js/jquery.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/moment.js"></script>
+
+<!-- bootstrap-daterangepicker -->
+<script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
 @yield('script')
 </html>
 

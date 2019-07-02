@@ -1,12 +1,14 @@
 <?php  
 namespace App\Repositories\LeTan;
 
-use Prettus\Repository\Eloquent\BaseRepository as ThuVienRepo;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
+use App\Repositories\LeTan\LeTanRepoInterface;
+use App\Validators\LeTanValidator;
 use App\Model\Ban;
 use DB;
 
-class LeTanRepo extends ThuVienRepo implements LeTanRepoInterface{
+class LeTanRepo extends BaseRepository implements LeTanRepoInterface{
 	public function model()
     {
         return Ban::class;

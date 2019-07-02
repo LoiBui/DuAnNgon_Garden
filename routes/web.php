@@ -48,6 +48,7 @@ Route::post('thaydoitrangthaiphieuorder', "MyControllers\NhaBepController@thaydo
 /*  Le Tan */
 Route::group(['prefix' => 'letan'], function () {
     Route::get('/', "MyControllers\LeTanController@index")->name('letan');
-    Route::post('taophieu/{idban}', "MyControllers\LeTanController@taophieu")->name('letan.taophieu')->where('idban', '[0-9]+');
+    Route::get('taophieu', "MyControllers\LeTanController@taophieu")->name('letan.taophieu')->where('idban', '[0-9]+');
+    Route::post('datban', "MyControllers\LeTanController@datban")->name('letan.datban');
 });
 /* End  Le Tan */
