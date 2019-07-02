@@ -26,7 +26,7 @@ Route::get('dangnhap', function () {
 Route::get('taotaikhoan', function () {
     return view("Pages.TaiKhoan.TaoTaiKhoan");
 });
-Route::get('nhabep', "MyControllers\NhaBepController@index");
+
 Route::post('dangnhap', "MyControllers\TaiKhoanController@dangnhap")->name("dangnhap");
 Route::post('taotaikhoan', "MyControllers\TaiKhoanController@store")->name("taotaikhoan");
 
@@ -35,3 +35,11 @@ Route::group(['prefix' => 'taikhoan'], function () {
     Route::get('destroy/{v}', "MyControllers\TaiKhoanController@destroy");
     Route::post('update', "MyControllers\TaiKhoanController@update")->name('taikhoan.update');
 });
+
+
+//NHÀ BẾP
+Route::get('nhabep', "MyControllers\NhaBepController@index");
+Route::get('getPhieuOrder', "MyControllers\NhaBepController@getPhieuorder");
+Route::get('getChiTietPhieubyIdPhieuOrder/{id}', "MyControllers\NhaBepController@getChiTietPhieubyIdPhieuOrder");
+Route::post('thaydoitrangthaichitietphieu', "MyControllers\NhaBepController@thaydoitrangthaichitietphieu");
+Route::post('thaydoitrangthaiphieuorder', "MyControllers\NhaBepController@thaydoitrangthaiphieuorder");
