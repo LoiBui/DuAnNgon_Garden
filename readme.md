@@ -1,3 +1,4 @@
+<h1 align="center">TEMPLATE USING <a href="https://demo.dashboardpack.com/architectui-html-pro/index.html">Architectui</a></h1>
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">

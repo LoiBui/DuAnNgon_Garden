@@ -28,6 +28,15 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\ThucDon\ThucDonRepoInterFace',
             'App\Repositories\ThucDon\ThucDonRepo'
         );
+        
+        $this->app->bind(
+            'App\Repositories\LeTan\LeTanRepoInterface',
+            'App\Repositories\LeTan\LeTanRepo'
+        );
+        $this->app->bind(
+            'App\Repositories\ChiTietPhieu\ChiTietPhieuRepoInterface',
+            'App\Repositories\ChiTietPhieu\ChiTietPhieuRepo'
+        );
     }
 
     /**

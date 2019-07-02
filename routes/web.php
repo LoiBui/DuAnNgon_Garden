@@ -26,7 +26,7 @@ Route::get('dangnhap', function () {
 Route::get('taotaikhoan', function () {
     return view("Pages.TaiKhoan.TaoTaiKhoan");
 });
-Route::get('nhabep', "MyControllers\NhaBepController@index");
+
 Route::post('dangnhap', "MyControllers\TaiKhoanController@dangnhap")->name("dangnhap");
 Route::post('taotaikhoan', "MyControllers\TaiKhoanController@store")->name("taotaikhoan");
 
@@ -45,3 +45,17 @@ Route::group(['prefix' => 'thucdon'], function () {
     Route::post('update','MyControllers\ThucDonController@update')->name('thucdon.update');
     Route::get('destroy/{id}','MyControllers\ThucDonController@destroy')->name('thucdon.destroy');
 });
+//NHÀ BẾP
+Route::get('nhabep', "MyControllers\NhaBepController@index");
+Route::get('getPhieuOrder', "MyControllers\NhaBepController@getPhieuorder");
+Route::get('getChiTietPhieubyIdPhieuOrder/{id}', "MyControllers\NhaBepController@getChiTietPhieubyIdPhieuOrder");
+Route::post('thaydoitrangthaichitietphieu', "MyControllers\NhaBepController@thaydoitrangthaichitietphieu");
+Route::post('thaydoitrangthaiphieuorder', "MyControllers\NhaBepController@thaydoitrangthaiphieuorder");
+
+
+/*  Le Tan */
+Route::group(['prefix' => 'letan'], function () {
+    Route::get('/', "MyControllers\LeTanController@index")->name('letan');
+    Route::post('taophieu/{idban}', "MyControllers\LeTanController@taophieu")->name('letan.taophieu')->where('idban', '[0-9]+');
+});
+/* End  Le Tan */

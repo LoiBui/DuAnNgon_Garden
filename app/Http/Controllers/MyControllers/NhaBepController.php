@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\MyControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\PhieuOrder;
+use App\Model\ChiTietPhieu;
 use App\Repositories\PhieuOrder\PhieuOrderRepoInterface;
+use App\Repositories\ChiTietPhieu\ChiTietPhieuRepoInterface;
 
 class NhaBepController extends Controller
 {
@@ -12,17 +15,45 @@ class NhaBepController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    protected $NhaBepRepo;
+    protected $PhieuOrder;
+    protected $ChiTietPhieu;
 
-    public function __construct(PhieuOrderRepoInterface $var){
-        $this->NhaBepRepo = $var;
+    public function __construct(PhieuOrderRepoInterface $var, ChiTietPhieuRepoInterface $ctp){
+        $this->PhieuOrder = $var;
+        $this->ChiTietPhieu = $ctp;
     }
     public function index()
     {
-        return $this->NhaBepRepo->all();
         return view("Pages.NhaBep.index");
     }
 
+    public function getPhieuorder(){
+        $phieuorder = $this->PhieuOrder->all();
+        foreach($phieuorder as $key=>$value){
+            $value->tennhanvien = $value->NhanVien->tennguoidung;
+        }
+        return $phieuorder;
+    }
+
+    public function getChiTietPhieubyIdPhieuOrder($id){
+        $ctphieuorder = $this->ChiTietPhieu->findByIdPhieuOrder($id);
+        foreach($ctphieuorder as $value){
+            $value->tenmon = $value->ThucDon->ten;
+        }
+        return $ctphieuorder;
+    }
+
+    public function thaydoitrangthaichitietphieu(Request $re){
+        $data = ChiTietPhieu::find($re->id);
+        $data->trangthai = $re->status;
+        $data->save();
+    }
+
+    public function thaydoitrangthaiphieuorder(Request $re){
+        $data = PhieuOrder::find($re->id);
+        $data->trangthai = $re->status;
+        $data->save();
+    }
     /**
      * Show the form for creating a new resource.
      *
