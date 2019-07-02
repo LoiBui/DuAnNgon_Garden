@@ -63,3 +63,10 @@ Route::group(['prefix' => 'thucdon'], function () {
     Route::post('update','MyControllers\ThucDonController@update')->name('thucdon.update');
     Route::get('destroy/{id}','MyControllers\ThucDonController@destroy')->name('thucdon.destroy');
 });
+
+
+Route::get('datban', function () {
+    return view("Pages.DatBanOnline.index");
+});
+
+Route::post("datban", "Controller@datban")->name("datban");
