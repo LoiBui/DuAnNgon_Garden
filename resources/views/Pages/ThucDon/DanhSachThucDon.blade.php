@@ -13,7 +13,7 @@
 </div>
 <div class="navbar" style="float:right;margin-bottom: 20px;border-bottom:1px solid blue;">
     <div class="search" style="margin-right:15px;">
-        <form class="form-inline" action="{{route('thucdon.search')}}" method="GET">
+        <form class="form-inline" action="{{route('thucdon.search')}}" method="POST">
             <select name="sortprice" class="custom-select" id="sortprice" style="margin-right:10px;">
                 <option selected>Sắp xếp theo giá</option>
                 <option value="1">Tăng dần</option>
@@ -24,7 +24,9 @@
         </form>
     </div>
     <div class="add">
-        <a type="button" class="btn btn-primary" href="{{route('thucdon.add')}}">Thêm mới</a>
+        <a href="{{route('thucdon.add')}}">
+            <button class="btn btn-primary">Thêm mới</button>
+        </a>
     </div>
 </div>
 <div class="clearfix"></div>
@@ -51,7 +53,7 @@
     @endforeach
 </div>
 <div class="page-links" style="float:right;">
-    {{$data->appends(['data-search'=>Request::get('data-search')])->links()}}
+    {{$data->links()}}
 </div>
 @endsection
 

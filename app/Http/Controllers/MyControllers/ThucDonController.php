@@ -34,15 +34,22 @@ class ThucDonController extends BaseController
     public function search()
     {
         $data_search = Input::get('data-search');
-        if ($data_search != "") {
-            //dd($data_search);
-            $data = ThucDon::where('ten','LIKE','%'.$data_search.'%')->orWhere('loai','LIKE','%'.$data_search.'%')->paginate(12);
-            
-            return view('Pages/ThucDon/DanhSachThucDon',compact('data'));
+        $dataSort = Input::get('sortprice');
+        
+        $data = new ThucDon;
+        
+        
+        if ($dataSort == 1){
+            $data = $data->orderByRaw('giatien ASC');
+        }else if ($dataSort == 2){
+            $data = $data->orderByRaw('giatien DESC');
         }
-        else{
-            return $this::index();
+
+        if ($data_search){
+            $data = $data->where('ten','LIKE','%'.$data_search.'%')->orWhere('loai','LIKE','%'.$data_search.'%');
         }
+        $data = $data->get();
+        return view('Pages.ThucDon.DanhSachThucDon',compact('data'));
         
     }
 

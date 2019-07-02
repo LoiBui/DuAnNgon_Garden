@@ -38,13 +38,7 @@ Route::group(['prefix' => 'taikhoan'], function () {
 
 
 
-Route::group(['prefix' => 'thucdon'], function () {
-    Route::get('/',"MyControllers\ThucDonController@index")->name('thucdon');
-    Route::get('search',"MyControllers\ThucDonController@search")->name("thucdon.search");
-    Route::any('add','MyControllers\ThucDonController@add')->name('thucdon.add');
-    Route::post('update','MyControllers\ThucDonController@update')->name('thucdon.update');
-    Route::get('destroy/{id}','MyControllers\ThucDonController@destroy')->name('thucdon.destroy');
-});
+
 //NHÀ BẾP
 Route::get('nhabep', "MyControllers\NhaBepController@index");
 Route::get('getPhieuOrder', "MyControllers\NhaBepController@getPhieuorder");
@@ -59,3 +53,13 @@ Route::group(['prefix' => 'letan'], function () {
     Route::post('taophieu/{idban}', "MyControllers\LeTanController@taophieu")->name('letan.taophieu')->where('idban', '[0-9]+');
 });
 /* End  Le Tan */
+
+
+//Thực đơn
+Route::group(['prefix' => 'thucdon'], function () {
+    Route::get('/',"MyControllers\ThucDonController@index")->name('thucdon');
+    Route::get('search',"MyControllers\ThucDonController@search")->name("thucdon.search");
+    Route::any('add','MyControllers\ThucDonController@add')->name('thucdon.add');
+    Route::post('update','MyControllers\ThucDonController@update')->name('thucdon.update');
+    Route::get('destroy/{id}','MyControllers\ThucDonController@destroy')->name('thucdon.destroy');
+});
