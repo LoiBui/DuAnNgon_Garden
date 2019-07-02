@@ -50,7 +50,7 @@ class Bans extends Seeder
                     'mota' => $array[rand(0, 2)],
                     'phuphi' => $loaiban=0?0:rand(100000, 500000),
                     'ghichu' => $faker->text,
-                    'trangthai' => rand(0, 1),
+                    'trangthai' => rand(0, 2),
             ]);
         }
     }

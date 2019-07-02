@@ -25,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            'App\Repositories\LeTan\LeTanRepoInterface',
+            'App\Repositories\LeTan\LeTanRepo'
+        );
+        
+        $this->app->bind(
             'App\Repositories\ChiTietPhieu\ChiTietPhieuRepoInterface',
             'App\Repositories\ChiTietPhieu\ChiTietPhieuRepo'
         );

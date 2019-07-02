@@ -69,9 +69,8 @@
 		</div>
 	</div>
 </div>
-
-
 @endsection
+
 @section('script')
 <script>
 	new Vue({
