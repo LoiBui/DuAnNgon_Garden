@@ -27,7 +27,7 @@
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         @include("Layout.header");
 
-        @include("Layout.setting");
+        {{-- @include("Layout.setting"); --}}
 
         <div class="app-main">
             @include('Layout.sliderbar')  

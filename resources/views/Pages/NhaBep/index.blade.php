@@ -63,7 +63,8 @@
 						</tbody>
 						
 					</table>
-					<p v-if = "chitietphieuorder.length == 0">Không Tìm Thấy Dữ Liệu</p>
+					<p v-if = "chitietphieuorder.length == 0 && !isloading">Không Tìm Thấy Dữ Liệu</p>
+					<img v-if = "isloading" class="loading" src="icon/loading.gif" alt="">
 				</div>
 			</div>
 		</div>
@@ -79,7 +80,8 @@
 		phieuorder: [],
 		chitietphieuorder: [],
 		currentOrder: '',
-		trangthai: ''
+		trangthai: '',
+		isloading: false
 	},
 	created() {
 		var cur = this;
@@ -94,6 +96,8 @@
 	},
 	methods:{
 		chooseOrder(id, trangthai){
+			this.chitietphieuorder = [];
+			this.isloading = true;
 			this.currentOrder = id;
 			this.trangthai = trangthai;
 			var cur = this;
@@ -102,6 +106,7 @@
                 url: 'getChiTietPhieubyIdPhieuOrder/'+id,
                 success: function(data){
 					cur.chitietphieuorder = data;
+					cur.isloading = false;
                 }
             });
 		},
@@ -202,5 +207,10 @@
 	background: #00000014;
 }
 
+.loading{
+	width: 55px;
+    display: block;
+    margin: auto;
+}
 </style>
 @endsection
