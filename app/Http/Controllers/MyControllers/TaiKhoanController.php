@@ -35,7 +35,7 @@ class TaiKhoanController extends BaseController
      */
     public function dangnhap(Request $request){
         if (\Auth::attempt(['tendangnhap' => $request->tendangnhap, 'matkhau' => $request->matkhau])){
-            return ok;
+            return "ok";
         }else{
             return "fail";
         }

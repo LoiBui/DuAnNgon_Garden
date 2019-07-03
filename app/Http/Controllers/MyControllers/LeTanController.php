@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\MyControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\LeTan\LeTanRepoInterface;
+use App\Repositories\Ban\BanRepoInterface;
 use Illuminate\Support\Facades\DB;
-use App\Validators\LeTanValidator;
+use App\Validators\BanValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Validators\BaseValidatorInterface;
 
 class LeTanController extends Controller
 {
-    protected $LeTanRepo;
-    protected $LeTanValiDate;
+    protected $BanRepo;
+    protected $BanValiDate;
 
-    public function __construct(LeTanRepoInterface $var, LeTanValidator $validate){
-        $this->LeTanRepo = $var;
-        $this->LeTanValiDate = $validate;
+    public function __construct(BanRepoInterface $var, BanValidator $validate){
+        $this->BanRepo = $var;
+        $this->BanValiDate = $validate;
     }
 
     public function index(Request $request)
@@ -43,7 +43,7 @@ class LeTanController extends Controller
             }
         }
 
-        $bans = $this->LeTanRepo->scopeQuery(function ($query) use ($search) {
+        $bans = $this->BanRepo->scopeQuery(function ($query) use ($search) {
             return $query
                 ->where($search);
         });
@@ -99,7 +99,7 @@ class LeTanController extends Controller
         if(empty($data))
             $data = [];
         
-        return view("Pages.Letan.index", compact('data', 'bans'));
+        return view("Pages.LeTan.index", compact('data', 'bans'));
     }
 
     
@@ -131,23 +131,23 @@ class LeTanController extends Controller
             $data = $request->all();
             unset($data['_token']);
 
-            $this->LeTanValiDate->with($data)->passesOrFail(BaseValidatorInterface::RULE_CREATE);
+            $this->BanValiDate->with($data)->passesOrFail(BaseValidatorInterface::RULE_CREATE);
 
             
             $data = array_merge($data, [
                 'trangthai' => 0,
             ]);
 
-            // $datban = $this->LeTanRepo->create($data);
+            // $datban = $this->BanRepo->create($data);
             if(DB::table('datbans')->insert($data) && DB::table('bans')->where('id', $data['idban'])->update(['trangthai' => 1]))
             {
                 $request->session()->flash('thongbao', 'Đặt Bàn Thành Công');
             }
                 
-            return redirect(route('letan'));
+            return redirect()->back();
         } catch (ValidatorException $e) {
             $request->session()->flash('thongbao','Đặt Bàn Thất Bại');
-            return redirect(route('letan'))->withErrors($e->getMessageBag())->withInput();
+            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
     }
 }

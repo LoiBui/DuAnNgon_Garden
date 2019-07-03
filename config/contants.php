@@ -18,3 +18,6 @@ if(!defined("LOAI_BAN_THUONG")) define("LOAI_BAN_THUONG", 1);
 if(!defined("TRANG_THAI_BAN_TRONG")) define("TRANG_THAI_BAN_TRONG", 0);
 if(!defined("TRANG_THAI_BAN_DA_DAT")) define("TRANG_THAI_BAN_DA_DAT", 1);
 if(!defined("TRANG_THAI_BAN_DANG_SU_DUNG")) define("TRANG_THAI_BAN_DANG_SU_DUNG", 2);
+
+if(!defined("LOAI_MON_DO_AN")) define("LOAI_MON_DO_AN", 0);
+if(!defined("LOAI_MON_NUOC_UONG")) define("LOAI_MON_NUOC_UONG", 1);

@@ -11,7 +11,7 @@ use Illuminate\Contracts\Validation\Factory;
  *
  * @package namespace App\Validators;
  */
-class LeTanValidator extends LaravelValidator
+class BanValidator extends LaravelValidator
 {
 
     /**

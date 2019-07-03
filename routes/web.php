@@ -52,3 +52,11 @@ Route::group(['prefix' => 'letan'], function () {
     Route::post('datban', "MyControllers\LeTanController@datban")->name('letan.datban');
 });
 /* End  Le Tan */
+
+/*  Nhân Viên Phục Vụ */
+Route::group(['prefix' => 'nvphucvu'], function () {
+    Route::get('/', "MyControllers\NvPhucVuController@index")->name('nvphucvu');
+    Route::get('taophieu', "MyControllers\NvPhucVuController@taophieu")->name('nvphucvu.taophieu')->where('idban', '[0-9]+');
+    Route::post('datban', "MyControllers\NvPhucVuController@datban")->name('nvphucvu.datban');
+});
+/* End  Nhân Viên Phục Vụ */

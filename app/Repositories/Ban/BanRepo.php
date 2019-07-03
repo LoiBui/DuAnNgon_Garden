@@ -1,14 +1,14 @@
 <?php  
-namespace App\Repositories\LeTan;
+namespace App\Repositories\Ban;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\LeTan\LeTanRepoInterface;
-use App\Validators\LeTanValidator;
+use App\Repositories\Ban\BanRepoInterface;
+use App\Validators\BanValidator;
 use App\Model\Ban;
 use DB;
 
-class LeTanRepo extends BaseRepository implements LeTanRepoInterface{
+class BanRepo extends BaseRepository implements BanRepoInterface{
 	public function model()
     {
         return Ban::class;
@@ -30,7 +30,7 @@ class LeTanRepo extends BaseRepository implements LeTanRepoInterface{
      */
     public function validator()
     {
-        // return CalendarValidator::class;
+        return BanValidator::class;
     }
 }
 

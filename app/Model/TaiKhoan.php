@@ -9,6 +9,6 @@ class TaiKhoan extends Model
     protected $table = "taikhoans";
 
     protected $fillable = [
-        'id',
+        'id','tendangnhap', 'matkhau'
     ];
 }
