@@ -30,12 +30,17 @@ class AppServiceProvider extends ServiceProvider
         );
         
         $this->app->bind(
-            'App\Repositories\LeTan\LeTanRepoInterface',
-            'App\Repositories\LeTan\LeTanRepo'
+            'App\Repositories\Ban\BanRepoInterface',
+            'App\Repositories\Ban\BanRepo'
         );
         $this->app->bind(
             'App\Repositories\ChiTietPhieu\ChiTietPhieuRepoInterface',
             'App\Repositories\ChiTietPhieu\ChiTietPhieuRepo'
+        );
+
+        $this->app->bind(
+            'App\Repositories\NVPhucVu\NvPhucVuRepoInterface',
+            'App\Repositories\NVPhucVu\NvPhucVuRepo'
         );
     }
 

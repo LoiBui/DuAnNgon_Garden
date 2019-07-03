@@ -91,7 +91,10 @@
                 data: "check",
                 success: function(data){
 					cur.phieuorder = data;
-                }
+                },
+				error: (er)=>{
+					console.log(er);
+				}
             });
 	},
 	methods:{

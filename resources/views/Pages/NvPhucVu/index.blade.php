@@ -6,37 +6,25 @@
 			<form class="form-horizontal form-label-left input_mask">
 				<div class="row">
 					<div class="col-md-2 col-xs-12 form-group">
-						<input type="text" class="form-control" name="sochongoi" placeholder="Số chỗ ngồi..." value="{{ Request::get('sochongoi') }}">
+						<input type="text" class="form-control" name="id" placeholder="Mã Món..." value="{{ Request::get('id') }}">
 					</div>
 
 					<div class="col-md-2 col-xs-12 form-group">
-						<label><input style="margin-top: 10px;" id="myCheck" type="checkbox" checked></label>
-						<input disabled style="width: 90%" id="ngaydat" type="text" class="form-control date-picker pull-right" name="ngaydat" placeholder="Ngày Đặt..." >
+						<input type="text" class="form-control" name="ten" placeholder="Tên Món..." value="{{ Request::get('ten') }}">
 					</div>
 
 					<div class="col-md-2 col-xs-12 form-group">
-						<input type="text" class="form-control" name="sdt" placeholder="SDT Khách Hàng..." value="{{ Request::get('sdt') }}">
-					</div>
-
-					<div class="col-md-2 col-xs-12 form-group">
-						<select name="trangthai" class="form-control">
-							<option>{{__('-- Trạng Thái --')}}</option>
-							<option>{{__('Trống')}}</option>
-							<option>{{__('Đã Đặt')}}</option>
-							<option>{{__('Đang Sử Dụng')}}</option>
+						<select name="loai" class="form-control">
+							<option>{{__('-- Loại --')}}</option>
+							<option>{{__('Đồ Ăn')}}</option>
+							<option>{{__('Nước Uống')}}</option>
 						</select>
 					</div>
 
 					<div class="col-md-2 col-xs-12 form-group">
 						<form  method="POST" class="form-horizontal form-label-left">
-							<button href="{{ url(route('letan')) }}" style="width: 100%" type="submit" class="btn btn-success btn-search"><i class="fa fa-search"></i> {{__('search')}}</button>
+							<button href="{{ url(route('nvphucvu')) }}" style="width: 100%" type="submit" class="btn btn-success btn-search"><i class="fa fa-search"></i> {{__('search')}}</button>
 						</form>
-					</div>
-					
-					<div class="col-md-2 col-xs-12 form-group">
-						<div id="taophieu" style="width: 100%" class="btn btn-info pull-left">
-							<i class="fa fa-plus"></i> {{__('Tạo Phiếu')}}
-						</div>
 					</div>
 				</div>
 			</form>
@@ -45,52 +33,67 @@
 	</div>
 
     <div class="row">
-		<div class="col-lg-12">
+		<div class="col-lg-6">
 			<div class="main-card mb-3 card">
-				<div class="card-body"><h5 class="card-title">Bàn  </h5>
-					
-
-					<div class="table-responsive table-hover">
+				<div class="card-body"><h5 class="card-title">Món Ăn  </h5>
+					<div class="table-responsive">
 						<table class="mb-0 table">
 							<thead>
 							<tr>
-								<th>ID</th>
-								<th>Số Chỗ Ngồi</th>
-								<th>Loại Bàn</th>
-								<th>Mô Tả</th>
-								<th>Trạng Thái</th>
-								<th>Ngày Đặt</th>
-								<th>Giờ Đặt</th>
-								<th>Tên Khách Hàng</th>
-								<th>SDT</th>
+								<th>Mã Món</th>
+								<th>Tên Món</th>
+								<th>Loại</th>
+								<th>Giá Tiền</th>
+								<th>Số Lượng</th>
+								<th>Thêm</th>
 							</tr>
 							</thead>
 							<tbody id="table">
-								@foreach($data as $key => $value)
-								<tr style="cursor: pointer;"
-								@if( $value['trangthai'] == TRANG_THAI_BAN_TRONG ) 
-									data-toggle="modal" data-target=".bd-example-modal-lg" 
-									onclick="DatBan({{$value['id']}})" 
-								@elseif($value['trangthai'] == TRANG_THAI_BAN_DA_DAT)
-									onclick="TaoPhieu({{$value['id']}})" id="ban{{$value['id']}}"
-								@endif style="color: #000000bf;" data-target="{{$value['id']}}">
-									
-								<td>{{ $value['id'] }}</td>
-									<td>{{ $value['sochongoi'] }}</td>
-									<td>@if( $value['loaiban'] == LOAI_BAN_VIP ) Bàn Vip @else Bàn Thường @endif
-									<td>{{ $value['mota'] }}</td>
-									<td>@if( $value['trangthai'] == 0 ) Trống @elseif($value['trangthai'] == 1) Đã Đặt @else Đang Sử Dụng @endif</td>
-									<td>{{ $value['ngaydat'] }}</td>
-									<td>{{ $value['giodat'] }}</td>
-									<td>{{ $value['tenkhachhang'] }}</td>
-									<td>{{ $value['sdt'] }}</td>
+								@foreach($monans as $key => $value)
+								<tr>
+									<td>{{ $value['id'] }}</td>
+									<td>{{ $value['ten'] }}</td>
+									<td>@if( $value['loai'] == LOAI_MON_DO_AN ) Đồ Ăn @else Nước Uống @endif
+										<td>{{ $value['giatien'] }}</td>
+									<td><input style="width: 50px;" type="text"></td>
+									<td class="text-center" style="cursor: pointer;"><a style="height:35x;"><i class="fa fa-plus"></i></a></td>
 								</tr>
 								@endforeach
 							</tbody>
 						</table>
 						<hr>
 						<div style="float: right;">
-							{{-- {{$bans->links()}} --}}
+							{{$monans->links()}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="main-card mb-3 card">
+				<div class="card-body"><h5 class="card-title">Đặt Món  </h5>
+					<div class="table-responsive table-hover">
+						<table class="mb-0 table">
+							<thead>
+							<tr>
+								<th>Mã Món</th>
+								<th>Tên Món</th>
+								<th>Loại</th>
+								<th>Giá Tiền</th>
+								<th>Số Lượng</th>
+								<th>Sửa</th>
+								<th>Xóa</th>
+							</tr>
+							</thead>
+							<tbody id="table">
+								<tr style="cursor: pointer;">
+									<th></th>
+								</tr>
+							</tbody>
+						</table>
+						<hr>
+						<div style="float: right;">
 						</div>
 					</div>
 				</div>
