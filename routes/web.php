@@ -69,4 +69,8 @@ Route::get('datban', function () {
     return view("Pages.DatBanOnline.index");
 });
 
+Route::get('thanhcong', function () {
+    return view("Pages.DatBanOnline.thanhcong");
+});
+
 Route::post("datban", "Controller@datban")->name("datban");

@@ -87,8 +87,8 @@ button:hover {
   <h1>Đặt Bàn Trực Tuyến</h1>
   <!-- One "tab" for each step in the form: -->
   <div class="tab">
-    <p>Ngày Đến Ăn<input type="date" id="ngayda" name="ngaydenan"></p>
-    <p>Gờ Đến Ăn<input type="time" id="gioda" name="giodenan"></p>
+    <p>Ngày Đến Ăn<input type="date" id="ngayda" name="ngaydat"></p>
+    <p>Gờ Đến Ăn<input type="time" id="gioda" name="giodat"></p>
     <p>Số Người<input type="number" id="son" name="songuoi"></p>
   </div>
   
