@@ -2,9 +2,37 @@
 
 @section('content')
     <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <form class="form-horizontal form-label-left input_mask">
+                <div class="row">
+                    <div class="col-md-2 col-xs-12 form-group">
+                        <input type="text" class="form-control" name="tennguoidung" placeholder="Tên Nhân Viên..." value="{{ Request::get('sochongoi') }}">
+                    </div>
+
+                    <div class="col-md-2 col-xs-12 form-group">
+                        <input type="text" class="form-control" name="sdt" placeholder="Số Điện Thoại..." value="{{ Request::get('sochongoi') }}">
+                    </div>
+
+                    <div class="col-md-2 col-xs-12 form-group">
+                        <form  method="POST" class="form-horizontal form-label-left">
+                            <button href="taikhoan" style="width: 100%" type="submit" class="btn btn-success btn-search"><i class="fa fa-search"></i> {{__('search')}}</button>
+                        </form>
+                    </div>
+
+                    <div class="col-md-4"></div>
+
+                    <div class="col-md-2 col-xs-12 form-group">
+                        <a href="taotaikhoan" style="width: 100%" class="btn btn-primary btn-search"><i class="fa fa-plus"></i> {{__('Thêm Tài Khoản')}}</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
             <div class="col-lg-12">
                     <div class="main-card mb-3 card">
-                        <div class="card-body"><h5 class="card-title">Table responsive</h5>
+                        <div class="card-body"><h5 class="card-title">Tài Khoản</h5><a href=""></a>
                             <div class="table-responsive">
                                 <table class="mb-0 table">
                                     <thead>
@@ -24,7 +52,7 @@
                                             @foreach($data as $key => $value)
                                     <tr style="color: #000000bf;" data-target="{{$value->id}}">
                                                 <td>{{ $key + 1 }}</td>
-                                                <td>{{ $value->tendangnhap }}</td>
+                                                <td>{{ $value->username }}</td>
                                                 <td>
                                                         {{ $value->tennguoidung }}
                                                 </td>

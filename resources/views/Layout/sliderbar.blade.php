@@ -25,10 +25,15 @@
             <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
                 <span class="btn-icon-wrapper">
                     <i class="fa fa-ellipsis-v fa-w-6"></i>
+                    
                 </span>
             </button>
         </span>
-    </div>    <div class="scrollbar-sidebar">
+    </div>    
+    <div class="scrollbar-sidebar">
+        <div class="text-center">
+            <img id="logo" style="width: 150px;transition: 1s;" class="rounded-circle" src="assets/images/logo.png" alt="">
+        </div>
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Dashboards</li>

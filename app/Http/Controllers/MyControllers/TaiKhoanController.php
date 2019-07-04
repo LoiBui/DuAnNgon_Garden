@@ -29,9 +29,20 @@ class TaiKhoanController extends BaseController
         $this->taikhoan = $TaiKhoanRepoInterFace;
         $this->taikhoanvalidate = $vali;
     }
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->taikhoan->paginate(10);
+        $search = [];
+
+        if ($request->tennguoidung != '') {
+            $search[] = ['tennguoidung', $request->tennguoidung];
+        }
+
+        if ($request->sdt != '') {
+            $search[] = ['sdt', $request->sdt];
+        }
+
+        $data = TaiKhoan::where($search)->paginate(10);
+
         return view('Pages.TaiKhoan.DanhSach', compact("data"));
     }
 
@@ -85,11 +96,11 @@ class TaiKhoanController extends BaseController
             if(DB::table('taikhoans')->insert($data))
             {
                 $request->session()->flash('thongbao', __('Thêm Tài Khoản Thành Công'));
-                return redirect("taikhoan");
+                return redirect("taotaikhoan");
             }
         } catch (ValidatorException $e) {
             $request->session()->flash('thongbao', __('Thêm Tài Khoản Thất Bại'));
-            return redirect("taikhoan")->withErrors($e->getMessageBag())->withInput();
+            return redirect("taotaikhoan")->withErrors($e->getMessageBag())->withInput();
         }
     }
 

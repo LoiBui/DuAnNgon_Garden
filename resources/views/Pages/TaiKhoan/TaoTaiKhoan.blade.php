@@ -72,7 +72,7 @@
                     </div>
 
                         
-                    
+                    <a href="taikhoan" style="color: #FFFFFF; font-weight: bold" class="mt-1 btn btn-success">Hủy</a>
                     <button class="mt-1 btn btn-primary">Thêm</button>
                 </form>
             </div>
