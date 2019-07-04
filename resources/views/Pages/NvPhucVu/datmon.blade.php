@@ -87,9 +87,17 @@
 							</tr>
 							</thead>
 							<tbody id="table">
-								<tr style="cursor: pointer;">
-									<th></th>
-								</tr>
+									@foreach($monanorders as $key => $value)
+									<tr>
+										<td>{{ $value->id }}</td>
+										<td>{{ $value->ten }}</td>
+										<td>@if( $value['loai'] == LOAI_MON_DO_AN ) Đồ Ăn @else Nước Uống @endif</td>
+										<td>{{ $value->giatien }}</td>
+										<td><input type="text" name="soluong" id="soluong" style="width: 50px"></td>
+										<td class="text-center"><a href="{{ url(route('nvphucvu.datmon', $value->id)) }}"><i class="fa fa-plus fa-lg"></i></a></td>
+										<td class="text-center"><a href="{{ url(route('nvphucvu.datmon', $value->id)) }}"><i class="fa fa-trash-alt fa-lg"></i></a></td>
+									</tr>
+									@endforeach
 							</tbody>
 						</table>
 						<hr>

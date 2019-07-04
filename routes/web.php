@@ -37,6 +37,8 @@ Route::group(['prefix' => 'taikhoan'], function () {
 });
 
 
+
+
 //NHÀ BẾP
 Route::get('nhabep', "MyControllers\NhaBepController@index");
 Route::get('getPhieuOrder', "MyControllers\NhaBepController@getPhieuorder");
@@ -53,6 +55,26 @@ Route::group(['prefix' => 'letan'], function () {
 });
 /* End  Le Tan */
 
+
+//Thực đơn
+Route::group(['prefix' => 'thucdon'], function () {
+    Route::get('/',"MyControllers\ThucDonController@index")->name('thucdon');
+    Route::get('search',"MyControllers\ThucDonController@search")->name("thucdon.search");
+    Route::any('add','MyControllers\ThucDonController@add')->name('thucdon.add');
+    Route::post('update','MyControllers\ThucDonController@update')->name('thucdon.update');
+    Route::get('destroy/{id}','MyControllers\ThucDonController@destroy')->name('thucdon.destroy');
+});
+
+
+Route::get('datban', function () {
+    return view("Pages.DatBanOnline.index");
+});
+
+Route::get('thanhcong', function () {
+    return view("Pages.DatBanOnline.thanhcong");
+});
+
+Route::post("datban", "Controller@datban")->name("datban");
 /*  Nhân Viên Phục Vụ */
 Route::group(['prefix' => 'nvphucvu'], function () {
     Route::get('/', "MyControllers\NvPhucVuController@index")->name('nvphucvu');

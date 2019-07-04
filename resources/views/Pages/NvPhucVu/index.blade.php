@@ -26,7 +26,7 @@
 				<div class="card-body"><h5 class="card-title">Bàn  </h5>
 					
 
-					<div class="table-responsive">
+					<div class="datatable table-responsive">
 						<table class="mb-0 table">
 							<thead>
 							<tr>

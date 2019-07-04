@@ -23,6 +23,7 @@
     -->
     @yield('style')
 <link href="main.css" rel="stylesheet">
+<link href="css/datatable.css" rel="stylesheet">
 
 <!-- bootstrap-daterangepicker -->
 <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
@@ -65,7 +66,7 @@
                 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
-<script type="text/javascript" src="assets/scripts/main.js"></script></body>
+<script type="text/javascript" src="{{asset('assets/scripts/main.js')}}"></script></body>
 <script>
 setTimeout(function(){ 
 		document.getElementById('thongbao').remove();
@@ -75,6 +76,7 @@ setTimeout(function(){
 <script src="js/jquery.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/moment.js"></script>
+<script src="js/datatable.js"></script>
 
 <!-- bootstrap-daterangepicker -->
 <script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>

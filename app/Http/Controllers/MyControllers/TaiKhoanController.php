@@ -34,7 +34,7 @@ class TaiKhoanController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function dangnhap(Request $request){
-        if (\Auth::attempt(['tendangnhap' => $request->tendangnhap, 'matkhau' => $request->matkhau])){
+        if (\Auth::attempt(['tendangnhap' => $request->tendangnhap, 'password' => $request->matkhau])){
             return "ok";
         }else{
             return "fail";
@@ -66,9 +66,9 @@ class TaiKhoanController extends BaseController
 
         );
         if($this->taikhoan->store($arr)){
-            return redirect("taikhoan")->with("thongbao", $this->response["SUCCESS"]);
+            return redirect("taikhoan")->with("thongbao", $this->response["SUCCESS"]["msg"]);
         }
-        return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]);
+        return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]["msg"]);
         
     }
 

@@ -109,11 +109,11 @@ class LeTanController extends Controller
             $idban = $request->query('idban');
         }
         
-        // if(DB::table('phieuorders')->insert([
-        //     'idban', $idban,
-        //     'idnhanvien', \Auth::user()->id,
-        //     'thoigiantao', date('Y-m-d H:i:s')
-        // ]))
+        if(DB::table('phieuorders')->insert([
+            'idban', $idban,
+            'idnhanvien', \Auth::user()->id,
+            'thoigiantao', date('Y-m-d H:i:s')
+        ]))
         if(1==1)
         {
             return response()->json(['success' => true, 'msg' => 'Tạo Phiếu Thành Công']);
