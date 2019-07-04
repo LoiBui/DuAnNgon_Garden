@@ -58,7 +58,7 @@ Route::group(['prefix' => 'letan'], function () {
 //Thực đơn
 Route::group(['prefix' => 'thucdon'], function () {
     Route::get('/',"MyControllers\ThucDonController@index")->name('thucdon');
-    Route::get('search',"MyControllers\ThucDonController@search")->name("thucdon.search");
+    Route::any('search',"MyControllers\ThucDonController@search")->name("thucdon.search");
     Route::any('add','MyControllers\ThucDonController@add')->name('thucdon.add');
     Route::post('update','MyControllers\ThucDonController@update')->name('thucdon.update');
     Route::get('destroy/{id}','MyControllers\ThucDonController@destroy')->name('thucdon.destroy');

@@ -13,8 +13,8 @@
 </div>
 <div class="navbar" style="float:right;margin-bottom: 20px;border-bottom:1px solid blue;">
     <div class="search" style="margin-right:15px;">
-        <form class="form-inline" action="{{route('thucdon.search')}}" method="POST">
-            <select name="sortprice" class="custom-select" id="sortprice" style="margin-right:10px;">
+        <form class="form-inline" action="{{route('thucdon.search')}}" method="post">
+            <select name="sort-price" class="custom-select" id="sortprice" style="margin-right:10px;">
                 <option selected>Sắp xếp theo giá</option>
                 <option value="1">Tăng dần</option>
                 <option value="2">Giảm dần</option>
@@ -44,7 +44,7 @@
                 <br>
                 <div class="btn-group btn-group-md">
                     <button class="btn btn-secondary">Chi tiết</button>
-                    <button data-toggle="modal" data-target=".bd-example-modal-lg" class=" btn btn-info btn-sua">Sửa</button>
+                    <button data-toggle="modal" data-target=".bd-example-modal-lg" data-item-id="{{$value->id}}" class=" btn btn-info btn-sua">Sửa</button>
                     <button class="btn btn-danger" type="button" value="destroy/{{$value->id}}" onclick="destroy(this)">Xoá</button>
                 </div>
             </div>
@@ -53,7 +53,7 @@
     @endforeach
 </div>
 <div class="page-links" style="float:right;">
-    {{$data->links()}}
+    {{$data->appends(['data-search'=>Request::get('data-search')])->links()}}
 </div>
 @endsection
 
@@ -117,8 +117,16 @@
     function destroy(btn) {
         if (confirm("Bạn có muốn xoá?") == true) {
             let url = btn.value;
-            document.location.href = url;
+            document.location.href = "thucdon/"+url;
+            
         }
     }
+
+    $(document).ready(function(){
+        $(document).on('click','btn-sua',function(){
+            
+
+        });
+    });
 </script>
 @endsection
