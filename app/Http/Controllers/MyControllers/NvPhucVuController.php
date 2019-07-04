@@ -37,19 +37,42 @@ class NvPhucVuController extends Controller
         return view("Pages.NvPhucVu.index", compact('phieuorders'));
     }
 
-    public function datmon(Request $request)
+    public function datmon(Request $request, $idphieuorder)
     {
         $search = [];
 
-        if ($request->idban != '') {
-            $search[] = ['idban', $request->idban];
+        if ($request->id != '') {
+            $search[] = ['id', $request->id];
+        }
+
+        if ($request->ten != '') {
+            $search[] = ['ten', 'like', "%{$request->query('ten')}%"];
+        }
+
+        if ($request->has('loai')) {
+            switch ($request->query('loai')) {
+                case __('Đồ Ăn'):
+                    $search[] = ['loai', LOAI_MON_DO_AN];
+                    break;
+                case __('Nước Uống'):
+                    $search[] = ['loai', LOAI_MON_NUOC_UONG];
+                    break; 
+                default:
+                    break;
+            }
         }
 
         $monans = ThucDon::where($search)->paginate(10);
 
+        $phieuorder = PhieuOrder::where('id', $idphieuorder)->first();
+        $monanorders = $phieuorder->ThucDons()->get();
+
+        if(empty($monanorders))
+            $monanorders = [];
+
         if(empty($monans))
             $monans = [];
         
-        return view("Pages.NvPhucVu.datmon", compact('monans'));
+        return view("Pages.NvPhucVu.datmon", compact('monans', 'monanorders'));
     }
 }

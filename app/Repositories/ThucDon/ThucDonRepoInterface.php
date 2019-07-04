@@ -1,9 +1,9 @@
 <?php  
 namespace App\Repositories\ThucDon;
 
-use Prettus\Repository\Contracts\RepositoryInterface;
+use App\Repositories\BaseRepositoryInterface;
 
-interface ThucDonRepoInterface extends RepositoryInterface{
+interface ThucDonRepoInterFace extends BaseRepositoryInterface{
 	
 }
 
