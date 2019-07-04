@@ -18,7 +18,7 @@ class CreateChiTietPhieusTable extends Migration
             $table->bigInteger('idphieuorder')->unsigned();
             $table->bigInteger('idmon')->unsigned();
             $table->integer('soluong');
-            $table->longText('ghichu');
+            $table->longText('ghichu')->null();
             $table->integer('trangthai');
             $table->timestamps();
 

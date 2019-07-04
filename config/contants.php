@@ -21,3 +21,7 @@ if(!defined("TRANG_THAI_BAN_DANG_SU_DUNG")) define("TRANG_THAI_BAN_DANG_SU_DUNG"
 
 if(!defined("LOAI_MON_DO_AN")) define("LOAI_MON_DO_AN", 0);
 if(!defined("LOAI_MON_NUOC_UONG")) define("LOAI_MON_NUOC_UONG", 1);
+
+if(!defined("TRANG_THAI_MON_CHUA_LAM")) define("TRANG_THAI_MON_CHUA_LAM", 0);
+if(!defined("TRANG_THAI_MON_DANG_LAM")) define("TRANG_THAI_MON_DANG_LAM", 1);
+if(!defined("TRANG_THAI_MON_HOAN_THANH")) define("TRANG_THAI_MON_HOAN_THANH", 2);
