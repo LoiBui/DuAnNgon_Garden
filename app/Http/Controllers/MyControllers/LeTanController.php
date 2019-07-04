@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use App\Validators\BanValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Validators\BaseValidatorInterface;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Input;
 
 class LeTanController extends Controller
 {
@@ -99,7 +101,19 @@ class LeTanController extends Controller
         if(empty($data))
             $data = [];
         
-        return view("Pages.LeTan.index", compact('data', 'bans'));
+
+            $page = Input::get('page', 1); 
+
+            $perPage = 10;
+
+            $offSet = ($page * $perPage) - $perPage; // Start displaying items from this number
+
+            $itemsForCurrentPage = array_slice($data, $offSet, $perPage, true);
+
+            $data = new LengthAwarePaginator($itemsForCurrentPage, count($data), $perPage, $page, 
+        ['path' => request()->url(), 'query' => request()->query()]);
+        
+        return view("Pages.LeTan.index", compact('data'));
     }
 
     
