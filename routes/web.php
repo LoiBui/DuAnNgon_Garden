@@ -56,7 +56,7 @@ Route::group(['prefix' => 'letan'], function () {
 /*  Nhân Viên Phục Vụ */
 Route::group(['prefix' => 'nvphucvu'], function () {
     Route::get('/', "MyControllers\NvPhucVuController@index")->name('nvphucvu');
-    Route::get('taophieu', "MyControllers\NvPhucVuController@taophieu")->name('nvphucvu.taophieu')->where('idban', '[0-9]+');
-    Route::post('datban', "MyControllers\NvPhucVuController@datban")->name('nvphucvu.datban');
+    Route::get('datmon/{idphieuorder}', "MyControllers\NvPhucVuController@datmon")->name('nvphucvu.datmon')->where('idphieuorder', '[0-9]+');
+    // Route::post('datmon', "MyControllers\NvPhucVuController@datmon")->name('nvphucvu.datmon');
 });
 /* End  Nhân Viên Phục Vụ */

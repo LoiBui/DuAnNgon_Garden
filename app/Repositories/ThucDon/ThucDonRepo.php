@@ -1,14 +1,14 @@
 <?php  
-namespace App\Repositories\NVPhucVu;
+namespace App\Repositories\ThucDon;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\NVPhucVu\NvPhucVuRepoInterface;
+use App\Repositories\ThucDon\ThucDonRepoInterface;
 // use App\Validators\LeTanValidator;
 use App\Model\ThucDon;
 use DB;
 
-class NvPhucVuRepo extends BaseRepository implements NvPhucVuRepoInterface{
+class ThucDonRepo extends BaseRepository implements ThucDonRepoInterface{
 	public function model()
     {
         return ThucDon::class;
