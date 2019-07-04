@@ -16,13 +16,14 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr v-for = "(item, index) in phieuorder" v-if = "item.trangthai == 0 || item.trangthai == 1" @click = "chooseOrder(item.id, item.trangthai)" :class = "{choose: item.id == currentOrder}">
+						<tr v-for = "(item, index) in phieuorder" v-if = "item.trangthai != 2" @click = "chooseOrder(item.id, item.trangthai)" :class = "{choose: item.id == currentOrder}">
 							<td>@{{item.idban}}</td>
 							<td>@{{item.tennhanvien}}</td>
 							<td>@{{convertDate(item.thoigiantao)}}</td>
 							<td>
 								<div class="status statusDanger" v-if = "item.trangthai == 0" @click = "start(item.id)">Chưa Làm</div>	
 								<div class="status statusPending" v-if = "item.trangthai == 1" @click = "start(item.id)">Đang Làm</div>	
+								<div class="status statusPending" v-if = "item.trangthai == 3" @click = "start(item.id)">Thay Đổi</div>	
 							</td>
 						</tr>
 						</tbody>
@@ -37,6 +38,7 @@
 					<h5 class="card-title">Chi Tiết Món Ăn Theo Bàn</h5>
 					<button v-if = "chitietphieuorder.length > 0 && trangthai == 0" class="mt-2 btn btn-primary"  style="margin-bottom: 7px;" @click = "nhanlam(currentOrder, trangthai)">Nhận Làm</button>
 					<button v-if = "chitietphieuorder.length > 0 && trangthai == 1" class="mt-2 btn btn-warning"  style="margin-bottom: 7px;" @click = "nhanlam(currentOrder, trangthai)">Đang Làm</button>
+					<button v-if = "chitietphieuorder.length > 0 && trangthai == 3" class="mt-2 btn btn-warning"  style="margin-bottom: 7px;" @click = "nhanlam(currentOrder, trangthai)">Thay Đổi</button>
 					<button v-if = "chitietphieuorder.length > 0 && trangthai == 2" class="mt-2 btn btn-success"  style="margin-bottom: 7px;">Hoàn Thành</button>
 					<table class="mb-0 table">
 						<thead>
@@ -54,9 +56,9 @@
 							<td>@{{item.soluong}}</td>
 							<td>@{{item.ghichu}}</td>
 							<td>
-								<div class="status statusDanger" v-if = "item.trangthai == 0 && trangthai == 1" @click = "start(item.id)">Đang Chờ</div>	
-								<div class="status statusPending" v-if = "item.trangthai == 1  && trangthai == 1" @click = "start(item.id)">Đang Làm</div>	
-								<div class="status statusSucess" v-if = "item.trangthai == 2  && trangthai == 1">Hoàn Thành</div>	
+								<div class="status statusDanger" v-if = "item.trangthai == 0 && (trangthai == 1 || trangthai ==3)" @click = "start(item.id)">Đang Chờ</div>	
+								<div class="status statusPending" v-if = "item.trangthai == 1  && (trangthai == 1 || trangthai ==3)" @click = "start(item.id)">Đang Làm</div>	
+								<div class="status statusSucess" v-if = "item.trangthai == 2  && (trangthai == 1 || trangthai ==3)">Hoàn Thành</div>	
 							</td>
 						</tr>
 						
@@ -158,6 +160,9 @@
 					alert("Bạn không thể nhấn hoàn thành trong khi các món ăn chưa làm xong");
 					return;
 				}
+			}
+			if(trangthai == 3){
+				status = 2;
 			}
 
 			this.phieuorder.forEach(el=>{

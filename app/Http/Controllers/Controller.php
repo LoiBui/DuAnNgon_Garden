@@ -59,6 +59,9 @@ class Controller extends BaseController
         $db->sdt = $re->sdt;
         $db->trangthai = 0;
         $db->save();
+
+        $db = Ban::find($idBan)->update(["trangthai"=>2]);
+        
         return redirect("thanhcong")->with("notice", "Đặt Bàn Thành Công<br> Chúng tôi sẽ gọi điện xác nhận lại trong giây lát");
     }
 }
