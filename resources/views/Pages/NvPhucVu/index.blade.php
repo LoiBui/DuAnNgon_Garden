@@ -6,19 +6,7 @@
 			<form class="form-horizontal form-label-left input_mask">
 				<div class="row">
 					<div class="col-md-2 col-xs-12 form-group">
-						<input type="text" class="form-control" name="id" placeholder="Mã Món..." value="{{ Request::get('id') }}">
-					</div>
-
-					<div class="col-md-2 col-xs-12 form-group">
-						<input type="text" class="form-control" name="ten" placeholder="Tên Món..." value="{{ Request::get('ten') }}">
-					</div>
-
-					<div class="col-md-2 col-xs-12 form-group">
-						<select name="loai" class="form-control">
-							<option>{{__('-- Loại --')}}</option>
-							<option>{{__('Đồ Ăn')}}</option>
-							<option>{{__('Nước Uống')}}</option>
-						</select>
+						<input type="text" class="form-control" name="idban" placeholder="ID Bàn..." value="{{ Request::get('sochongoi') }}">
 					</div>
 
 					<div class="col-md-2 col-xs-12 form-group">
@@ -33,67 +21,39 @@
 	</div>
 
     <div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-12">
 			<div class="main-card mb-3 card">
-				<div class="card-body"><h5 class="card-title">Món Ăn  </h5>
+				<div class="card-body"><h5 class="card-title">Bàn  </h5>
+					
+
 					<div class="table-responsive">
 						<table class="mb-0 table">
 							<thead>
 							<tr>
-								<th>Mã Món</th>
-								<th>Tên Món</th>
-								<th>Loại</th>
-								<th>Giá Tiền</th>
-								<th>Số Lượng</th>
-								<th>Thêm</th>
+								<th>ID</th>
+								<th>ID Bàn</th>
+								<th>ID Nhân Viên</th>
+								<th>Thời Gian Tạo</th>
+								<th>Trạng Thái</th>
+								<th>Gọi Món</th>
 							</tr>
 							</thead>
 							<tbody id="table">
-								@foreach($monans as $key => $value)
+								@foreach($phieuorders as $key => $value)
 								<tr>
-									<td>{{ $value['id'] }}</td>
-									<td>{{ $value['ten'] }}</td>
-									<td>@if( $value['loai'] == LOAI_MON_DO_AN ) Đồ Ăn @else Nước Uống @endif
-										<td>{{ $value['giatien'] }}</td>
-									<td><input style="width: 50px;" type="text"></td>
-									<td class="text-center" style="cursor: pointer;"><a style="height:35x;"><i class="fa fa-plus"></i></a></td>
+									<td>{{ $value->id }}</td>
+									<td>{{ $value->idban }}</td>
+									<td>{{ $value->idnhanvien }}</td>
+									<td>{{ $value->thoigiantao }}</td>
+									<td>@if( $value['trangthai'] == 0 ) Trống @elseif($value['trangthai'] == 1) Đã Đặt @else Đang Sử Dụng @endif</td>
+									<td><a href="{{ url(route('nvphucvu.datmon', $value->id)) }}"><i class="fa fa-calendar-plus fa-lg"></i></a></td>
 								</tr>
 								@endforeach
 							</tbody>
 						</table>
 						<hr>
 						<div style="float: right;">
-							{{$monans->links()}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-lg-6">
-			<div class="main-card mb-3 card">
-				<div class="card-body"><h5 class="card-title">Đặt Món  </h5>
-					<div class="table-responsive table-hover">
-						<table class="mb-0 table">
-							<thead>
-							<tr>
-								<th>Mã Món</th>
-								<th>Tên Món</th>
-								<th>Loại</th>
-								<th>Giá Tiền</th>
-								<th>Số Lượng</th>
-								<th>Sửa</th>
-								<th>Xóa</th>
-							</tr>
-							</thead>
-							<tbody id="table">
-								<tr style="cursor: pointer;">
-									<th></th>
-								</tr>
-							</tbody>
-						</table>
-						<hr>
-						<div style="float: right;">
+							{{$phieuorders->links()}}
 						</div>
 					</div>
 				</div>

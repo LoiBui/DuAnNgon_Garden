@@ -23,9 +23,9 @@ class CreateChiTietPhieusTable extends Migration
             $table->timestamps();
 
             $table->foreign('idphieuorder')
-            ->references('id')->on('phieuorders')->onDelete('cascade');;
+            ->references('id')->on('phieuorders')->onDelete('cascade');
             $table->foreign('idmon')
-            ->references('id')->on('thucdons')->onDelete('cascade');;
+            ->references('id')->on('thucdons')->onDelete('cascade');
         });
     }
 

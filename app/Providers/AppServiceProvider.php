@@ -39,8 +39,8 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            'App\Repositories\NVPhucVu\NvPhucVuRepoInterface',
-            'App\Repositories\NVPhucVu\NvPhucVuRepo'
+            'App\Repositories\ThucDon\ThucDonRepoInterface',
+            'App\Repositories\ThucDon\ThucDonRepo'
         );
     }
 
