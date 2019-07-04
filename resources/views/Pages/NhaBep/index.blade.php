@@ -28,6 +28,7 @@
 						</tr>
 						</tbody>
 					</table>
+					<img v-if = "isLoading" class="loading" src="icon/loading.gif" alt="">
 				</div>
 			</div>
 		</div>
@@ -83,7 +84,8 @@
 		chitietphieuorder: [],
 		currentOrder: '',
 		trangthai: '',
-		isloading: false
+		isloading: false,
+		isLoading: true,
 	},
 	created() {
 		var cur = this;
@@ -93,6 +95,7 @@
                 data: "check",
                 success: function(data){
 					cur.phieuorder = data;
+					cur.isLoading = false;
                 },
 				error: (er)=>{
 					console.log(er);

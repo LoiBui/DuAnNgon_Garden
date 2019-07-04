@@ -44,12 +44,12 @@
 									<td>{{ $value['tennhanvien'] }}</td>
 									<td>{{ $value['thoigiantao'] }}</td>
 									<td class="text-center">
-										<a style="cursor: pointer" onclick="ChieTietPhieu({{$value['id']}})" data-toggle="modal" data-target=".bd-example-modal-lg">
+										<button class="btn btn-success" style="cursor: pointer" onclick="ChieTietPhieu({{$value['id']}})" data-toggle="modal" data-target=".bd-example-modal-lg">
 											<i class="fa fa-info-circle fa-lg"></i>
-										</a>
+										</button>
 									</td>
 									
-									<td class="text-center"><a href="{{ url(route('nvphucvu.datmon', $value['id'])) }}"><i class="fa fa-calendar-plus fa-lg"></i></a></td>
+									<td class="text-center"><a class="btn btn-primary" href="{{ url(route('nvphucvu.datmon', $value['id'])) }}"><i class="fa fa-calendar-plus fa-lg"></i></a></td>
 								</tr>
 								@endforeach
 							</tbody>

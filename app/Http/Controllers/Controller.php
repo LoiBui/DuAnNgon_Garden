@@ -22,34 +22,45 @@ class Controller extends BaseController
         $idBan = "";
         
         if (count($data) > 0){
-            foreach($data as $value){
+            $tmp = [];
+            foreach($data as $key=> $value){
+                if ($key == 0){
+                    $tmp = $value;
+                }
                 if ($value->sochongoi == $re->songuoi){
                     $idBan = $value->idban;
                     break;
                 }
             }
             if ($idBan == ""){
-                $idBan = $data[0]->id;
+                $idBan = $tmp->id;
             }
         }else{
             $que = 'SELECT * FROM bans WHERE (sochongoi > 11 OR sochongoi + 3>11) AND MINUTE(TIMEDIFF(NOW(), "'.$re->ngaydat.' '.$re->giodat.'"))/60 + HOUR(TIMEDIFF(NOW(), "'.$re->ngaydat.' '.$re->giodat.'")) > 2 AND trangthai = 0';
             
             $data1 = DB::select($que);
             if ($data1){
-                foreach($data1 as $value){
+                $tmp = [];
+                foreach($data1 as $key=> $value){
+                    if ($key == 0){
+                        $tmp = $value;
+                    }
                     if ($value->sochongoi == $re->songuoi){
                         $idBan = $value->id;
                         break;
                     }
                 }
+               
                 if ($idBan == ""){
-                    $idBan = $data[0]->id;
+                    $idBan = $tmp->id;
                 }
+
+                
             }
             
         }
         if ($idBan == ""){
-        return redirect("thanhcong")->with("notice", "Đặt Bàn Thất Bại<br> Không còn bàn");
+            return redirect("thanhcong")->with("notice", "Đặt Bàn Thất Bại<br> Không còn bàn");
         }
         $db = new Datban;
         $db->idban = $idBan;

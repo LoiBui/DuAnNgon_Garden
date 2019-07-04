@@ -52,6 +52,7 @@ Route::group(['prefix' => 'letan'], function () {
     Route::get('/', "MyControllers\LeTanController@index")->name('letan');
     Route::get('taophieu', "MyControllers\LeTanController@taophieu")->name('letan.taophieu')->where('idban', '[0-9]+');
     Route::post('datban', "MyControllers\LeTanController@datban")->name('letan.datban');
+    Route::post('chuyentranthaiban', "MyControllers\LeTanController@chuyentranthaiban")->name('letan.chuyentranthaiban');
 });
 /* End  Le Tan */
 
@@ -78,7 +79,7 @@ Route::post("datban", "Controller@datban")->name("datban");
 
 /*  Nhân Viên Phục Vụ */
 Route::group(['prefix' => 'nvphucvu'], function () {
-    Route::get('phieuorder/', "MyControllers\NvPhucVuController@index")->name('nvphucvu');
+    Route::get('/', "MyControllers\NvPhucVuController@index")->name('nvphucvu');
     Route::get('phieuorder/{idphieuorder}/datmon', "MyControllers\NvPhucVuController@datmon")->name('nvphucvu.datmon')->where('idphieuorder', '[0-9]+');
     Route::post('phieuorder/{idphieuorder}/datmon/{idmon}', "MyControllers\NvPhucVuController@themmon")->name('nvphucvu.themmon')->where('idphieuorder', '[0-9]+');
     Route::post('phieuorder/{idphieuorder}/suamon/{idchitietphieuorder}', "MyControllers\NvPhucVuController@suamon")->name('nvphucvu.suamon')->where('idphieuorder', '[0-9]+');

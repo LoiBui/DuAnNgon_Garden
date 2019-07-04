@@ -28,7 +28,7 @@ class NhaBepController extends Controller
     }
 
     public function getPhieuorder(){
-        $phieuorder = $this->PhieuOrder->all();
+        $phieuorder = PhieuOrder::orderBy('thoigiantao', 'desc')->get();
         foreach($phieuorder as $key=>$value){
             $value->tennhanvien = $value->NhanVien->tennguoidung;
         }
