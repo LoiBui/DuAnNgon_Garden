@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\TaiKhoan\TaiKhoanRepoInterFace;
 use Hash;
+use App\Validators\TaiKhoanValidator;
+use Prettus\Validator\Exceptions\ValidatorException;
+use App\Validators\BaseValidatorInterface;
+use Illuminate\Support\Facades\DB;
+use App\Model\TaiKhoan;
 
 
 class TaiKhoanController extends BaseController
@@ -16,11 +21,13 @@ class TaiKhoanController extends BaseController
      * @return \Illuminate\Http\Response
      */
     protected $taikhoan;
+    protected $taikhoanvalidate;
 
-    public function __construct(TaiKhoanRepoInterFace $TaiKhoanRepoInterFace)
+    public function __construct(TaiKhoanRepoInterFace $TaiKhoanRepoInterFace, TaiKhoanValidator $vali)
     {
         parent::__construct();
         $this->taikhoan = $TaiKhoanRepoInterFace;
+        $this->taikhoanvalidate = $vali;
     }
     public function index()
     {
@@ -28,115 +35,105 @@ class TaiKhoanController extends BaseController
         return view('Pages.TaiKhoan.DanhSach', compact("data"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function dangnhap(Request $request){
-        if (\Auth::attempt(['tendangnhap' => $request->tendangnhap, 'password' => $request->matkhau])){
-            return "ok";
-        }else{
-            return "fail";
+    public function dangnhap(Request $request, $guard = 'web'){
+        try{
+            $auth = Auth()->guard($guard);
+
+            if($auth->attempt(['username'=>$request->tendangnhap, 'password'=>$request->matkhau]))
+            {   
+                switch (Auth()->guard('web')->user()->quyen) {
+                    case QUYEN_ADMIN:
+                        return redirect('taikhoan/');
+                        break;
+                    case QUYEN_NHA_BEP:
+                        return redirect('nhabep/');
+                        break;
+                    case QUYEN_PHUC_VU:
+                        return redirect('nvphucvu/');
+                        break;
+                    case QUYEN_LE_TAN:
+                        return redirect('letan/');
+                        break;
+                    default:
+                         return redirect('taikhoan');
+                        break;
+                }
+            }
+
+            $request->session()->flash('thongbao', __('Sai tên đăng nhập hoặc mật khẩu'));
+            return redirect('dangnhap');
+        }catch (ValidatorException $e) {
+            return redirect('dangnhap')->withErrors($e->getMessageBag())->withInput();
         }
     }
-    public function create()
-    {
-        //
+
+    public function dangxuat($guard = 'web')
+    {            
+        Auth()->guard($guard)->logout();
+        return redirect("dangnhap");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
-    {
-        $arr = array(
-            'tendangnhap'=>$request->tendangnhap,
-            'matkhau'=>$request->matkhau,
-            'tennguoidung' => $request->tennguoidung,
-            'gioitinh' => $request->gioitinh,
-            'socmnd' => $request->socmnd,
-            'email' => $request->email,
-            'sdt' => $request->sdt,
-            'quequan' => $request->quequan,
-            'quyen' => $request->quyen,
+    {    
+        try {
+            $data = $request->all();
+            unset($data['_token']);
+    
+            $this->taikhoanvalidate->with($data)->passesOrFail(BaseValidatorInterface::RULE_CREATE);
 
-        );
-        if($this->taikhoan->store($arr)){
-            return redirect("taikhoan")->with("thongbao", $this->response["SUCCESS"]["msg"]);
+            if(DB::table('taikhoans')->insert($data))
+            {
+                $request->session()->flash('thongbao', __('Thêm Tài Khoản Thành Công'));
+                return redirect("taikhoan");
+            }
+        } catch (ValidatorException $e) {
+            $request->session()->flash('thongbao', __('Thêm Tài Khoản Thất Bại'));
+            return redirect("taikhoan")->withErrors($e->getMessageBag())->withInput();
         }
-        return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]["msg"]);
-        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
-        
-        $arr = array(
-            "id"=>$request->id,
-            'tennguoidung' => $request->tennguoidung,
-            'gioitinh' => $request->gioitinh,
-            'socmnd' => $request->socmnd,
-            'email' => $request->email,
-            'sdt' => $request->sdt,
-            'quequan' => $request->quequan,
+        try {
+            $data = $request->all();
+            unset($data['_token']);
 
-        );
-        
-        if ($request->isSua == 1){
-            $arr["matkhau"] = Hash::make($request->matkhau);
+            if ($request->isSua == 1){
+                $data["password"] = Hash::make($request->password);
+            }
+            else {
+                unset($data['password']);
+            }
+            unset($data['isSua']);
+            unset($data['xacnhanmatkhau']);
+
+            $this->taikhoanvalidate->with($data)->passesOrFail(BaseValidatorInterface::RULE_UPDATE);
+            
+            if($this->taikhoan->update($data)){
+                $request->session()->flash('thongbao', __('Sửa Tài Khoản Thành Công'));
+                return redirect("taikhoan");
+            }
+        } catch (ValidatorException $e) {
+            $request->session()->flash('thongbao', __('Sửa Tài Khoản Thất Bại'));
+            return redirect("taikhoan")->withErrors($e->getMessageBag())->withInput();
         }
-        
-        if($this->taikhoan->update($arr)){
-            return redirect("taikhoan")->with("thongbao", $this->response["SUCCESS"]);
-        }
-        return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        if($this->taikhoan->destroy($id)){
-            return redirect("taikhoan")->with("thongbao", $this->response["SUCCESS"]);
+        try {
+            if (DB::table('taikhoans')->where('id', $id)->delete()) {
+                request()->session()->flash('thongbao', __('Xóa Tài Khoản Thành Công'));
+                return redirect("taikhoan");
+            }
+        } catch (\Exception $e) {
+            request()->session()->flash('thongbao', __('Xóa Tài Khoản Thất Bại'));
+            return redirect("taikhoan");
         }
-        return redirect("taikhoan")->with("thongbao", $this->response["FAIL"]);
+
+        request()->session()->flash('thongbao', __('Xóa Tài Khoản Thất Bại'));
+        return redirect("taikhoan");
     }
 
     

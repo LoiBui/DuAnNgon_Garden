@@ -15,8 +15,8 @@ class CreateTaiKhoansTable extends Migration
     {
         Schema::create('taikhoans', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('tendangnhap')->unique();
-            $table->string('matkhau');
+            $table->string('username')->unique();
+            $table->string('password');
             $table->string('tennguoidung');
             $table->integer('gioitinh');
             $table->string('socmnd')->unique();

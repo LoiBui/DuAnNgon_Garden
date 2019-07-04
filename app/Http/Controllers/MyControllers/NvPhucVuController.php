@@ -113,10 +113,10 @@ class NvPhucVuController extends Controller
 
             if(DB::table('chitietphieus')->insert($data))
                 $request->session()->flash('thongbao', __('Đặt Món Thành Công'));
-            return redirect(route('nvphucvu.datmon', $idphieuorder));
+            return redirect()->back();
         } catch (ValidatorException $e) {
             $request->session()->flash('thongbao', __('Đặt Món Thất Bại'));
-            return redirect(route('nvphucvu.datmon', $idphieuorder))->withErrors($e->getMessageBag())->withInput();
+            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
     }
 
@@ -127,12 +127,12 @@ class NvPhucVuController extends Controller
             unset($data['_token']);
             $this->ChiTietPhieuValiDate->with($data)->passesOrFail(BaseValidatorInterface::RULE_CREATE);
 
-            if(DB::table('chitietphieus')->update($data, $idchitietphieuorder))
+            if(DB::table('chitietphieus')->where('id', $idchitietphieuorder)->update($data, $idchitietphieuorder))
                 $request->session()->flash('thongbao', __('Sửa Món Thành Công'));
-            return redirect(route('nvphucvu.datmon', $idphieuorder));
+                return redirect()->back();
         } catch (ValidatorException $e) {
             $request->session()->flash('thongbao', __('Sửa Món Thất Bại'));
-            return redirect(route('nvphucvu.datmon', $idphieuorder))->withErrors($e->getMessageBag())->withInput();
+            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
     }
 
@@ -141,14 +141,14 @@ class NvPhucVuController extends Controller
         try {
             if (DB::table('chitietphieus')->where('id', $idchitietphieuorder)->delete()) {
                 request()->session()->flash('thongbao', __('Xóa Món Thành Công'));
-                return redirect(route('nvphucvu.datmon', [$idphieuorder]));
+                return redirect()->back();
             }
         } catch (\Exception $e) {
             dd($e);
         }
 
         request()->session()->flash('thongbao', __('Xóa Món Thất Bại'));
-        return redirect(route('nvphucvu.datmon', [$idphieuorder]));
+        return redirect()->back();
     }
 
     public function ajax(Request $request)

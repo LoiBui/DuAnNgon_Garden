@@ -12,17 +12,17 @@
                         <div class="col-6">
                             <div class="position-relative form-group">
                                 <label for="exampleAddress" class="">Tên Đăng Nhập</label>
-                                <input name="tendangnhap" id="exampleAddress" placeholder="1234 Main St" type="text" class="form-control">
+                                <input name="username" id="exampleAddress" placeholder="1234 Main St" type="text" class="form-control">
                             </div>
     
                             <div class="position-relative form-group">
                                 <label for="examplePassword" class="">Mật Khẩu</label>
-                                <input name="matkhau" id="examplePassword" placeholder="password placeholder" type="password" class="form-control">
+                                <input name="password" id="examplePassword" placeholder="password placeholder" type="password" class="form-control">
                             </div>
     
                             <div class="position-relative form-group">
                                 <label for="examplePassword" class="">Xác Nhận Mật Khẩu</label>
-                                <input name="xacnhanmatkhau" id="examplePassword" placeholder="password placeholder" type="password" class="form-control">
+                                <input id="examplePassword" placeholder="password placeholder" type="password" class="form-control">
                             </div>
     
                             <div class="position-relative form-group">

@@ -75,7 +75,7 @@
                     <div class="col-6">
                         <div class="position-relative form-group">
                             <label for="exampleEmail" class="">Tên Đăng Nhập</label>
-                            <input name="tendangnhap" readonly id="tendangnhap" placeholder="with a placeholder" type="text" class="form-control">
+                            <input name="username" readonly id="tendangnhap" placeholder="with a placeholder" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="col-6">
@@ -142,7 +142,7 @@
                                     
                                     <div class="position-relative form-group">
                                         <label for="exampleEmail" class="">Mật Khẩu</label>
-                                        <input value="" name="matkhau" id="matkhau" placeholder="with a placeholder" type="password" class="form-control">
+                                        <input value="" name="password" id="matkhau" placeholder="with a placeholder" type="password" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-6">
