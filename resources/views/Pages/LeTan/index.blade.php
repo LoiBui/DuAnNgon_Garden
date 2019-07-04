@@ -1,102 +1,120 @@
 @extends('Layout.index')
 
 @section('content')
-	<div class="row">
-		<div class="col-md-12 col-sm-12 col-xs-12">
-			<form class="form-horizontal form-label-left input_mask">
-				<div class="row">
-					<div class="col-md-2 col-xs-12 form-group">
-						<input type="text" class="form-control" name="sochongoi" placeholder="Số chỗ ngồi..." value="{{ Request::get('sochongoi') }}">
-					</div>
-
-					<div class="col-md-2 col-xs-12 form-group">
-						<label><input style="margin-top: 10px;" id="myCheck" type="checkbox" checked></label>
-						<input disabled style="width: 90%" id="ngaydat" type="text" class="form-control date-picker pull-right" name="ngaydat" placeholder="Ngày Đặt..." >
-					</div>
-
-					<div class="col-md-2 col-xs-12 form-group">
-						<input type="text" class="form-control" name="sdt" placeholder="SDT Khách Hàng..." value="{{ Request::get('sdt') }}">
-					</div>
-
-					<div class="col-md-2 col-xs-12 form-group">
-						<select name="trangthai" class="form-control">
-							<option>{{__('-- Trạng Thái --')}}</option>
-							<option>{{__('Trống')}}</option>
-							<option>{{__('Đã Đặt')}}</option>
-							<option>{{__('Đang Sử Dụng')}}</option>
-						</select>
-					</div>
-
-					<div class="col-md-2 col-xs-12 form-group">
-						<form  method="POST" class="form-horizontal form-label-left">
-							<button href="{{ url(route('letan')) }}" style="width: 100%" type="submit" class="btn btn-success btn-search"><i class="fa fa-search"></i> {{__('search')}}</button>
-						</form>
-					</div>
-					
-					<div class="col-md-2 col-xs-12 form-group">
-						<div id="taophieu" style="width: 100%" class="btn btn-info pull-left">
-							<i class="fa fa-plus"></i> {{__('Tạo Phiếu')}}
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-		<input type="text" id="idbantruoc" value="1" hidden>
+<div class="mb-3 card">
+	<div class="card-header card-header-tab-animation">
+		<ul class="nav nav-justified">
+			<li class="nav-item"><a data-toggle="tab" href="#tab-eg115-0" class="nav-link show active">Trang Chính</a></li>
+			<li class="nav-item"><a data-toggle="tab" href="#tab-eg115-1" class="nav-link show">Thanh Toán</a></li>
+		</ul>
 	</div>
-
-    <div class="row">
-		<div class="col-lg-12">
-			<div class="main-card mb-3 card">
-				<div class="card-body"><h5 class="card-title">Bàn  </h5>
+	<div class="card-body">
+		<div class="tab-content">
+			<div class="tab-pane show active" id="tab-eg115-0" role="tabpanel">
+					<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<form class="form-horizontal form-label-left input_mask">
+									<div class="row">
+										<div class="col-md-2 col-xs-12 form-group">
+											<input type="text" class="form-control" name="sochongoi" placeholder="Số chỗ ngồi..." value="{{ Request::get('sochongoi') }}">
+										</div>
 					
-
-					<div class="table-responsive table-hover">
-						<table class="mb-0 table">
-							<thead>
-							<tr>
-								<th>ID</th>
-								<th>Số Chỗ Ngồi</th>
-								<th>Loại Bàn</th>
-								<th>Mô Tả</th>
-								<th>Trạng Thái</th>
-								<th>Ngày Đặt</th>
-								<th>Giờ Đặt</th>
-								<th>Tên Khách Hàng</th>
-								<th>SDT</th>
-							</tr>
-							</thead>
-							<tbody id="table">
-								@foreach($data as $key => $value)
-								<tr style="cursor: pointer;"
-								@if( $value['trangthai'] == TRANG_THAI_BAN_TRONG ) 
-									data-toggle="modal" data-target=".bd-example-modal-lg" 
-									onclick="DatBan({{$value['id']}})" 
-								@elseif($value['trangthai'] == TRANG_THAI_BAN_DA_DAT)
-									onclick="TaoPhieu({{$value['id']}})" id="ban{{$value['id']}}"
-								@endif style="color: #000000bf;" data-target="{{$value['id']}}">
-									
-								<td>{{ $value['id'] }}</td>
-									<td>{{ $value['sochongoi'] }}</td>
-									<td>@if( $value['loaiban'] == LOAI_BAN_VIP ) Bàn Vip @else Bàn Thường @endif
-									<td>{{ $value['mota'] }}</td>
-									<td>@if( $value['trangthai'] == 0 ) Trống @elseif($value['trangthai'] == 1) Đã Đặt @else Đang Sử Dụng @endif</td>
-									<td>{{ $value['ngaydat'] }}</td>
-									<td>{{ $value['giodat'] }}</td>
-									<td>{{ $value['tenkhachhang'] }}</td>
-									<td>{{ $value['sdt'] }}</td>
-								</tr>
-								@endforeach
-							</tbody>
-						</table>
-						<hr>
-						<div style="float: right;">
-							{{-- {{$bans->links()}} --}}
+										<div class="col-md-2 col-xs-12 form-group">
+											<label><input style="margin-top: 10px;" id="myCheck" type="checkbox" checked></label>
+											<input disabled style="width: 90%" id="ngaydat" type="text" class="form-control date-picker pull-right" name="ngaydat" placeholder="Ngày Đặt..." >
+										</div>
+					
+										<div class="col-md-2 col-xs-12 form-group">
+											<input type="text" class="form-control" name="sdt" placeholder="SDT Khách Hàng..." value="{{ Request::get('sdt') }}">
+										</div>
+					
+										<div class="col-md-2 col-xs-12 form-group">
+											<select name="trangthai" class="form-control">
+												<option>{{__('-- Trạng Thái --')}}</option>
+												<option>{{__('Trống')}}</option>
+												<option>{{__('Đã Đặt')}}</option>
+												<option>{{__('Đang Sử Dụng')}}</option>
+											</select>
+										</div>
+					
+										<div class="col-md-2 col-xs-12 form-group">
+											<form  method="POST" class="form-horizontal form-label-left">
+												<button href="{{ url(route('letan')) }}" style="width: 100%" type="submit" class="btn btn-success btn-search"><i class="fa fa-search"></i> {{__('search')}}</button>
+											</form>
+										</div>
+										
+										<div class="col-md-2 col-xs-12 form-group">
+											<div id="taophieu" style="width: 100%" class="btn btn-info pull-left">
+												<i class="fa fa-plus"></i> {{__('Tạo Phiếu')}}
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<input type="text" id="idbantruoc" value="1" hidden>
 						</div>
-					</div>
-				</div>
+					
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="main-card mb-3 card">
+									<div class="card-body"><h5 class="card-title">Bàn  </h5>
+										
+					
+										<div class="table-responsive table-hover">
+											<table id="dttable" class="mb-0 table">
+												<thead>
+												<tr>
+													<th>ID</th>
+													<th>Số Chỗ Ngồi</th>
+													<th>Loại Bàn</th>
+													<th>Mô Tả</th>
+													<th>Trạng Thái</th>
+													<th>Ngày Đặt</th>
+													<th>Giờ Đặt</th>
+													<th>Tên Khách Hàng</th>
+													<th>SDT</th>
+												</tr>
+												</thead>
+												<tbody id="table">
+													@foreach($data as $key => $value)
+													<tr style="cursor: pointer;"
+													@if( $value['trangthai'] == TRANG_THAI_BAN_TRONG ) 
+														data-toggle="modal" data-target=".bd-example-modal-lg" 
+														onclick="DatBan({{$value['id']}})" 
+													@elseif($value['trangthai'] == TRANG_THAI_BAN_DA_DAT)
+														onclick="TaoPhieu({{$value['id']}})" id="ban{{$value['id']}}"
+													@endif style="color: #000000bf;" data-target="{{$value['id']}}">
+														
+													<td>{{ $value['id'] }}</td>
+														<td>{{ $value['sochongoi'] }}</td>
+														<td>@if( $value['loaiban'] == LOAI_BAN_VIP ) Bàn Vip @else Bàn Thường @endif
+														<td>{{ $value['mota'] }}</td>
+														<td>@if( $value['trangthai'] == 0 ) Trống @elseif($value['trangthai'] == 1) Đã Đặt @else Đang Sử Dụng @endif</td>
+														<td>{{ $value['ngaydat'] }}</td>
+														<td>{{ $value['giodat'] }}</td>
+														<td>{{ $value['tenkhachhang'] }}</td>
+														<td>{{ $value['sdt'] }}</td>
+													</tr>
+													@endforeach
+												</tbody>
+											</table>
+											<hr>
+											<div style="float: right;">
+												{{-- {{$bans->links()}} --}}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 			</div>
+			<div class="tab-pane show" id="tab-eg115-1" role="tabpanel"><p>Like Aldus PageMaker including versions of Lorem. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+				essentially unchanged. </p></div>
+			
 		</div>
-    </div>
+	</div>
+</div>
+	
 @endsection
 
 @section('modal')
@@ -205,6 +223,35 @@
 
 @endsection
 
+@section('style')
+<style>
+select {
+    height: 30px;
+    width: 65px;
+    border-radius: 5px;
+    outline: none;
+}
+
+input[type="search"] {
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid darkgrey;
+}
+
+a.paginate_button.current {
+    border-radius: 50px !important;
+    background: #16aaff !important;
+    border: none !important;
+}
+
+a.paginate_button:hover {
+    background: #dcd1d19e !important;
+    border-radius: 50% !important;
+	border: none !important;
+}
+</style>
+@endsection
 @section('script')
     <script>
         $(document).ready(function(){
@@ -288,6 +335,19 @@
 				});
 			});
 		}
+
+		$(document).ready( function () {
+			$('#dttable').DataTable({
+				"language": {
+					"lengthMenu": "Hiển Thị _MENU_ Bản Ghi",
+					"zeroRecords": "Không tìm thấy gì - sorry",
+					"info": "Trang _PAGE_ / _PAGES_",
+					"infoEmpty": "Không có bản ghi khả dụng",
+					"infoFiltered": "(Tìm kiếm trong _MAX_ bản ghi)",
+					"search" : "Tìm Kiếm",
+				}
+			} );
+		} );
     </script>   
 @endsection
 
