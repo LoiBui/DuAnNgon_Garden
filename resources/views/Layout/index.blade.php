@@ -30,14 +30,15 @@
 
 </head>
 <body>
-    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <div>
+        <div id="appvue" class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         @include("Layout.header");
 
         {{-- @include("Layout.setting"); --}}
 
         <div class="app-main">
             @include('Layout.sliderbar')  
-            <div class="app-main__outer">
+            <div class="app-main__outer" >
                 <div class="app-main__inner">
                         <div id="thongbao">
                             @if(session('thongbao'))
@@ -60,13 +61,19 @@
                             @endif
                         </div>
                     @yield('content')
+                    
                 </div>
                 @include('Layout.footer')
+                
             </div>
-                <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-        </div>
+            
+        </div>@yield('modal')
     </div>
-<script type="text/javascript" src="{{asset('assets/scripts/main.js')}}"></script></body>
+<script type="text/javascript" src="{{asset('assets/scripts/main.js')}}"></script>
+
+    </div>
+</body>
+
 <script>
 setTimeout(function(){ 
 		document.getElementById('thongbao').remove();
@@ -84,4 +91,4 @@ setTimeout(function(){
 @yield('script')
 </html>
 
-@yield('modal')
+

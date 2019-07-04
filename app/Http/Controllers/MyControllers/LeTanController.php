@@ -11,6 +11,8 @@ use App\Validators\BaseValidatorInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Input;
 use App\Model\DatBan;
+use App\Model\PhieuOrder;
+use App\Model\ChiTietPhieu;
 use Carbon\Carbon;
 use App\Model\Ban;
 
@@ -27,7 +29,8 @@ class LeTanController extends Controller
 
     public function index(Request $request)
     {
-        
+        $page = "";
+        //data phần list bàn
         $search = [];
         $invalid = [];
         if ($request->sochongoi != '') {
@@ -82,50 +85,6 @@ class LeTanController extends Controller
         }
         
         
-        // $search_datban = [];
-        // if ($request->sdt != '') {
-        //     $search_datban[] = ['sdt', 'like', "%{$request->query('sdt')}%"];
-        // }
-
-        // if ($request->ngaydat != '') {
-        //     $search_datban[] = ['ngaydat', $request->query('ngaydat')];
-        // }
-
-        // foreach ($bans as $key => $value) {
-        //     if($search_datban )
-        //     {
-        //         $datban = $value->datban()->where($search_datban)->first();
-        //         if(!empty($datban))
-        //         {
-        //             $data[] = array_merge($value->toArray(), [
-        //                 'ngaydat' => $datban->ngaydat, 
-        //                 'giodat' => $datban->giodat, 
-        //                 'tenkhachhang' => $datban->tenkhachhang,
-        //                 'sdt' => $datban->sdt
-        //             ]);
-        //         }
-        //     }
-        //     else {
-        //         $datban = $value->datban()->first();
-        //         if(!empty($datban))
-        //         {
-        //             $data[] = array_merge($value->toArray(), [
-        //                 'ngaydat' => $datban->ngaydat, 
-        //                 'giodat' => $datban->giodat, 
-        //                 'tenkhachhang' => $datban->tenkhachhang,
-        //                 'sdt' => $datban->sdt
-        //             ]);
-        //         }
-        //         else{
-        //             $data[] = array_merge($value->toArray(), [
-        //                 'ngaydat' => '', 
-        //                 'giodat' => '', 
-        //                 'tenkhachhang' => '',
-        //                 'sdt' => ''
-        //             ]);
-        //         }
-        //     }
-        // }
         
         $data = $bans->toArray();
 
@@ -145,21 +104,67 @@ class LeTanController extends Controller
 
             $data = new LengthAwarePaginator($itemsForCurrentPage, count($data), $perPage, $page, 
         ['path' => request()->url(), 'query' => request()->query()]);
+        $page = 1;
+
+        //data phần đặt bàn
+        $kiemtra = 1;
+        $datban = [];
+        $search_datban = [];
+        if ($request->sdt != '') {
+           
+            $datban = DatBan::where("sdt", $request->query('sdt'));
+            $kiemtra = 0;
+        }
+        if ($request->ngaydat != '') {
+            if ($kiemtra == 0){
+                $datban = $datban->where("ngaydat", $request->query('ngaydat'));
+            }else{
+                $datban = DatBan::where("ngaydat", $request->query('ngaydat'));
+            }
+            $kiemtra = 0;
+        }
         
-        return view("Pages.LeTan.index", compact('data'));
+        
+
+        if ($kiemtra == 0){
+            $datban = $datban->paginate(10);
+            $page = 2;
+        }else{
+            $datban = DatBan::where("trangthai", "<>", "2")->paginate(10);
+        }
+
+
+        //thanh toán
+        $databan = Ban::where("trangthai", 1);
+        if ($request->idban != "")
+        {
+            $page = 3;
+            $databan = $databan->where("id", $request->idban);
+        }else if ($request->has("idban")){
+            $page = 3;
+        }
+        $databan = $databan->paginate(10);
+        return view("Pages.LeTan.index", compact('data', 'datban', 'databan', "page"));
     }
 
     public function chuyentranthaiban(Request $re){
         $ban = Ban::find($re->idban);
         $ban->trangthai = TRANG_THAI_BAN_DANG_SU_DUNG;
         if ($ban->save()){
-            $datban = DatBan::where("idban", $re->idban)->where("ngaydat", $re->ngaydat)->where("giodat", $re->giodat)->first();
-            $db = DatBan::find($datban->id);
-            $db->trangthai = 2;
-            $db->save();
             return 1;
         }
         return 0;
+    }
+
+    public function chuyentranthaibanonline(Request $re){
+        $db = DatBan::find($re->iddatban);
+        $db->trangthai = 2;
+        $db->save();
+
+        $ban = Ban::find($db->idban);
+        $ban->trangthai = 1;
+        $ban->save();
+        return 1;
     }
     public function taophieu(Request $request)
     {
@@ -207,5 +212,38 @@ class LeTanController extends Controller
             $request->session()->flash('thongbao','Đặt Bàn Thất Bại');
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
+    }
+
+    public function getidphieuorderByidBan($idban){
+        
+        try{
+            $phieuorder = PhieuOrder::where("idban", $idban)->where("trangthai", 2)->first();
+            
+            if (!$phieuorder){
+                return [
+                    "err"=>"1",
+                    "data"=>"Không Tìm Thấy Dữ Liệu"
+                ];
+            }
+            else{
+                
+                $chitietphieu = ChiTietPhieu::where("idphieuorder", $phieuorder->id)->get();
+                
+                foreach($chitietphieu as $value){
+                    $value->thucdon = $value->ThucDon;
+                }
+                return [
+                    "err"=>"0",
+                    "data"=>$chitietphieu
+                ];
+                
+            }
+            
+            
+        }
+        catch (Exception $e) {
+            return  $e->getMessage();
+        }
+        
     }
 }
