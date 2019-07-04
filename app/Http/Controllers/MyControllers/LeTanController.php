@@ -10,6 +10,10 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Validators\BaseValidatorInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Input;
+use App\Model\DatBan;
+use Carbon\Carbon;
+use App\Model\Ban;
+
 
 class LeTanController extends Controller
 {
@@ -23,13 +27,16 @@ class LeTanController extends Controller
 
     public function index(Request $request)
     {
+        
         $search = [];
-
+        $invalid = [];
         if ($request->sochongoi != '') {
             $search[] = ['sochongoi', $request->sochongoi];
         }
 
-        if ($request->has('trangthai')) {
+        
+
+        if ($request->has('trangthai') && $request->query('trangthai') != "-- Trạng Thái --") {
             switch ($request->query('trangthai')) {
                 case __('Trống'):
                     $search[] = ['trangthai', TRANG_THAI_BAN_TRONG];
@@ -43,61 +50,87 @@ class LeTanController extends Controller
                 default:
                     break;
             }
+        }else{
+            
+            $search[] = ['trangthai', '<>' , TRANG_THAI_BAN_DANG_SU_DUNG];
+            $datban = DatBan::where("trangthai", 1)->get();
+            $now = Carbon::now();
+            foreach($datban as $value){
+                
+                $currentTime = Carbon::parse($value->ngaydat . " " . $value->giodat);
+                $diff = $now->diffInMinutes($currentTime)/60;
+                //echo $diff . "<br>";
+                if ($diff < 2){
+                    array_push($invalid, $value->idban);
+                }
+            }
         }
-
+        
+        
+        
         $bans = $this->BanRepo->scopeQuery(function ($query) use ($search) {
             return $query
                 ->where($search);
         });
 
-        $bans = $bans->get();
-        // $bans = $bans->paginate(10);
+        
 
-        $search_datban = [];
-        if ($request->sdt != '') {
-            $search_datban[] = ['sdt', 'like', "%{$request->query('sdt')}%"];
-        }
-
-        if ($request->ngaydat != '') {
-            $search_datban[] = ['ngaydat', $request->query('ngaydat')];
-        }
-
-        foreach ($bans as $key => $value) {
-            if($search_datban )
-            {
-                $datban = $value->datban()->where($search_datban)->first();
-                if(!empty($datban))
-                {
-                    $data[] = array_merge($value->toArray(), [
-                        'ngaydat' => $datban->ngaydat, 
-                        'giodat' => $datban->giodat, 
-                        'tenkhachhang' => $datban->tenkhachhang,
-                        'sdt' => $datban->sdt
-                    ]);
-                }
-            }
-            else {
-                $datban = $value->datban()->first();
-                if(!empty($datban))
-                {
-                    $data[] = array_merge($value->toArray(), [
-                        'ngaydat' => $datban->ngaydat, 
-                        'giodat' => $datban->giodat, 
-                        'tenkhachhang' => $datban->tenkhachhang,
-                        'sdt' => $datban->sdt
-                    ]);
-                }
-                else{
-                    $data[] = array_merge($value->toArray(), [
-                        'ngaydat' => '', 
-                        'giodat' => '', 
-                        'tenkhachhang' => '',
-                        'sdt' => ''
-                    ]);
-                }
-            }
+        $bans = $bans->findWhereNotIn("id",$invalid);
+        
+        foreach($bans as $value){
+            $value->infoOrder = $value->DatBan;
         }
         
+        
+        // $search_datban = [];
+        // if ($request->sdt != '') {
+        //     $search_datban[] = ['sdt', 'like', "%{$request->query('sdt')}%"];
+        // }
+
+        // if ($request->ngaydat != '') {
+        //     $search_datban[] = ['ngaydat', $request->query('ngaydat')];
+        // }
+
+        // foreach ($bans as $key => $value) {
+        //     if($search_datban )
+        //     {
+        //         $datban = $value->datban()->where($search_datban)->first();
+        //         if(!empty($datban))
+        //         {
+        //             $data[] = array_merge($value->toArray(), [
+        //                 'ngaydat' => $datban->ngaydat, 
+        //                 'giodat' => $datban->giodat, 
+        //                 'tenkhachhang' => $datban->tenkhachhang,
+        //                 'sdt' => $datban->sdt
+        //             ]);
+        //         }
+        //     }
+        //     else {
+        //         $datban = $value->datban()->first();
+        //         if(!empty($datban))
+        //         {
+        //             $data[] = array_merge($value->toArray(), [
+        //                 'ngaydat' => $datban->ngaydat, 
+        //                 'giodat' => $datban->giodat, 
+        //                 'tenkhachhang' => $datban->tenkhachhang,
+        //                 'sdt' => $datban->sdt
+        //             ]);
+        //         }
+        //         else{
+        //             $data[] = array_merge($value->toArray(), [
+        //                 'ngaydat' => '', 
+        //                 'giodat' => '', 
+        //                 'tenkhachhang' => '',
+        //                 'sdt' => ''
+        //             ]);
+        //         }
+        //     }
+        // }
+        
+        $data = $bans->toArray();
+
+        
+
         if(empty($data))
             $data = [];
         
@@ -116,7 +149,18 @@ class LeTanController extends Controller
         return view("Pages.LeTan.index", compact('data'));
     }
 
-    
+    public function chuyentranthaiban(Request $re){
+        $ban = Ban::find($re->idban);
+        $ban->trangthai = TRANG_THAI_BAN_DANG_SU_DUNG;
+        if ($ban->save()){
+            $datban = DatBan::where("idban", $re->idban)->where("ngaydat", $re->ngaydat)->where("giodat", $re->giodat)->first();
+            $db = DatBan::find($datban->id);
+            $db->trangthai = 2;
+            $db->save();
+            return 1;
+        }
+        return 0;
+    }
     public function taophieu(Request $request)
     {
         if ($request->has('idban')) {
