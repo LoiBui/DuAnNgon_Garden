@@ -172,7 +172,19 @@ class ThucDonController extends BaseController
     public function update(Request $request)
     {
         //
-
+        $data  = $request->all();
+        //dd($data);
+        DB::beginTransaction();
+            try{
+                $thucdon = ThucDon::where('id','=',$data['id'])->update(['ten'=>$data['namefood'],'giatien'=>$data['pricefood'],'loai'=>$data['typefood'],'ghichu'=>$data['notefood']]);
+                DB::commit();
+                return redirect()->route('thucdon')->with("thongbao", $this->response["SUCCESS"]);
+            }catch(\Exception $e)
+            {
+                DB::rollBack();
+                dd($e);
+                exit;
+            }
     }
 
     /**
