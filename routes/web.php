@@ -74,3 +74,7 @@ Route::get('thanhcong', function () {
 });
 
 Route::post("datban", "Controller@datban")->name("datban");
+
+//feedback
+Route::get('phanhoi',"Controller@phanhoi");
+Route::post('phanhoi',"Controller@checkhd")->name('phanhoi.checkhd');

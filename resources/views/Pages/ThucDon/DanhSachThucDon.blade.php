@@ -30,28 +30,34 @@
     </div>
 </div>
 <div class="clearfix"></div>
-<div class="row">
+<table class="mb-0 table" style="background-color: white;border-radius:16px;">
+    <thead>
+        <tr align="center">
+            <th>#</th>
+            <th>Tên món</th>
+            <th>Ảnh</th>
+            <th>Loại</th>
+            <th>Giá tiền</th>
+            <th>Ghi chú</th>
+            <th>Xoá</th>
+            <th>Sửa</th>
+        </tr>
+    </thead>
+    <tbody>
     @foreach($data as $key=>$value)
-    <div class="col-6 col-sm-4 col-md-3 col-lg-3" data-target="{{$value->id}}">
-        <div class="main-card mb-3 card"><img width="100%" src="{{asset('images/thucdon/')}}/{{$value->anh}}" alt="Card image cap" class="card-img-top">
-            <div class="card-body">
-                <div class="information-food">
-                    <h5 class="card-title">{{$value->ten}}</h5>
-                    <p class="price"><span>{{$value->giatien}} <b>vnđ</b></span></p>
-
-                    <h6 class="card-subtitle">Mã: {{$value->id}}</h6>{{$value->ghichu}}
-                </div>
-                <br>
-                <div class="btn-group btn-group-md">
-                    <button class="btn btn-secondary">Chi tiết</button>
-                    <button data-toggle="modal" data-target=".bd-example-modal-lg" data-item-id="{{$value->id}}" class=" btn btn-info btn-sua">Sửa</button>
-                    <button class="btn btn-danger" type="button" value="destroy/{{$value->id}}" onclick="destroy(this)">Xoá</button>
-                </div>
-            </div>
-        </div>
-    </div>
+        <tr data-target="{{$value->id}}">
+            <th scope="row">{{$value->id}}</th>
+            <td>{{$value->ten}}</td>
+            <td><img src="{{asset('images/thucdon/')}}/{{$value->anh}}" alt="anh{{$value->id}}" width="350"></td>
+            <td>{{$value->loai}}</td>
+            <td>{{$value->giatien}}</td>
+            <td>{{$value->ghichu}}</td>
+            <td><a href="thucdon/destroy/{{$value->id}}" class="mb-2 mr-2 btn btn-danger"><i class="pe-7s-trash" style="font-size: 20px;"> </i></a></td>
+            <td><a data-toggle="modal" data-target=".bd-example-modal-lg" href="" id="btn-sua" class="mb-2 mr-2 btn btn-info btnsua"><i class="pe-7s-pen" style="font-size: 20px;"> </i></a></td>
+        </tr>
     @endforeach
-</div>
+    </tbody>
+</table>
 <div class="page-links" style="float:right;">
     {{$data->appends(['data-search'=>Request::get('data-search')])->links()}}
 </div>
@@ -114,18 +120,18 @@
 
 @section('script')
 <script>
-    function destroy(btn) {
-        if (confirm("Bạn có muốn xoá?") == true) {
-            let url = btn.value;
-            document.location.href = "thucdon/"+url;
-            
-        }
-    }
+    
+    $(document).ready(function() {
+        $("body").on("click",".btnsua",function() {
+            $("#id").val($(this).parent().parent()[0].dataset.target);
+            console.log($(this).parent().parent()[0].dataset.target);
+            var tthis = $(this).parent().parent().children();
+            console.log(tthis);
 
-    $(document).ready(function(){
-        $(document).on('click','btn-sua',function(){
-            
-
+            $("#tenmonan").val(tthis[1].innerText);
+            $("#loai").val(tthis[3].innerText);
+            $("#gia").val(tthis[4].innerText);
+            $("#ghichu").val(tthis[5].innerText);
         });
     });
 </script>

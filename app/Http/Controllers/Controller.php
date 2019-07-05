@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Model\Ban;
 use App\Model\DatBan;
+use App\Model\XuLySuCo;
+use App\Model\HoaDon;
 use DB;
 
 class Controller extends BaseController
@@ -60,5 +62,21 @@ class Controller extends BaseController
         $db->trangthai = 0;
         $db->save();
         return redirect("thanhcong")->with("notice", "Đặt Bàn Thành Công<br> Chúng tôi sẽ gọi điện xác nhận lại trong giây lát");
+    }
+
+    public function phanhoi()
+    {
+        return view("Pages/XuLySuCo/index"); 
+    }
+    public function checkhd(Request $request)
+    {
+        $result = [];
+        $result['success'] = true;
+        $hoadon = HoaDon::where('id','=',$request->ma_hd)->first();
+        if($hoadon)
+        {
+            $result['success'] = false;
+        }
+        return response()->json($result);
     }
 }
