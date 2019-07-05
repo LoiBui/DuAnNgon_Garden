@@ -330,8 +330,8 @@
 										<th>#</th>
 										<th>Tên Món</th>
 										<th>Số Lượng</th>
-										<th>Giá Tiền</th>
-										<th>Thành Tiền</th>
+										<th>Giá Tiền (VNĐ)</th>
+										<th>Thành Tiền (VNĐ)</th>
 									</tr>
 									</thead>
 									<tbody>
@@ -347,7 +347,7 @@
 										<th></th>
 										<th></th>
 										<th></th>
-										<th><strong>@{{total}} VNĐ</strong></th>
+										<th><strong>@{{total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}} VNĐ</strong></th>
 									</tr>
 									</tbody>
 								</table>
