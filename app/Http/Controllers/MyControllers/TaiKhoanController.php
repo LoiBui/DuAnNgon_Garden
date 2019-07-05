@@ -66,7 +66,7 @@ class TaiKhoanController extends BaseController
                         return redirect('letan/');
                         break;
                     default:
-                         return redirect('taikhoan');
+                         return redirect('dashboard');
                         break;
                 }
             }

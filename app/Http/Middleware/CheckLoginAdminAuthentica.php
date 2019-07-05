@@ -17,7 +17,8 @@ class CheckLoginAdminAuthentica
     public function handle($request, Closure $next, $guard = 'web')
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('letan/');
+            $request->session()->flash('thongbao', __('Bạn Phải Đăng Xuất Trước Đã.'));
+            return redirect('dashboard/');
         }
 
         return $next($request);

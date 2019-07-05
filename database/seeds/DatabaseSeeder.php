@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DatBans::class);
         $this->call(ThucDons::class);
         $this->call(PhieuOrders::class);
-         $this->call(ChiTietPhieus::class);
+        $this->call(ChiTietPhieus::class);
         $this->call(HoaDons::class);     
         $this->call(XuLySuCos::class);
     }
