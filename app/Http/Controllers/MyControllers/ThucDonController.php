@@ -31,24 +31,26 @@ class ThucDonController extends BaseController
         return view('Pages/ThucDon/DanhSachThucDon',compact("data"));
     }
 
-    public function search()
+    public function search(Request $request)
     {
-        $data_search = Input::get('data-search');
-        $dataSort = Input::get('sortprice');
+        //dd($request);
+        $data_search = $request->get('data-search');
+        $dataSort = $request->get('sort-price');
         
         $data = new ThucDon;
         
-        
+        //dd($dataSort);
         if ($dataSort == 1){
             $data = $data->orderByRaw('giatien ASC');
         }else if ($dataSort == 2){
             $data = $data->orderByRaw('giatien DESC');
         }
-
-        if ($data_search){
-            $data = $data->where('ten','LIKE','%'.$data_search.'%')->orWhere('loai','LIKE','%'.$data_search.'%');
+        
+        if ($data_search) {
+            //dd($data_search);
+            $data = $data->where('ten','LIKE','%'.$data_search.'%');
         }
-        $data = $data->get();
+        $data = $data->paginate(12);
         return view('Pages.ThucDon.DanhSachThucDon',compact('data'));
         
     }
@@ -105,7 +107,8 @@ class ThucDonController extends BaseController
                 //dd($thucdon);
                 $thucdon->save();
                 DB::commit();
-                return redirect()->route('thucdon.add')->with("thongbao", $this->response["SUCCESS"]);
+                session()->flash('thongbao', __('Thêm món thành công'));
+                return redirect()->route('thucdon.add');
             }catch(\Exception $e)
             {
                 DB::rollBack();
@@ -170,7 +173,33 @@ class ThucDonController extends BaseController
     public function update(Request $request)
     {
         //
+        $data  = $request->all();
+        //dd($data);
+        DB::beginTransaction();
+            try{
+                $fname = "";
+                if ($request->hasFile('photo1')) {
+                    $file           = $request->file('photo1');
 
+                    $extension      = $file->getClientOriginalExtension(); // getting excel extension
+                    $filename       = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $dir            = public_path('images/thucdon');
+                    $filename       = uniqid() . '_' . time() . '_' . date('Ymd') . '_' . $filename . '.' . $extension;
+                    $file->move($dir, $filename);
+                    //dd($filename);
+                    $fname  = $filename;
+                }
+                //dd($fname);
+                ThucDon::where('id','=',$data['id'])->update(['anh'=>$fname,'ten'=>$data['namefood'],'giatien'=>$data['pricefood'],'loai'=>$data['typefood'],'ghichu'=>$data['notefood']]);
+                DB::commit();
+                session()->flash('thongbao', __('Sửa món thành công'));
+                return redirect()->route('thucdon');
+            }catch(\Exception $e)
+            {
+                DB::rollBack();
+                dd($e);
+                exit;
+            }
     }
 
     /**
@@ -185,6 +214,7 @@ class ThucDonController extends BaseController
         if($this->thucdon->destroy($id)){
             return redirect("thucdon")->with("thongbao", $this->response["SUCCESS"]);
         }
-        return redirect("thucdon")->with("thongbao", $this->response["FAIL"]);
+        session()->flash('thongbao', __('Xoá món thành công'));
+        return redirect("thucdon");
     }
 }
