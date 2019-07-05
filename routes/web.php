@@ -15,7 +15,7 @@ Route::group(['middleware'=>'admin.guest'], function() {
     Route::get('dangnhap', function () {
         return view("Pages.TaiKhoan.DangNhap");
     });
-    Route::post('dangnhap', "MyControllers\TaiKhoanController@dangnhap")->name("dangnhap");
+    Route::post('dangnhap', "MyControllers\TaiKhoanController@dangnhap")->name("login");
 });
 
 Route::group(['middleware'=>'admin.auth'], function() {

@@ -173,7 +173,7 @@ body {
                     @endforeach
                 @endif
             </div>
-            <form action="{{route("dangnhap")}}" method="POST" class="form-signin">
+            <form autocomplete="off" action="{{route("login")}}" method="POST" class="form-signin">
                   @csrf
                 <div class="form-label-group">
                   <input name="tendangnhap" type="text" id="inputEmail" class="form-control" placeholder="Tên Đăng Nhập" required autofocus>
