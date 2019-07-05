@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
-    <base href="{{asset("")}}">
+    <base href = "{{asset("")}}" >
     <!--
     =========================================================
     * ArchitectUI HTML Theme Dashboard - v1.0.0
@@ -23,22 +23,28 @@
     -->
     @yield('style')
 <link href="main.css" rel="stylesheet">
+<link href="css/datatable.css" rel="stylesheet">
+
+<!-- bootstrap-daterangepicker -->
+<link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
 </head>
 <body>
-    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <div>
+        <div id="appvue" class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         @include("Layout.header");
 
         {{-- @include("Layout.setting"); --}}
 
         <div class="app-main">
             @include('Layout.sliderbar')  
-            <div class="app-main__outer">
+            <div class="app-main__outer" >
                 <div class="app-main__inner">
                         <div id="thongbao">
                             @if(session('thongbao'))
                                 <div class="alert alert-success">
                                     <strong>Thông Báo!</strong>
-                                    {!!session('thongbao')['msg']!!}
+                                    {!!session('thongbao')!!}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -55,13 +61,19 @@
                             @endif
                         </div>
                     @yield('content')
+                    
                 </div>
                 @include('Layout.footer')
+                
             </div>
-                <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-        </div>
+            
+        </div>@yield('modal')
     </div>
-<script type="text/javascript" src="{{asset('assets/scripts/main.js')}}"></script></body>
+<script type="text/javascript" src="{{asset('assets/scripts/main.js')}}"></script>
+
+    </div>
+</body>
+
 <script>
 setTimeout(function(){ 
 		document.getElementById('thongbao').remove();
@@ -71,7 +83,12 @@ setTimeout(function(){
 <script src="js/jquery.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/moment.js"></script>
+<script src="js/datatable.js"></script>
+
+<!-- bootstrap-daterangepicker -->
+<script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
 @yield('script')
 </html>
 
-@yield('modal')
+

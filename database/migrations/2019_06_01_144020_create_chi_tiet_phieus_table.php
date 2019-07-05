@@ -18,14 +18,14 @@ class CreateChiTietPhieusTable extends Migration
             $table->bigInteger('idphieuorder')->unsigned();
             $table->bigInteger('idmon')->unsigned();
             $table->integer('soluong');
-            $table->longText('ghichu');
+            $table->longText('ghichu')->null();
             $table->integer('trangthai');
             $table->timestamps();
 
             $table->foreign('idphieuorder')
-            ->references('id')->on('phieuorders')->onDelete('cascade');;
+            ->references('id')->on('phieuorders')->onDelete('cascade');
             $table->foreign('idmon')
-            ->references('id')->on('thucdons')->onDelete('cascade');;
+            ->references('id')->on('thucdons')->onDelete('cascade');
         });
     }
 

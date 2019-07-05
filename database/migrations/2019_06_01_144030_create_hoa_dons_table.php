@@ -22,7 +22,7 @@ class CreateHoaDonsTable extends Migration
             $table->timestamps();
             
             $table->foreign('idphieu')
-            ->references('id')->on('phieuorders')->onDelete('cascade');;
+            ->references('id')->on('phieuorders')->onDelete('cascade');
         });
     }
 

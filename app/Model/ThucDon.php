@@ -13,4 +13,5 @@ class ThucDon extends Model
     {
         return $this->hasMany('ChiTietPhieu','idmon','id');
     }
+
 }

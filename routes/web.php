@@ -50,7 +50,11 @@ Route::post('thaydoitrangthaiphieuorder', "MyControllers\NhaBepController@thaydo
 /*  Le Tan */
 Route::group(['prefix' => 'letan'], function () {
     Route::get('/', "MyControllers\LeTanController@index")->name('letan');
-    Route::post('taophieu/{idban}', "MyControllers\LeTanController@taophieu")->name('letan.taophieu')->where('idban', '[0-9]+');
+    Route::get('taophieu', "MyControllers\LeTanController@taophieu")->name('letan.taophieu')->where('idban', '[0-9]+');
+    Route::post('datban', "MyControllers\LeTanController@datban")->name('letan.datban');
+    Route::post('chuyentranthaiban', "MyControllers\LeTanController@chuyentranthaiban")->name('letan.chuyentranthaiban');
+    Route::post('chuyentranthaibanonline', "MyControllers\LeTanController@chuyentranthaibanonline")->name('letan.chuyentranthaibanonline');
+    Route::get("getidphieuorderByidBan/{id}", "MyControllers\LeTanController@getidphieuorderByidBan")->name('letan.getidphieuorderByidBan');
 });
 /* End  Le Tan */
 
@@ -75,6 +79,30 @@ Route::get('thanhcong', function () {
 
 Route::post("datban", "Controller@datban")->name("datban");
 
+<<<<<<< HEAD
 //feedback
 Route::get('phanhoi',"Controller@phanhoi");
 Route::post('phanhoi',"Controller@checkhd")->name('phanhoi.checkhd');
+=======
+/*  Nhân Viên Phục Vụ */
+Route::group(['prefix' => 'nvphucvu'], function () {
+    Route::get('/', "MyControllers\NvPhucVuController@index")->name('nvphucvu');
+    Route::get('phieuorder/{idphieuorder}/datmon', "MyControllers\NvPhucVuController@datmon")->name('nvphucvu.datmon')->where('idphieuorder', '[0-9]+');
+    Route::post('phieuorder/{idphieuorder}/datmon/{idmon}', "MyControllers\NvPhucVuController@themmon")->name('nvphucvu.themmon')->where('idphieuorder', '[0-9]+');
+    Route::post('phieuorder/{idphieuorder}/suamon/{idchitietphieuorder}', "MyControllers\NvPhucVuController@suamon")->name('nvphucvu.suamon')->where('idphieuorder', '[0-9]+');
+    Route::get('/ajax/getchitietphieu', "MyControllers\NvPhucVuController@ajax")->name('ajax');
+    Route::get('phieuorder/{idphieuorder}/xoamon/{idchitietphieuorder}', "MyControllers\NvPhucVuController@xoamon")->name('nvphucvu.xoamon');
+});
+/* End  Nhân Viên Phục Vụ */
+
+/*  Bàn Ăn */
+Route::group(['prefix' => 'ban'], function () {
+    Route::get('/', "MyControllers\BanController@index")->name('ban');
+    Route::get('them', "MyControllers\BanController@showthem")->name('ban.them');
+    Route::post('them', "MyControllers\BanController@them")->name('ban.them');
+    Route::get('sua/{idban}', "MyControllers\BanController@showsua")->name('ban.sua')->where('idban', '[0-9]+');
+    Route::post('sua/{idban}', "MyControllers\BanController@sua")->name('ban.sua')->where('idban', '[0-9]+');
+    Route::delete('xoa/{idban}', "MyControllers\BanController@sua")->name('ban.sua')->where('idban', '[0-9]+');
+});
+/* End  Bàn Ăn */
+>>>>>>> 539902d62768e217904dff36437d8c7e3df07933
