@@ -121,7 +121,7 @@
 		function ChieTietPhieu(idphieu) {
 			console.log(idphieu);
 			$.ajax({
-				url: '/nvphucvu/ajax/getchitietphieu',
+				url: 'nvphucvu/ajax/getchitietphieu',
 				type: 'GET',
 				data: {
 					idphieuorder: idphieu,

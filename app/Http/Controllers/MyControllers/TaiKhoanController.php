@@ -33,7 +33,7 @@ class TaiKhoanController extends BaseController
     {
         $search = [];
 
-        if ($request->tennguoidung != '') {
+        if ($request->tennguoididung != '') {
             $search[] = ['tennguoidung', $request->tennguoidung];
         }
 
@@ -66,7 +66,7 @@ class TaiKhoanController extends BaseController
                         return redirect('letan/');
                         break;
                     default:
-                         return redirect('taikhoan');
+                         return redirect('dashboard');
                         break;
                 }
             }

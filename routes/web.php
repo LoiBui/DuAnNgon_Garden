@@ -49,6 +49,7 @@ Route::group(['middleware'=>'admin.auth'], function() {
             Route::get('xoa/{id}', "Controller@xoa")->name('admin.phanhoi.xoa');
         });
         /* End  Bàn Ăn */
+        
     });
 
     //Thực đơn
@@ -78,6 +79,8 @@ Route::group(['middleware'=>'admin.auth'], function() {
             Route::post('datban', "MyControllers\LeTanController@datban")->name('letan.datban');
             Route::post('chuyentranthaiban', "MyControllers\LeTanController@chuyentranthaiban")->name('letan.chuyentranthaiban');
             Route::get('getidphieuorderByidBan/{type}/{id}', "MyControllers\LeTanController@getidphieuorderByidBan")->name('letan.getidphieuorderByidBan');
+            Route::post('chuyentranthaibanonline', "MyControllers\LeTanController@chuyentranthaibanonline")->name('letan.chuyentranthaibanonline');
+            Route::get('getidphieuorderByidBan/{id}', "MyControllers\LeTanController@getidphieuorderByidBan")->name('letan.getidphieuorderByidBan');
         });
         /* End  Le Tan */
 
@@ -87,7 +90,7 @@ Route::group(['middleware'=>'admin.auth'], function() {
         });
         Route::get('thanhcong', function () {
             return view("Pages.DatBanOnline.thanhcong");
-        });
+        })->name("thanhcong");
         Route::post("datban", "Controller@datban")->name("datban");
         /* End  Đặt Bàn Online */
     });
@@ -99,7 +102,7 @@ Route::group(['middleware'=>'admin.auth'], function() {
             Route::get('phieuorder/{idphieuorder}/datmon', "MyControllers\NvPhucVuController@datmon")->name('nvphucvu.datmon')->where('idphieuorder', '[0-9]+');
             Route::post('phieuorder/{idphieuorder}/datmon/{idmon}', "MyControllers\NvPhucVuController@themmon")->name('nvphucvu.themmon')->where('idphieuorder', '[0-9]+');
             Route::post('phieuorder/{idphieuorder}/suamon/{idchitietphieuorder}', "MyControllers\NvPhucVuController@suamon")->name('nvphucvu.suamon')->where('idphieuorder', '[0-9]+');
-            Route::get('/ajax/getchitietphieu', "MyControllers\NvPhucVuController@ajax")->name('ajax');
+            Route::get('ajax/getchitietphieu', "MyControllers\NvPhucVuController@ajax")->name('ajax');
             Route::get('phieuorder/{idphieuorder}/xoamon/{idchitietphieuorder}', "MyControllers\NvPhucVuController@xoamon")->name('nvphucvu.xoamon');
         });
         /* End  Nhân Viên Phục Vụ */
