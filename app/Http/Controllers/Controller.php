@@ -60,7 +60,8 @@ class Controller extends BaseController
             
         }
         if ($idBan == ""){
-            return redirect("thanhcong")->with("notice", "Đặt Bàn Thất Bại<br> Không còn bàn");
+            $re->session()->flash('notice','Đặt Bàn Thất Bại<br> Không còn bàn');
+            return redirect()->route('thanhcong');
         }
         $db = new Datban;
         $db->idban = $idBan;
@@ -72,7 +73,7 @@ class Controller extends BaseController
         $db->save();
 
         $db = Ban::find($idBan)->update(["trangthai"=>2]);
-        
-        return redirect("thanhcong")->with("notice", "Đặt Bàn Thành Công<br> Chúng tôi sẽ gọi điện xác nhận lại trong giây lát");
+        $re->session()->flash('notice','Đặt Bàn Thành Công<br> Chúng tôi sẽ gọi điện xác nhận lại trong giây lát');
+        return redirect()->route('thanhcong');
     }
 }

@@ -83,7 +83,8 @@ button:hover {
 </style>
 <body>
 
-<form id="regForm" action="{{route("datban")}}" method="POST">
+<form id="regForm" action="{{route('datban')}}" method="POST">
+  @csrf
   <h1>Đặt Bàn Trực Tuyến</h1>
   <!-- One "tab" for each step in the form: -->
   <div class="tab">

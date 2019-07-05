@@ -105,7 +105,8 @@ class ThucDonController extends BaseController
                 //dd($thucdon);
                 $thucdon->save();
                 DB::commit();
-                return redirect()->route('thucdon.add')->with("thongbao", $this->response["SUCCESS"]);
+                $request->session()->flash('thongbao','Thêm Thực Đơn Thành Công');
+                return redirect()->route('thucdon.add');
             }catch(\Exception $e)
             {
                 DB::rollBack();
@@ -183,8 +184,10 @@ class ThucDonController extends BaseController
     {
         //
         if($this->thucdon->destroy($id)){
-            return redirect("thucdon")->with("thongbao", $this->response["SUCCESS"]);
+            $request->session()->flash('thongbao','Xóa Thực Đơn Thành Công');
+            return redirect("thucdon");
         }
-        return redirect("thucdon")->with("thongbao", $this->response["FAIL"]);
+        $request->session()->flash('thongbao','Xóa Thực Đơn Thất Bại');
+        return redirect("thucdon");
     }
 }

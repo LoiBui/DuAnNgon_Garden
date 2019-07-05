@@ -81,7 +81,7 @@ Route::group(['middleware'=>'admin.auth'], function() {
         });
         Route::get('thanhcong', function () {
             return view("Pages.DatBanOnline.thanhcong");
-        });
+        })->name("thanhcong");
         Route::post("datban", "Controller@datban")->name("datban");
         /* End  Đặt Bàn Online */
     });
