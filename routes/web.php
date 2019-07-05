@@ -79,11 +79,9 @@ Route::get('thanhcong', function () {
 
 Route::post("datban", "Controller@datban")->name("datban");
 
-<<<<<<< HEAD
 //feedback
 Route::get('phanhoi',"Controller@phanhoi");
 Route::post('phanhoi',"Controller@checkhd")->name('phanhoi.checkhd');
-=======
 /*  Nhân Viên Phục Vụ */
 Route::group(['prefix' => 'nvphucvu'], function () {
     Route::get('/', "MyControllers\NvPhucVuController@index")->name('nvphucvu');
@@ -105,4 +103,3 @@ Route::group(['prefix' => 'ban'], function () {
     Route::delete('xoa/{idban}', "MyControllers\BanController@sua")->name('ban.sua')->where('idban', '[0-9]+');
 });
 /* End  Bàn Ăn */
->>>>>>> 539902d62768e217904dff36437d8c7e3df07933
