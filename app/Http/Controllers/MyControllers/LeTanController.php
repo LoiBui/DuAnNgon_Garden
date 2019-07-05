@@ -15,6 +15,7 @@ use App\Model\PhieuOrder;
 use App\Model\ChiTietPhieu;
 use Carbon\Carbon;
 use App\Model\Ban;
+use App\Model\HoaDon;
 
 
 class LeTanController extends Controller
@@ -216,7 +217,7 @@ class LeTanController extends Controller
         }
     }
 
-    public function getidphieuorderByidBan($idban){
+    public function getidphieuorderByidBan($type, $idban){
         
         try{
             $phieuorder = PhieuOrder::where("idban", $idban)->where("trangthai", 2)->first();
@@ -234,10 +235,34 @@ class LeTanController extends Controller
                 foreach($chitietphieu as $value){
                     $value->thucdon = $value->ThucDon;
                 }
-                return [
-                    "err"=>"0",
-                    "data"=>$chitietphieu
-                ];
+                if ($type == 1){
+                    return [
+                        "err"=>"0",
+                        "data"=>$chitietphieu
+                    ];
+                }else{
+                    $phieu = PhieuOrder::find($phieuorder->id);
+                    $phieu->trangthai = 4;
+                    //$phieu->save();
+
+                    $ba = Ban::find($phieuorder->idban);
+                    $ba->trangthai = 0;
+                    //$ba->save();
+
+                    $tong = 0;
+                    foreach($chitietphieu as $value){
+                        $tong += $value->ThucDon->giatien * $value->soluong;
+                    }
+                    $hoadon = new HoaDon;
+                    $hoadon->idphieu = $phieuorder->id;
+                    $hoadon->thoigiantao = now();
+                    $hoadon->tongtien = $tong + $phieuorder->Ban->phuphi;
+                    $hoadon->trangthai = 1;
+                    $hoadon->save();
+
+                    return view("Pages.HoaDon.index", compact("chitietphieu", "phieuorder"));
+                }
+                
                 
             }
             

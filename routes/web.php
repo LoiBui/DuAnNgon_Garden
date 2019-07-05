@@ -72,7 +72,7 @@ Route::group(['middleware'=>'admin.auth'], function() {
             Route::get('taophieu', "MyControllers\LeTanController@taophieu")->name('letan.taophieu')->where('idban', '[0-9]+');
             Route::post('datban', "MyControllers\LeTanController@datban")->name('letan.datban');
             Route::post('chuyentranthaiban', "MyControllers\LeTanController@chuyentranthaiban")->name('letan.chuyentranthaiban');
-            Route::get('getidphieuorderByidBan/{id}', "MyControllers\LeTanController@getidphieuorderByidBan")->name('letan.getidphieuorderByidBan');
+            Route::get('getidphieuorderByidBan/{type}/{id}', "MyControllers\LeTanController@getidphieuorderByidBan")->name('letan.getidphieuorderByidBan');
         });
         /* End  Le Tan */
 

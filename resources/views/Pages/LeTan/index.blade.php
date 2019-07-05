@@ -301,7 +301,7 @@
 			</div>
                 
             <div class="modal-footer">
-                <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button"  class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
@@ -359,7 +359,7 @@
 	  
 			<!-- Modal footer -->
 			<div class="modal-footer">
-			  <button type="button" class="btn btn-primary" data-dismiss="modal">Thanh Toán</button>
+			  <a target="_blank" :href="currenturl" class="inphieu"><button class="btn btn-primary">Thanh Toán</button></a>
 			  <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
 			</div>
 	  
@@ -380,16 +380,18 @@
 					chitiet: [],
 					total: 0,
 					isLoading: true,
-					notice: ''
+					notice: '',
+					currenturl: ''
 				},
 				methods: {
 					chitietphieu(id){
+						this.currenturl = "letan/getidphieuorderByidBan/2/" + id;
 						this.notice = '';
 						this.isLoading = true;
 						var cur = this;
 						$.ajax({
 						type: "GET",
-						url: 'letan/getidphieuorderByidBan/'+id,
+						url: 'letan/getidphieuorderByidBan/1/'+id,
 						data: "check",
 						success: function(data){
 							if (data.err == 1){
@@ -418,7 +420,6 @@
     <script>
         $(document).ready(function(){
 			init();
-			
 		});
 
 		function sudungbandatonline(iddatban){
