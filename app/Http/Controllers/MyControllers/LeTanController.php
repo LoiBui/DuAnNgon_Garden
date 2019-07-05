@@ -123,7 +123,9 @@ class LeTanController extends Controller
             }
             $kiemtra = 0;
         }
-        
+        if ($request->has('sdt') || $request->has('ngaydat')){
+            $page = 2;
+        }
         
 
         if ($kiemtra == 0){
