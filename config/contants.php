@@ -4,6 +4,11 @@ if(!defined("GIOITINH_NAM")) define("GIOITINH_NAM", 1);
 if(!defined("GIOITINH_NU")) define("GIOITINH_NU", 2);
 if(!defined("GIOITINH_KHAC")) define("GIOITINH_KHAC", 3);
 
+if(!defined("QUYEN_ADMIN")) define("QUYEN_ADMIN", 0);
+if(!defined("QUYEN_NHA_BEP")) define("QUYEN_NHA_BEP", 1);
+if(!defined("QUYEN_PHUC_VU")) define("QUYEN_PHUC_VU", 2);
+if(!defined("QUYEN_LE_TAN")) define("QUYEN_LE_TAN", 3);
+
 if(!defined("TIEPTAN")) define("TIEPTAN", 3);
 
 if(!defined("PHUCVU")) define("PHUCVU", 2);

@@ -79,6 +79,21 @@ setTimeout(function(){
 		document.getElementById('thongbao').remove();
 }, 3000);
 
+document.getElementById("button").addEventListener("click", function(){
+    document.getElementById('check').value = Number(document.getElementById('check').value) + 1;
+    if(document.getElementById('check').value % 2 !=0)
+    {
+        document.getElementById('logo').style.width = "50px";
+        document.getElementById('logo').style.height = "50px";
+    }
+    else{
+        document.getElementById('logo').style.width = "150px";
+        document.getElementById('logo').style.height = "150px";
+    }
+    
+    console.log(document.getElementById('check').value);
+});
+
 </script>
 <script src="js/jquery.js"></script>
 <script src="js/vue.js"></script>
