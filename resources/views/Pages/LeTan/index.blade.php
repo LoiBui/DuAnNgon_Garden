@@ -342,7 +342,7 @@
 										<th>@{{value.thucdon.giatien}}</th>
 										<th>@{{value.soluong * value.thucdon.giatien}}</th>
 									</tr>
-									<tr>
+									<tr v-if = "notice == ''">
 										<th><strong>Tổng Cộng</strong></th>
 										<th></th>
 										<th></th>
@@ -351,6 +351,7 @@
 									</tr>
 									</tbody>
 								</table>
+								<p v-if = "notice != ''" style="text-align: center; font-weight: bold;">@{{notice}}</p>
 								<img v-if = "isLoading" class="loading" src="icon/loading.gif" alt="">
 							</div>
 						</div>
@@ -378,10 +379,12 @@
 				data:{
 					chitiet: [],
 					total: 0,
-					isLoading: true
+					isLoading: true,
+					notice: ''
 				},
 				methods: {
 					chitietphieu(id){
+						this.notice = '';
 						this.isLoading = true;
 						var cur = this;
 						$.ajax({
@@ -389,6 +392,11 @@
 						url: 'letan/getidphieuorderByidBan/'+id,
 						data: "check",
 						success: function(data){
+							if (data.err == 1){
+								cur.notice = data.data;
+								cur.isLoading = false;
+								return;
+							}
 							cur.chitiet = data.data;
 							data.data.forEach(el => {
 								cur.total += el.soluong * el.thucdon.giatien;
