@@ -45,7 +45,7 @@
     </thead>
     <tbody>
     @foreach($data as $key=>$value)
-        <tr data-target="{{$value->id}}">
+        <tr data-target="{{$value->id}}" align="center">
             <th scope="row">{{$value->id}}</th>
             <td>{{$value->ten}}</td>
             <td><img src="{{asset('images/thucdon/')}}/{{$value->anh}}" alt="anh{{$value->id}}" width="350"></td>
@@ -127,11 +127,15 @@
             console.log($(this).parent().parent()[0].dataset.target);
             var tthis = $(this).parent().parent().children();
             console.log(tthis);
-
+            
             $("#tenmonan").val(tthis[1].innerText);
             $("#loai").val(tthis[3].innerText);
             $("#gia").val(tthis[4].innerText);
             $("#ghichu").val(tthis[5].innerText);
+            
+            $("#myFile").click(function(){
+
+            });
         });
     });
 </script>

@@ -107,7 +107,8 @@ class ThucDonController extends BaseController
                 //dd($thucdon);
                 $thucdon->save();
                 DB::commit();
-                return redirect()->route('thucdon.add')->with("thongbao", $this->response["SUCCESS"]);
+                session()->flash('thongbao', __('Thêm món thành công'));
+                return redirect()->route('thucdon.add');
             }catch(\Exception $e)
             {
                 DB::rollBack();
@@ -176,9 +177,23 @@ class ThucDonController extends BaseController
         //dd($data);
         DB::beginTransaction();
             try{
-                $thucdon = ThucDon::where('id','=',$data['id'])->update(['ten'=>$data['namefood'],'giatien'=>$data['pricefood'],'loai'=>$data['typefood'],'ghichu'=>$data['notefood']]);
+                $fname = "";
+                if ($request->hasFile('photo1')) {
+                    $file           = $request->file('photo1');
+
+                    $extension      = $file->getClientOriginalExtension(); // getting excel extension
+                    $filename       = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $dir            = public_path('images/thucdon');
+                    $filename       = uniqid() . '_' . time() . '_' . date('Ymd') . '_' . $filename . '.' . $extension;
+                    $file->move($dir, $filename);
+                    //dd($filename);
+                    $fname  = $filename;
+                }
+                //dd($fname);
+                ThucDon::where('id','=',$data['id'])->update(['anh'=>$fname,'ten'=>$data['namefood'],'giatien'=>$data['pricefood'],'loai'=>$data['typefood'],'ghichu'=>$data['notefood']]);
                 DB::commit();
-                return redirect()->route('thucdon')->with("thongbao", $this->response["SUCCESS"]);
+                session()->flash('thongbao', __('Sửa món thành công'));
+                return redirect()->route('thucdon');
             }catch(\Exception $e)
             {
                 DB::rollBack();
@@ -199,6 +214,7 @@ class ThucDonController extends BaseController
         if($this->thucdon->destroy($id)){
             return redirect("thucdon")->with("thongbao", $this->response["SUCCESS"]);
         }
-        return redirect("thucdon")->with("thongbao", $this->response["FAIL"]);
+        session()->flash('thongbao', __('Xoá món thành công'));
+        return redirect("thucdon");
     }
 }
