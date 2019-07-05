@@ -19,6 +19,7 @@
                     <p>Thời Gian Vào: <strong>{{$phieuorder->thoigiantao}}</strong></p>
                     <p>Thời Gian Ra: <strong>{{now()}}</strong></p>
                     <p>Số Phiếu: <strong>{{$chitietphieu[0]->idphieuorder}}</strong></p>
+                    <p>Số Hóa Đơn: <strong>{{$mahd}}</strong></p>
                         <table class="mb-0 table table-bordered">
                                 <thead>
                                 <tr>

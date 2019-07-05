@@ -43,6 +43,11 @@ Route::group(['middleware'=>'admin.auth'], function() {
             Route::post('sua/{idban}', "MyControllers\BanController@sua")->name('ban.sua')->where('idban', '[0-9]+');
             Route::delete('xoa/{idban}', "MyControllers\BanController@sua")->name('ban.sua')->where('idban', '[0-9]+');
         });
+
+        Route::group(['prefix' => 'phanhoi'], function () {
+            Route::get('danhsach', "Controller@danhsach")->name('admin.phanhoi.danhsach');
+            Route::get('xoa/{id}', "Controller@xoa")->name('admin.phanhoi.xoa');
+        });
         /* End  Bàn Ăn */
     });
 
@@ -105,3 +110,4 @@ Route::group(['middleware'=>'admin.auth'], function() {
 //feedback
 Route::get('phanhoi',"Controller@phanhoi");
 Route::post('phanhoi',"Controller@checkhd")->name('phanhoi.checkhd');
+Route::post('phanhoisave',"Controller@savephanhoi")->name('phanhoi.phanhoisave');

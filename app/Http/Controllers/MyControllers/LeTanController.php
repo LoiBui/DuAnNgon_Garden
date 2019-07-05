@@ -243,11 +243,11 @@ class LeTanController extends Controller
                 }else{
                     $phieu = PhieuOrder::find($phieuorder->id);
                     $phieu->trangthai = 4;
-                    //$phieu->save();
+                    $phieu->save();
 
                     $ba = Ban::find($phieuorder->idban);
                     $ba->trangthai = 0;
-                    //$ba->save();
+                    $ba->save();
 
                     $tong = 0;
                     foreach($chitietphieu as $value){
@@ -259,8 +259,9 @@ class LeTanController extends Controller
                     $hoadon->tongtien = $tong + $phieuorder->Ban->phuphi;
                     $hoadon->trangthai = 1;
                     $hoadon->save();
+                    $mahd = $hoadon->id;
 
-                    return view("Pages.HoaDon.index", compact("chitietphieu", "phieuorder"));
+                    return view("Pages.HoaDon.index", compact("chitietphieu", "phieuorder", "mahd"));
                 }
                 
                 

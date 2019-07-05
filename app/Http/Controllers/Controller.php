@@ -84,13 +84,31 @@ class Controller extends BaseController
     }
     public function checkhd(Request $request)
     {
-        $result = [];
-        $result['success'] = true;
         $hoadon = HoaDon::where('id','=',$request->ma_hd)->first();
         if($hoadon)
         {
-            $result['success'] = false;
+            return 1;
         }
-        return response()->json($result);
+        return 0;
+    }
+
+    public function savephanhoi(Request $re){
+        $hd = new XuLySuCo;
+        $hd->idhoadon = $re->mahd;
+        $hd->mieuta = $re->noidung;
+        $hd->save();
+        $re->session()->flash('thongbao', __('Thêm Thành Công'));
+                return redirect("phanhoi");
+    }
+
+    public function danhsach(){
+        $xulysuco = XuLySuCo::get();
+        return view("Pages.XuLySuCo.danhsach", compact("xulysuco"));
+    }
+
+    public function xoa($id){
+        $xulysuco = XuLySuCo::find($id);
+        $xulysuco->delete();
+        return redirect("phanhoi/danhsach")->with('thongbao', __('Xóa Thành Công'));
     }
 }
