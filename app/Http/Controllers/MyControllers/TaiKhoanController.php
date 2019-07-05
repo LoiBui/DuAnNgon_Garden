@@ -33,7 +33,7 @@ class TaiKhoanController extends BaseController
     {
         $search = [];
 
-        if ($request->tennguoidung != '') {
+        if ($request->tennguoididung != '') {
             $search[] = ['tennguoidung', $request->tennguoidung];
         }
 

@@ -34,16 +34,7 @@ Route::group(['middleware'=>'admin.auth'], function() {
             Route::get('destroy/{v}', "MyControllers\TaiKhoanController@destroy");
             Route::post('update', "MyControllers\TaiKhoanController@update")->name('taikhoan.update');
         });
-        /*  Bàn Ăn */
-        Route::group(['prefix' => 'ban'], function () {
-            Route::get('/', "MyControllers\BanController@index")->name('ban');
-            Route::get('them', "MyControllers\BanController@showthem")->name('ban.them');
-            Route::post('them', "MyControllers\BanController@them")->name('ban.them');
-            Route::get('sua/{idban}', "MyControllers\BanController@showsua")->name('ban.sua')->where('idban', '[0-9]+');
-            Route::post('sua/{idban}', "MyControllers\BanController@sua")->name('ban.sua')->where('idban', '[0-9]+');
-            Route::delete('xoa/{idban}', "MyControllers\BanController@sua")->name('ban.sua')->where('idban', '[0-9]+');
-        });
-        /* End  Bàn Ăn */
+        
     });
 
     //Thực đơn
@@ -72,6 +63,7 @@ Route::group(['middleware'=>'admin.auth'], function() {
             Route::get('taophieu', "MyControllers\LeTanController@taophieu")->name('letan.taophieu')->where('idban', '[0-9]+');
             Route::post('datban', "MyControllers\LeTanController@datban")->name('letan.datban');
             Route::post('chuyentranthaiban', "MyControllers\LeTanController@chuyentranthaiban")->name('letan.chuyentranthaiban');
+            Route::post('chuyentranthaibanonline', "MyControllers\LeTanController@chuyentranthaibanonline")->name('letan.chuyentranthaibanonline');
             Route::get('getidphieuorderByidBan/{id}', "MyControllers\LeTanController@getidphieuorderByidBan")->name('letan.getidphieuorderByidBan');
         });
         /* End  Le Tan */

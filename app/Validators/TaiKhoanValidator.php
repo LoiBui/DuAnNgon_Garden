@@ -30,7 +30,7 @@ class TaiKhoanValidator extends LaravelValidator
          */
         $this->rules = [
             ValidatorInterface::RULE_CREATE => [
-                'username'=>'min: 10|unique:taikhoans',
+                'username'=>'min: 6|unique:taikhoans',
                 'password'=>'min: 8|',
                 'tennguoidung'=>'min: 10|max:50',
 	            'socmnd'=>'min: 10|numeric|unique:taikhoans',
@@ -40,12 +40,12 @@ class TaiKhoanValidator extends LaravelValidator
             ],
 
             ValidatorInterface::RULE_UPDATE => [
-                'password'=>'min: 8|',
+                'password'=>'min: 6|',
                 'tennguoidung'=>'min: 10|max:50',
-	            'socmnd'=>'min: 10|numeric|unique:taikhoans',
+	            'socmnd'=>'min: 10|numeric',
 	            'quequan'=>'min: 8|',
                 'sdt'=>'min: 10|numeric',
-                'email'=>'required|unique:taikhoans',
+                'email'=>'required',
             ],
         ];
 
@@ -62,7 +62,7 @@ class TaiKhoanValidator extends LaravelValidator
          *
          */
         $this->messages = [
-            'username.min' => 'Tên đăng nhập quá ngắn ít nhất 8 kí tự',
+            'username.min' => 'Tên đăng nhập quá ngắn ít nhất 6 kí tự',
             'username.max' => 'Tên đăng nhập quá dài nhiều nhất 50 kí tự',
             'username.username' => 'Tên đăng nhập đã tồn tại',
 

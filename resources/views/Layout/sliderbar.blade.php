@@ -43,6 +43,7 @@
                         Dashboard
                     </a>
                 </li>
+                @if(Auth()->guard('web')->user()->quyen == QUYEN_ADMIN)
                 <li class="app-sidebar__heading">Quản Lý</li>
                 <li>
                     <a href="taikhoan">
@@ -50,27 +51,16 @@
                         Tài Khoản
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="metismenu-icon pe-7s-car"></i>
-                        Bàn
-                        {{-- <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i> --}}
-                    </a>
-                    {{-- <ul>
-                        <li>
-                            <a href="components-tabs.html">
-                                <i class="metismenu-icon">
-                                </i>Danh Sách
-                            </a>
-                        </li>
-                    </ul> --}}
-                </li>
+                
                 <li  >
-                    <a href="tables-regular.html">
+                    <a href="thucdon">
                         <i class="metismenu-icon pe-7s-display2"></i>
-                        Tables
+                        Thực Đơn
                     </a>
                 </li>
+                @endif
+
+                @if(Auth()->guard('web')->user()->quyen == QUYEN_ADMIN || Auth()->guard('web')->user()->quyen == QUYEN_LE_TAN)
                 <li class="app-sidebar__heading">Lễ Tân</li>
                 <li>
                     <a href="{{ url(route('letan')) }}">
@@ -78,6 +68,9 @@
                         </i>Đặt Bàn
                     </a>
                 </li>
+                @endif
+
+                @if(Auth()->guard('web')->user()->quyen == QUYEN_ADMIN || Auth()->guard('web')->user()->quyen == QUYEN_PHUC_VU)
                 <li class="app-sidebar__heading">Phục Vụ</li>
                 <li>
                     <a href="{{ url(route('nvphucvu')) }}">
@@ -85,13 +78,17 @@
                         </i>Đặt Món
                     </a>
                 </li>
+                @endif
+
+                @if(Auth()->guard('web')->user()->quyen == QUYEN_ADMIN || Auth()->guard('web')->user()->quyen == QUYEN_NHA_BEP)
                 <li class="app-sidebar__heading">Nhà Bếp</li>
                 <li>
                     <a href="{{ url(route('nhabep')) }}">
                         <i class="metismenu-icon pe-7s-graph2">
-                        </i>ChartJS
+                        </i>Làm Món
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
     </div>

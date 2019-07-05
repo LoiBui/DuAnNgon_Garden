@@ -14,6 +14,7 @@
 <div class="navbar" style="float:right;margin-bottom: 20px;border-bottom:1px solid blue;">
     <div class="search" style="margin-right:15px;">
         <form class="form-inline" action="{{route('thucdon.search')}}" method="POST">
+            @csrf
             <select name="sortprice" class="custom-select" id="sortprice" style="margin-right:10px;">
                 <option selected>Sắp xếp theo giá</option>
                 <option value="1">Tăng dần</option>
