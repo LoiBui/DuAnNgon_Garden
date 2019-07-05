@@ -153,6 +153,26 @@ body {
           <div class="card card-signin my-5">
             <div class="card-body">
               <h5 class="card-title text-center">Đăng Nhập</h5>
+              <div id="thongbao">
+                @if(session('thongbao'))
+                    <div class="alert alert-success">
+                        <strong>Thông Báo!</strong>
+                        {!!session('thongbao')!!}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+                @if(count($errors) > 0)
+                    @foreach($errors->all() as $er)
+                        <div class="alert alert-danger">
+                            <strong>Thông Báo!</strong>
+                            {!!$er!!}
+                        </div>
+                    @endforeach
+                @endif
+            </div>
             <form action="{{route("dangnhap")}}" method="POST" class="form-signin">
                   @csrf
                 <div class="form-label-group">

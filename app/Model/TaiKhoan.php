@@ -10,6 +10,6 @@ class TaiKhoan extends Authenticatable
     protected $table = "taikhoans";
 
     protected $fillable = [
-        'id','tendangnhap', 'matkhau'
+        'id','username', 'password', 'tennguoidung', 'gioitinh', 'socmnd', 'quequan', 'sdt', 'email', 'quyen', 
     ];
 }
