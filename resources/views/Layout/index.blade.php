@@ -99,6 +99,7 @@ document.getElementById("button").addEventListener("click", function(){
 <script src="js/vue.js"></script>
 <script src="js/moment.js"></script>
 <script src="js/datatable.js"></script>
+<script src="js/printPage.js"></script>
 
 <!-- bootstrap-daterangepicker -->
 <script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>

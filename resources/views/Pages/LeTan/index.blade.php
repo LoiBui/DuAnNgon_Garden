@@ -124,8 +124,8 @@
 					<form class="form-horizontal form-label-left input_mask">
 						<div class="row">
 							<div class="col-md-4 col-xs-12 form-group">
-								<label><input style="margin-top: 10px;" id="myCheck" type="checkbox"></label>
-								<input disabled style="width: 90%" id="ngaydat" type="text" class="form-control date-picker pull-right" name="ngaydat" placeholder="Ngày Đặt..." >
+								{{-- <label><input style="margin-top: 10px;" id="myCheck" type="checkbox"></label> --}}
+								<input style="width: 90%" id="ngaydat" type="text" class="form-control date-picker pull-right" name="ngaydat" placeholder="Ngày Đặt..." >
 							</div>
 		
 							<div class="col-md-4 col-xs-12 form-group">
@@ -181,6 +181,11 @@
 												<button @if($value->trangthai == 2) {{"disabled"}} @endif onclick='sudungbandatonline("{{$value->id}}")' type="button" id="btnchononline{{$value->id}}" class="btn btn-primary">
 													Chọn
 												</button>
+												@if($value->trangthai != 1)
+												<button @if($value->trangthai == 2) {{"disabled"}} @endif onclick='chuyentrangthai("{{$value->id}}")' type="button" id="CHUYENTRANGTHAI{{$value->id}}" class="btn btn-warning">
+													Chuyển TT
+												</button>
+												@endif
 											</td>
 										</tr>
 										@endforeach
@@ -301,7 +306,7 @@
 			</div>
                 
             <div class="modal-footer">
-                <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button"  class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
@@ -330,8 +335,8 @@
 										<th>#</th>
 										<th>Tên Món</th>
 										<th>Số Lượng</th>
-										<th>Giá Tiền</th>
-										<th>Thành Tiền</th>
+										<th>Giá Tiền (VNĐ)</th>
+										<th>Thành Tiền (VNĐ)</th>
 									</tr>
 									</thead>
 									<tbody>
@@ -347,7 +352,7 @@
 										<th></th>
 										<th></th>
 										<th></th>
-										<th><strong>@{{total}} VNĐ</strong></th>
+										<th><strong>@{{total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}} VNĐ</strong></th>
 									</tr>
 									</tbody>
 								</table>
@@ -359,7 +364,7 @@
 	  
 			<!-- Modal footer -->
 			<div class="modal-footer">
-			  <button type="button" class="btn btn-primary" data-dismiss="modal">Thanh Toán</button>
+			  <a target="_blank" :href="currenturl" class="inphieu"><button class="btn btn-primary">Thanh Toán</button></a>
 			  <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
 			</div>
 	  
@@ -380,16 +385,18 @@
 					chitiet: [],
 					total: 0,
 					isLoading: true,
-					notice: ''
+					notice: '',
+					currenturl: ''
 				},
 				methods: {
 					chitietphieu(id){
+						this.currenturl = "letan/getidphieuorderByidBan/2/" + id;
 						this.notice = '';
 						this.isLoading = true;
 						var cur = this;
 						$.ajax({
 						type: "GET",
-						url: 'letan/getidphieuorderByidBan/'+id,
+						url: 'letan/getidphieuorderByidBan/1/'+id,
 						data: "check",
 						success: function(data){
 							if (data.err == 1){
@@ -418,9 +425,27 @@
     <script>
         $(document).ready(function(){
 			init();
-			
 		});
-
+		function chuyentrangthai(id){
+			$.ajax({
+				url: 'letan/chuyentrangthaidatban',
+				type: 'POST',
+				data: {
+					iddatban: id
+				},
+				success: function (result) {
+					console.log(result);
+					let btn = document.getElementById("CHUYENTRANGTHAI"+id);
+					console.log(btn);
+					btn.classList.remove("btn-primary");
+					btn.classList.add("btn-warning");
+					btn.innerHTML = "Hoàn Thành";
+				},
+				error: function (e) {
+					console.error(e);
+				}
+			});
+		}
 		function sudungbandatonline(iddatban){
 			console.log(iddatban);
 			$.ajax({

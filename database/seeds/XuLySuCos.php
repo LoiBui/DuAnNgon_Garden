@@ -17,7 +17,7 @@ class XuLySuCos extends Seeder
 
        //echo date("Y-m-d H:i:s",rand(1262055681,1262055681));return;
         
-        $limit = 100;
+        $limit = 10;
 
         for ($i = 0; $i < $limit; $i++) {
             DB::table('XuLySuCos')->insert([

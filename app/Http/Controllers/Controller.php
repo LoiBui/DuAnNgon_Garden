@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Model\Ban;
 use App\Model\DatBan;
+use App\Model\XuLySuCo;
+use App\Model\HoaDon;
 use DB;
 
 class Controller extends BaseController
@@ -75,5 +77,39 @@ class Controller extends BaseController
         $db = Ban::find($idBan)->update(["trangthai"=>2]);
         $re->session()->flash('notice','Đặt Bàn Thành Công<br> Chúng tôi sẽ gọi điện xác nhận lại trong giây lát');
         return redirect()->route('thanhcong');
+    }
+
+    public function phanhoi()
+    {
+        return view("Pages/XuLySuCo/index"); 
+    }
+    public function checkhd(Request $request)
+    {
+        $hoadon = HoaDon::where('id','=',$request->ma_hd)->first();
+        if($hoadon)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    public function savephanhoi(Request $re){
+        $hd = new XuLySuCo;
+        $hd->idhoadon = $re->mahd;
+        $hd->mieuta = $re->noidung;
+        $hd->save();
+        $re->session()->flash('thongbao', __('Thêm Thành Công'));
+                return redirect("phanhoi");
+    }
+
+    public function danhsach(){
+        $xulysuco = XuLySuCo::get();
+        return view("Pages.XuLySuCo.danhsach", compact("xulysuco"));
+    }
+
+    public function xoa($id){
+        $xulysuco = XuLySuCo::find($id);
+        $xulysuco->delete();
+        return redirect("phanhoi/danhsach")->with('thongbao', __('Xóa Thành Công'));
     }
 }

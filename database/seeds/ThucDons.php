@@ -13,7 +13,7 @@ class ThucDons extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        $limit = 100;
+        $limit = 10;
 
         for ($i = 0; $i < $limit; $i++) {
             DB::table('ThucDons')->insert([

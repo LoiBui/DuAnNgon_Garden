@@ -39,7 +39,7 @@ class Bans extends Seeder
         // ]);
         $faker = Faker\Factory::create();
 
-        $limit = 100;
+        $limit = 30;
         $array = array("Khu A", "Khu B", "Khu C");
 
         for ($i = 0; $i < $limit; $i++) {

@@ -11,6 +11,8 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Validators\BaseValidatorInterface;
 use Illuminate\Support\Facades\DB;
 use App\Model\TaiKhoan;
+use App\Model\HoaDon;
+
 
 
 class TaiKhoanController extends BaseController
@@ -147,5 +149,24 @@ class TaiKhoanController extends BaseController
         return redirect("taikhoan");
     }
 
+    public function dashboard(Request $request)
+    {
+        $tongtien = HoaDon::get()->sum('tongtien');
+        
+        $search = [];
+
+        if ($request->tennguoididung != '') {
+            $search[] = ['tennguoidung', $request->tennguoidung];
+        }
+
+        if ($request->sdt != '') {
+            $search[] = ['sdt', $request->sdt];
+        }
+
+        $data = TaiKhoan::where($search)->paginate(10);
+
+        return view("Pages.TaiKhoan.Dashboard", compact('data', 'tongtien'));
+
+    }
     
 }

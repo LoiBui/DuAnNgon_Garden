@@ -9,7 +9,7 @@ class PhieuOrder extends Model
     protected $table = "phieuorders";
     
     public function Ban(){
-        return $this->hasOne("App\Model\Ban", "id", "idBan");
+        return $this->hasOne("App\Model\Ban", "id", "idban");
     }
 
     public function NhanVien(){

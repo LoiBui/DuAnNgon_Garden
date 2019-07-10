@@ -40,7 +40,7 @@ class TaiKhoanValidator extends LaravelValidator
             ],
 
             ValidatorInterface::RULE_UPDATE => [
-                'password'=>'min: 6|',
+                'password'=>'min: 8|',
                 'tennguoidung'=>'min: 10|max:50',
 	            'socmnd'=>'min: 10|numeric',
 	            'quequan'=>'min: 8|',
