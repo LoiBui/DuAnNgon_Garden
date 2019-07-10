@@ -14,7 +14,7 @@
 
 body {
   background: #007bff;
-  background: linear-gradient(to right, #0062E6, #33AEFF);
+  background: linear-gradient(to right, #cbdaef, #33AEFF);
 }
 
 .card-signin {
@@ -55,7 +55,9 @@ body {
   height: auto;
   border-radius: 2rem;
 }
-
+label {
+    margin-top: -3px;
+}
 .form-label-group>input,
 .form-label-group>label {
   padding: var(--input-padding-y) var(--input-padding-x);
@@ -173,7 +175,7 @@ body {
                     @endforeach
                 @endif
             </div>
-            <form action="{{route("dangnhap")}}" method="POST" class="form-signin">
+            <form autocomplete="off" action="{{route("login")}}" method="POST" class="form-signin">
                   @csrf
                 <div class="form-label-group">
                   <input name="tendangnhap" type="text" id="inputEmail" class="form-control" placeholder="Tên Đăng Nhập" required autofocus>
@@ -199,5 +201,10 @@ body {
     </div>
     <script type="text/javascript" src="assets/scripts/main.js"></script></body>
   </body>
-
+  <script src="js/jquery.js"></script>
+<script>
+$(document).ready(()=>{
+  $("#inputEmail").click();
+});
+</script>
 </html>

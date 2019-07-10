@@ -15,7 +15,7 @@ Route::group(['middleware'=>'admin.guest'], function() {
     Route::get('dangnhap', function () {
         return view("Pages.TaiKhoan.DangNhap");
     });
-    Route::post('dangnhap', "MyControllers\TaiKhoanController@dangnhap")->name("dangnhap");
+    Route::post('dangnhap', "MyControllers\TaiKhoanController@dangnhap")->name("login");
 });
 
 Route::group(['middleware'=>'admin.auth'], function() {
@@ -103,7 +103,7 @@ Route::group(['middleware'=>'admin.auth'], function() {
             Route::get('phieuorder/{idphieuorder}/datmon', "MyControllers\NvPhucVuController@datmon")->name('nvphucvu.datmon')->where('idphieuorder', '[0-9]+');
             Route::post('phieuorder/{idphieuorder}/datmon/{idmon}', "MyControllers\NvPhucVuController@themmon")->name('nvphucvu.themmon')->where('idphieuorder', '[0-9]+');
             Route::post('phieuorder/{idphieuorder}/suamon/{idchitietphieuorder}', "MyControllers\NvPhucVuController@suamon")->name('nvphucvu.suamon')->where('idphieuorder', '[0-9]+');
-            Route::get('/ajax/getchitietphieu', "MyControllers\NvPhucVuController@ajax")->name('ajax');
+            Route::get('ajax/getchitietphieu', "MyControllers\NvPhucVuController@ajax")->name('ajax');
             Route::get('phieuorder/{idphieuorder}/xoamon/{idchitietphieuorder}', "MyControllers\NvPhucVuController@xoamon")->name('nvphucvu.xoamon');
         });
         /* End  Nhân Viên Phục Vụ */

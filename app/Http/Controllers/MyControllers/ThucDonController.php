@@ -212,8 +212,7 @@ class ThucDonController extends BaseController
     {
         //
         if($this->thucdon->destroy($id)){
-            $request->session()->flash('thongbao','Xóa Thực Đơn Thành Công');
-            return redirect("thucdon");
+            return redirect("thucdon")->with('thongbao','Xóa Thực Đơn Thành Công');;
         }
         session()->flash('thongbao', __('Xoá món thành công'));
         return redirect("thucdon");
