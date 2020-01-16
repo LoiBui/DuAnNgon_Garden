@@ -10,7 +10,6 @@
 						<thead>
 						<tr>
 							<th>Mã Bàn</th>
-							<th>Tên Nhân Viên</th>
 							<th>Thời Gian Tạo</th>
 							<th>Trạng Thái</th>
 						</tr>
@@ -18,12 +17,11 @@
 						<tbody>
 						<tr v-for = "(item, index) in phieuorder" v-if = "item.trangthai != 2" @click = "chooseOrder(item.id, item.trangthai)" :class = "{choose: item.id == currentOrder}">
 							<td>@{{item.idban}}</td>
-							<td>@{{item.tennhanvien}}</td>
 							<td>@{{convertDate(item.thoigiantao)}}</td>
 							<td>
 								<div class="status statusDanger" v-if = "item.trangthai == 0" @click = "start(item.id)">Chưa Làm</div>	
 								<div class="status statusPending" v-if = "item.trangthai == 1" @click = "start(item.id)">Đang Làm</div>	
-								<div class="status statusPending" v-if = "item.trangthai == 3" @click = "start(item.id)">Thay Đổi</div>	
+								<div class="status statusPending" v-if = "item.trangthai == 2" @click = "start(item.id)">Hoàn Thành</div>	
 							</td>
 						</tr>
 						</tbody>
@@ -39,7 +37,6 @@
 					<h5 class="card-title">Chi Tiết Món Ăn Theo Bàn</h5>
 					<button v-if = "chitietphieuorder.length > 0 && trangthai == 0" class="mt-2 btn btn-primary"  style="margin-bottom: 7px;" @click = "nhanlam(currentOrder, trangthai)">Nhận Làm</button>
 					<button v-if = "chitietphieuorder.length > 0 && trangthai == 1" class="mt-2 btn btn-warning"  style="margin-bottom: 7px;" @click = "nhanlam(currentOrder, trangthai)">Đang Làm</button>
-					<button v-if = "chitietphieuorder.length > 0 && trangthai == 3" class="mt-2 btn btn-warning"  style="margin-bottom: 7px;" @click = "nhanlam(currentOrder, trangthai)">Thay Đổi</button>
 					<button v-if = "chitietphieuorder.length > 0 && trangthai == 2" class="mt-2 btn btn-success"  style="margin-bottom: 7px;">Hoàn Thành</button>
 					<table class="mb-0 table">
 						<thead>
@@ -133,6 +130,10 @@
 					return;
 				}
 			});
+			
+			if(status==''){
+				return;
+			}
 			$.ajax({
                 type: "POST",
                 url: 'thaydoitrangthaichitietphieu',
@@ -144,6 +145,25 @@
 					console.log(data);
                 }
             });
+			
+			let ktc = true;
+			this.chitietphieuorder.forEach(element => {
+				if(element.trangthai != 2){
+					ktc = false;
+				}
+			});
+			if(ktc){
+				console.log(this.currentOrder)
+				this.trangthai = 2;
+				this.phieuorder.forEach((element, index) => {
+					if(element.id == this.currentOrder){
+						Vue.set(this.phieuorder[index], 'trangthai', 2);
+						console.log("ok")
+					}
+				});
+				console.log(this.phieuorder);
+			}
+			
 		},
 		nhanlam(id, trangthai){
 			var status = "";

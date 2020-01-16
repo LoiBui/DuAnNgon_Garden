@@ -16,13 +16,10 @@ class CreatePhieuOrdersTable extends Migration
         Schema::create('phieuorders', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->bigInteger('idban')->unsigned();
-            $table->bigInteger('idnhanvien')->unsigned();
             $table->timestamps();
             $table->dateTime('thoigiantao')->default(\Carbon\Carbon::now());
-
+            $table->decimal('tongtien', 15, 0)->default(0);
             $table->foreign('idban')->references('id')->on('bans')->onDelete('cascade');
-            
-            $table->foreign('idnhanvien')->references('id')->on('taikhoans')->onDelete('cascade');
         });
     }
 

@@ -32,20 +32,9 @@ class NvPhucVuController extends Controller
         }
 
         $phieuorders = PhieuOrder::where($search)->paginate(10);
-        foreach ($phieuorders as $key => $value) {
-            $tennhanvien = $value->NhanVien()->first()->tennguoidung;
-            if(!empty($tennhanvien))
-            {
-                $data[] = array_merge($value->toArray(), [
-                    'tennhanvien' => $tennhanvien, 
-                ]);
-            }
-        }
+        
 
-        if(empty($data))
-            $data = [];
-
-        return view("Pages.NvPhucVu.index", compact('data', 'phieuorders'));
+        return view("Pages.NvPhucVu.index", compact('phieuorders'));
     }
 
     public function datmon(Request $request, $idphieuorder)

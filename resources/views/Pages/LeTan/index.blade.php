@@ -51,7 +51,6 @@
 						</div>
 					</form>
 				</div>
-				<input type="text" id="idbantruoc" value="1" hidden>
 			</div>
 		
 			<div class="col-12">
@@ -172,15 +171,22 @@
 											<td>{{ $value->sdt }}</td>
 											<td>{{ $value->ngaydat }}</td>
 											<td>{{ $value->giodat }}</td>
-											<td>
+											<td id="dskldhsa{{ $value->id }}">
 												@if( $value->trangthai == 0 ) Chưa Xác Nhận 
 												@elseif($value->trangthai == 1) Đã Xác Nhận
 												@else Xong @endif
 											</td>
 											<td>
-												<button @if($value->trangthai == 2) {{"disabled"}} @endif onclick='sudungbandatonline("{{$value->id}}")' type="button" id="btnchononline{{$value->id}}" class="btn btn-primary">
-													Chọn
-												</button>
+												@if($value->trangthai == 1) 
+													<button disabled type="button" class="btn btn-warning">
+														Hoàn Thành
+													</button>
+												@else 
+													<button onclick='sudungbandatonline("{{$value->id}}")' type="button" id="btnchononline{{$value->id}}" class="btn btn-primary">
+														Xác Nhận
+													</button>
+												@endif
+												
 											</td>
 										</tr>
 										@endforeach
@@ -253,7 +259,7 @@
 													@elseif($value->trangthai == LOAI_BAN_THUONG) Bàn Thường
 													@endif
 												</td>
-												<td>{{ $value->phuphi }}</td>
+												<td>{{ number_format($value->phuphi) }} VNĐ</td>
 												<td style="max-width: 200px;">{{ $value->ghichu }}</td>
 												
 												<td>
@@ -336,11 +342,11 @@
 									</thead>
 									<tbody>
 									<tr v-if = "chitiet.length > 0" v-for = "(value, index) in chitiet">
-										<th scope="row">@{{index}}</th>
+										<th scope="row">@{{index + 1}}</th>
 										<th>@{{value.thucdon.ten}}</th>
 										<th>@{{value.soluong}}</th>
-										<th>@{{value.thucdon.giatien}}</th>
-										<th>@{{value.soluong * value.thucdon.giatien}}</th>
+										<th>@{{formatPrice(value.thucdon.giatien)}} VNĐ</th>
+										<th>@{{formatPrice(value.soluong * value.thucdon.giatien)}} VNĐ</th>
 									</tr>
 									<tr v-if = "notice == ''">
 										<th><strong>Tổng Cộng</strong></th>
@@ -384,7 +390,13 @@
 					currenturl: ''
 				},
 				methods: {
+					formatPrice(value) {
+						let val = (value/1).toFixed(0).replace('.', ',')
+						return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+					},
 					chitietphieu(id){
+						this.chitiet = [];
+						console.log(this.chitiet)
 						this.currenturl = "letan/getidphieuorderByidBan/2/" + id;
 						this.notice = '';
 						this.isLoading = true;
@@ -428,7 +440,8 @@
 				url: 'letan/chuyentranthaibanonline',
 				type: 'POST',
 				data: {
-					iddatban: iddatban
+					iddatban: iddatban,
+					type: 'choice'
 				},
 				success: function (result) {
 					console.log(result);
@@ -437,6 +450,7 @@
 					btn.classList.remove("btn-primary");
 					btn.classList.add("btn-warning");
 					btn.innerHTML = "Hoàn Thành";
+					$("#dskldhsa"+iddatban).html("Đã Xác Nhận")
 				},
 				error: function (e) {
 					console.error(e);

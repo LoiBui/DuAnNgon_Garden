@@ -18,64 +18,14 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function datban(Request $re){
-        $query = 'SELECT * FROM bans JOIN datbans on bans.id = datbans.idban  WHERE datbans.ngaydat = "'.$re->ngaydat.'" AND MINUTE(TIMEDIFF(datbans.giodat,"'.$re->giodat.'")) /60 + HOUR(TIMEDIFF(datbans.giodat,"'.$re->giodat.'")) > 2 AND (bans.sochongoi + 3 > '.$re->songuoi.' || bans.sochongoi = 11) AND datbans.trangthai = 2';
-        $data = DB::select($query);
+        // dd($re->all());
+        $data = DB::select(DB::raw("exec dbo.pc_timkiembanphuhop ".$re->songuoi.",'".$re->ngaydat."','".$re->giodat."','".$re->hoten."',".$re->sdt));
         
-        $idBan = "";
-        
-        if (count($data) > 0){
-            $tmp = [];
-            foreach($data as $key=> $value){
-                if ($key == 0){
-                    $tmp = $value;
-                }
-                if ($value->sochongoi == $re->songuoi){
-                    $idBan = $value->idban;
-                    break;
-                }
-            }
-            if ($idBan == ""){
-                $idBan = $tmp->id;
-            }
-        }else{
-            $que = 'SELECT * FROM bans WHERE (sochongoi > 11 OR sochongoi + 3>11) AND MINUTE(TIMEDIFF(NOW(), "'.$re->ngaydat.' '.$re->giodat.'"))/60 + HOUR(TIMEDIFF(NOW(), "'.$re->ngaydat.' '.$re->giodat.'")) > 2 AND trangthai = 0';
-            
-            $data1 = DB::select($que);
-            if ($data1){
-                $tmp = [];
-                foreach($data1 as $key=> $value){
-                    if ($key == 0){
-                        $tmp = $value;
-                    }
-                    if ($value->sochongoi == $re->songuoi){
-                        $idBan = $value->id;
-                        break;
-                    }
-                }
-               
-                if ($idBan == ""){
-                    $idBan = $tmp->id;
-                }
-
-                
-            }
-            
-        }
-        if ($idBan == ""){
+        if($data[0]->result == 0){
             $re->session()->flash('notice','Đặt Bàn Thất Bại<br> Không còn bàn');
-            return redirect()->route('thanhcong');
+        }else{
+            $re->session()->flash('notice','Đặt Bàn Thành Công<br> Chúng tôi sẽ gọi điện xác nhận lại trong giây lát');
         }
-        $db = new Datban;
-        $db->idban = $idBan;
-        $db->ngaydat = $re->ngaydat;
-        $db->giodat = $re->giodat;
-        $db->tenkhachhang = $re->hoten;
-        $db->sdt = $re->sdt;
-        $db->trangthai = 0;
-        $db->save();
-
-        $db = Ban::find($idBan)->update(["trangthai"=>2]);
-        $re->session()->flash('notice','Đặt Bàn Thành Công<br> Chúng tôi sẽ gọi điện xác nhận lại trong giây lát');
         return redirect()->route('thanhcong');
     }
 

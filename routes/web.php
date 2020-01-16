@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/', function () {
+    return redirect()->route("thucdon");
+});
 Route::group(['middleware'=>'admin.guest'], function() {
     Route::get('dangnhap', function () {
         return view("Pages.TaiKhoan.DangNhap");
@@ -88,10 +90,10 @@ Route::group(['middleware'=>'admin.auth'], function() {
         Route::get('datban', function () {
             return view("Pages.DatBanOnline.index");
         });
-        Route::get('thanhcong', function () {
+        Route::get('result', function () {
             return view("Pages.DatBanOnline.thanhcong");
         })->name("thanhcong");
-        Route::post("datban", "Controller@datban")->name("datban");
+        Route::post("check-datban", "Controller@datban")->name("datban");
         /* End  Đặt Bàn Online */
     });
 

@@ -55,11 +55,11 @@
 									<td>{{ $value->id }}</td>
 									<td>{{ $value->ten }}</td>
 									<td>@if( $value['loai'] == LOAI_MON_DO_AN ) Đồ Ăn @else Nước Uống @endif</td>
-									<td>{{ $value->giatien }}</td>
+									<td>{{number_format( $value->giatien )}} VNĐ</td>
 									<form action="{{route('nvphucvu.themmon', [$idphieuorder , $value->id])}}" method="POST">
 										@csrf
-										<td><input type="text" name="soluong" id="soluong" style="width: 50px"></td>
-										<td><input type="text" name="ghichu" id="ghichu" style="width: 50px"></td>
+										<td><input type="number" required name="soluong" id="soluong" style="width: 50px"></td>
+										<td><input type="text" required name="ghichu" id="ghichu" style="width: 50px"></td>
 										<td class="text-center"><button class="btn btn-primary" type="submit"><i class="fa fa-plus fa-lg"></i></button></td>
 									</form>
 								</tr>
@@ -99,7 +99,7 @@
 									<td>{{ $value['giatien'] }}</td>
 									<form action="{{route('nvphucvu.suamon', [$value['idphieuorder'], $value['id']])}}" method="POST">
 										@csrf
-										<td><input type="text" name="soluong" style="width: 50px;" value="{{ $value['soluong'] }}"></td>
+										<td><input type="number" name="soluong" style="width: 50px;" value="{{ $value['soluong'] }}"></td>
 										<td>@if( $value['trangthai'] == TRANG_THAI_MON_CHUA_LAM ) Chưa Làm @elseif($value['trangthai'] == TRANG_THAI_MON_DANG_LAM) Đang Làm @else Hoàn Thành @endif</td>
 										
 										<td class="text-center">

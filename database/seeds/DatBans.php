@@ -21,7 +21,7 @@ class DatBans extends Seeder
             DB::table('datbans')->insert([
                 'idban' =>  $i,
               	'ngaydat'=> date("Y-m-d",rand(1262055681,1262055681)),
-                'giodat'=>rand(0, 24),
+                'giodat'=>rand(0, 23).":".rand(0, 59),
                 'tenkhachhang'=>$faker->name,
                 'sdt'=>rand(),
                 'trangthai'=>0,

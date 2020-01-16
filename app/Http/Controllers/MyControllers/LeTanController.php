@@ -15,7 +15,6 @@ use App\Model\PhieuOrder;
 use App\Model\ChiTietPhieu;
 use Carbon\Carbon;
 use App\Model\Ban;
-use App\Model\HoaDon;
 
 
 class LeTanController extends Controller
@@ -138,7 +137,7 @@ class LeTanController extends Controller
 
 
         //thanh toán
-        $databan = Ban::where("trangthai", 1);
+        $databan = Ban::whereIn("trangthai", [1, 2]);
         if ($request->idban != "")
         {
             $page = 3;
@@ -146,6 +145,7 @@ class LeTanController extends Controller
         }else if ($request->has("idban")){
             $page = 3;
         }
+        // dd($databan->get());
         $databan = $databan->paginate(10);
         return view("Pages.LeTan.index", compact('data', 'datban', 'databan', "page"));
     }
@@ -153,6 +153,11 @@ class LeTanController extends Controller
     public function chuyentranthaiban(Request $re){
         $ban = Ban::find($re->idban);
         $ban->trangthai = TRANG_THAI_BAN_DANG_SU_DUNG;
+
+        PhieuOrder::create([
+            "idban"=>$re->idban,
+            "thoigiantao"=>Carbon::now()->format('Y-m-d h:m:s')
+        ]);
         if ($ban->save()){
             return 1;
         }
@@ -161,11 +166,11 @@ class LeTanController extends Controller
 
     public function chuyentranthaibanonline(Request $re){
         $db = DatBan::find($re->iddatban);
-        $db->trangthai = 2;
+        $db->trangthai = 1;
         $db->save();
 
         $ban = Ban::find($db->idban);
-        $ban->trangthai = 1;
+        $ban->trangthai = TRANG_THAI_BAN_DA_DAT;
         $ban->save();
         return 1;
     }
@@ -220,17 +225,16 @@ class LeTanController extends Controller
     public function getidphieuorderByidBan($type, $idban){
         
         try{
-            $phieuorder = PhieuOrder::where("idban", $idban)->where("trangthai", 2)->first();
-            
+            $phieuorder = PhieuOrder::where("idban", $idban)
+            ->orderBy('thoigiantao ','ASC')->first();
             if (!$phieuorder){
                 return [
                     "err"=>"1",
                     "data"=>"Không Tìm Thấy Dữ Liệu"
                 ];
             }
-            else{
-                
-                $chitietphieu = ChiTietPhieu::where("idphieuorder", $phieuorder->id)->get();
+
+            $chitietphieu = ChiTietPhieu::where("idphieuorder", $phieuorder->id)->get();
                 
                 foreach($chitietphieu as $value){
                     $value->thucdon = $value->ThucDon;
@@ -241,32 +245,10 @@ class LeTanController extends Controller
                         "data"=>$chitietphieu
                     ];
                 }else{
-                    $phieu = PhieuOrder::find($phieuorder->id);
-                    $phieu->trangthai = 4;
-                    $phieu->save();
-
-                    $ba = Ban::find($phieuorder->idban);
-                    $ba->trangthai = 0;
-                    $ba->save();
-
-                    $tong = 0;
-                    foreach($chitietphieu as $value){
-                        $tong += $value->ThucDon->giatien * $value->soluong;
-                    }
-                    $hoadon = new HoaDon;
-                    $hoadon->idphieu = $phieuorder->id;
-                    $hoadon->thoigiantao = now();
-                    $hoadon->tongtien = $tong + $phieuorder->Ban->phuphi;
-                    $hoadon->trangthai = 1;
-                    $hoadon->save();
-                    $mahd = $hoadon->id;
-
+                    //thanh toán tại đây
+                    $mahd = $phieuorder->id;
                     return view("Pages.HoaDon.index", compact("chitietphieu", "phieuorder", "mahd"));
                 }
-                
-                
-            }
-            
             
         }
         catch (Exception $e) {

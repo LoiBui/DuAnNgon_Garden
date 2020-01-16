@@ -36,13 +36,6 @@
         </div>
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu">
-                <li class="app-sidebar__heading">Dashboards</li>
-                <li>
-                    <a href="{{ url(route('dashboard')) }}" class="mm-active">
-                        <i class="metismenu-icon pe-7s-rocket"></i>
-                        Dashboard
-                    </a>
-                </li>
                 @if(Auth()->guard('web')->user()->quyen == QUYEN_ADMIN)
                 <li class="app-sidebar__heading">Quản Lý</li>
                 <li>
@@ -65,7 +58,7 @@
                 <li>
                     <a href="{{ url(route('letan')) }}">
                         <i class="metismenu-icon pe-7s-graph2">
-                        </i>Đặt Bàn
+                        </i>Đặt Bàn - Thanh Toán
                     </a>
                 </li>
                 @endif

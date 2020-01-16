@@ -20,7 +20,7 @@ class CreateXuLySuCosTable extends Migration
             $table->timestamps();
 
             $table->foreign('idhoadon')
-            ->references('id')->on('hoadons');
+            ->references('id')->on('phieuorders');
         });
     }
 

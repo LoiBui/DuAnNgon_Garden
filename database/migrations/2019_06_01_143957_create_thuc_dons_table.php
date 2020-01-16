@@ -16,7 +16,7 @@ class CreateThucDonsTable extends Migration
         Schema::create('thucdons', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->string('ten');
-            $table->string('giatien');
+            $table->decimal('giatien', 15, 2);
             $table->integer('loai');
             $table->longText('anh');
             $table->longText('ghichu');

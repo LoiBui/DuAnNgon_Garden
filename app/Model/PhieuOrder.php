@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class PhieuOrder extends Model
 {
     protected $table = "phieuorders";
-    
+
+    protected $fillable = [
+        'id','idban','thoigiantao', 'trangthai'
+    ];
+
     public function Ban(){
         return $this->hasOne("App\Model\Ban", "id", "idban");
     }

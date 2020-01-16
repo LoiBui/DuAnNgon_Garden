@@ -31,8 +31,8 @@ class TaiKhoanController extends BaseController
     }
     public function index(Request $request)
     {
+        DB::connection()->enableQueryLog();
         $search = [];
-
         if ($request->tennguoididung != '') {
             $search[] = ['tennguoidung', $request->tennguoidung];
         }
@@ -43,6 +43,8 @@ class TaiKhoanController extends BaseController
 
         $data = TaiKhoan::where($search)->paginate(10);
 
+        $queries = DB::getQueryLog();
+        // dd($queries);
         return view('Pages.TaiKhoan.DanhSach', compact("data"));
     }
 
@@ -139,11 +141,11 @@ class TaiKhoanController extends BaseController
                 return redirect("taikhoan");
             }
         } catch (\Exception $e) {
-            request()->session()->flash('thongbao', __('Xóa Tài Khoản Thất Bại'));
+            request()->session()->flash('thongbao', __('Xóa Tài Khoản Thất Bại Do Có Khóa Ngoại'));
             return redirect("taikhoan");
         }
 
-        request()->session()->flash('thongbao', __('Xóa Tài Khoản Thất Bại'));
+        request()->session()->flash('thongbao', __('Xóa Tài Khoản Thất Bại Do Có Khóa Ngoại'));
         return redirect("taikhoan");
     }
 

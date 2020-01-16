@@ -30,18 +30,26 @@
 							<tr>
 								<th>ID Phiếu</th>
 								<th>Bàn</th>
-								<th>Tên Nhân Viên</th>
+								<th>Trạng Thái</th>
 								<th>Thời Gian Tạo</th>
 								<th class="text-center">Chi Tiết</th>
 								<th class="text-center">Đặt Món</th>
 							</tr>
 							</thead>
 							<tbody>
-								@foreach($data as $key => $value)
+								@foreach($phieuorders as $key => $value)
 								<tr>
 									<td>{{ $value['id'] }}</td>
 									<td>{{ $value['idban'] }}</td>
-									<td>{{ $value['tennhanvien'] }}</td>
+									<td>
+										@if ($value['trangthai'] == 0)
+											Chưa Làm 
+										@elseif($value['trangthai'] == 1)
+											Đang Làm
+										@else 
+											Hoàn Thành
+										@endif
+									</td>
 									<td>{{ $value['thoigiantao'] }}</td>
 									<td class="text-center">
 										<button class="btn btn-success" style="cursor: pointer" onclick="ChieTietPhieu({{$value['id']}})" data-toggle="modal" data-target=".bd-example-modal-lg">
@@ -130,6 +138,7 @@
 					console.log(result);
 					if(result.success)
 					{
+						$("#table").html("");
 						for (let index = 0; index < result.data.length; index++) {
 							var loai = '', trangthai = '';
 							if(result.data[index].loai == 0)
@@ -143,7 +152,8 @@
 								trangthai = 'Đang Làm';
 							else
 								trangthai = 'Hoàn Thành';
-
+							
+							
 							$('#table').append(
 								'<tr>'
 									+'<td>'+result.data[index].id+'</td>'
