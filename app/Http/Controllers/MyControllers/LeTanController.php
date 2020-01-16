@@ -157,7 +157,7 @@ class LeTanController extends Controller
         PhieuOrder::create([
             "idban"=>$re->idban,
             "thoigiantao"=>Carbon::now()->format('Y-m-d h:m:s')
-        ]);
+        ]); 
         if ($ban->save()){
             return 1;
         }
@@ -246,6 +246,12 @@ class LeTanController extends Controller
                     ];
                 }else{
                     //thanh toán tại đây
+                    PhieuOrder::find($phieuorder->id)->update([
+                        "trangthai"=>4
+                    ]);
+                    Ban::find($idban)->update([
+                        "trangthai"=> TRANG_THAI_BAN_TRONG
+                    ]);
                     $mahd = $phieuorder->id;
                     return view("Pages.HoaDon.index", compact("chitietphieu", "phieuorder", "mahd"));
                 }

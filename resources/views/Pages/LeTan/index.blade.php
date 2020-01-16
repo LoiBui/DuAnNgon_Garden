@@ -163,33 +163,41 @@
 									</tr>
 									</thead>
 									<tbody id="table">
-										@foreach($datban as $key => $value)
-										<tr>
-										
-											<td>{{ $value->idban }}</td>
-											<td>{{ $value->tenkhachhang }}</td>
-											<td>{{ $value->sdt }}</td>
-											<td>{{ $value->ngaydat }}</td>
-											<td>{{ $value->giodat }}</td>
-											<td id="dskldhsa{{ $value->id }}">
-												@if( $value->trangthai == 0 ) Chưa Xác Nhận 
-												@elseif($value->trangthai == 1) Đã Xác Nhận
-												@else Xong @endif
-											</td>
-											<td>
-												@if($value->trangthai == 1) 
-													<button disabled type="button" class="btn btn-warning">
-														Hoàn Thành
-													</button>
-												@else 
-													<button onclick='sudungbandatonline("{{$value->id}}")' type="button" id="btnchononline{{$value->id}}" class="btn btn-primary">
-														Xác Nhận
-													</button>
-												@endif
-												
-											</td>
-										</tr>
-										@endforeach
+										@if(count($datban) > 0)
+											@foreach($datban as $key => $value)
+											<tr>
+											
+												<td>{{ $value->idban }}</td>
+												<td>{{ $value->tenkhachhang }}</td>
+												<td>{{ $value->sdt }}</td>
+												<td>{{ $value->ngaydat }}</td>
+												<td>{{ $value->giodat }}</td>
+												<td id="dskldhsa{{ $value->id }}">
+													@if( $value->trangthai == 0 ) Chưa Xác Nhận 
+													@elseif($value->trangthai == 1) Đã Xác Nhận
+													@else Xong @endif
+												</td>
+												<td>
+													@if($value->trangthai == 1) 
+														<button disabled type="button" class="btn btn-warning">
+															Hoàn Thành
+														</button>
+													@else 
+														<button onclick='sudungbandatonline("{{$value->id}}")' type="button" id="btnchononline{{$value->id}}" class="btn btn-primary">
+															Xác Nhận
+														</button>
+													@endif
+													
+												</td>
+											</tr>
+											@endforeach
+										@else 
+											<tr>
+												<td>
+													<h3><strong>Không có dữ liệu</strong></h3>
+												</td>
+											</tr>
+										@endif
 									</tbody>
 								</table>
 								<hr>
@@ -248,27 +256,35 @@
 										</tr>
 										</thead>
 										<tbody id="table">
-											@foreach($databan as $key => $value)
-											<tr>
-											
-												<td>{{ $value->id }}</td>
-												<td>{{ $value->mota }}</td>
-												<td>{{ $value->sochongoi }}</td>
-												<td>
-													@if( $value->loaiban == LOAI_BAN_VIP ) Bàn Vip 
-													@elseif($value->trangthai == LOAI_BAN_THUONG) Bàn Thường
-													@endif
-												</td>
-												<td>{{ number_format($value->phuphi) }} VNĐ</td>
-												<td style="max-width: 200px;">{{ $value->ghichu }}</td>
+											@if (count($databan) > 0)
+												@foreach($databan as $key => $value)
+												<tr>
 												
+													<td>{{ $value->id }}</td>
+													<td>{{ $value->mota }}</td>
+													<td>{{ $value->sochongoi }}</td>
+													<td>
+														@if( $value->loaiban == LOAI_BAN_VIP ) Bàn Vip 
+														@elseif($value->trangthai == LOAI_BAN_THUONG) Bàn Thường
+														@endif
+													</td>
+													<td>{{ number_format($value->phuphi) }} VNĐ</td>
+													<td style="max-width: 200px;">{{ $value->ghichu }}</td>
+													
+													<td>
+														<button @click = "chitietphieu({{$value->id}})" data-toggle="modal" data-target="#myModal" type="button" id="btnchononline{{$value->id}}" class="app btn btn-primary">
+															Chi Tiết
+														</button>
+													</td>
+												</tr>
+												@endforeach
+											@else 
+											<tr>
 												<td>
-													<button @click = "chitietphieu({{$value->id}})" data-toggle="modal" data-target="#myModal" type="button" id="btnchononline{{$value->id}}" class="app btn btn-primary">
-														Chi Tiết
-													</button>
+													<h3><strong>Không có dữ liệu</strong></h3>
 												</td>
 											</tr>
-											@endforeach
+											@endif
 										</tbody>
 									</table>
 									<hr>
