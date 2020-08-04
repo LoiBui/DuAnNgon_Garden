@@ -11,17 +11,15 @@ class ThucDons extends Seeder
      */
     public function run()
     {
-        $faker = Faker\Factory::create();
-
         $limit = 100;
-
+        $food = "Mon an ";
         for ($i = 0; $i < $limit; $i++) {
-            DB::table('ThucDons')->insert([
-                'ten'=>$faker->name,
+            DB::table('thucdons')->insert([
+                'ten'=> $food . $i,
                 'giatien'=>rand(10000, 500000),
                 'loai'=>rand(0, 2),
                 'anh'=>Str::random(30),
-                'ghichu'=>$faker->text,
+                'ghichu'=> 'Khong'
             ]);
         }
     }

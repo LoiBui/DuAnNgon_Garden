@@ -11,7 +11,7 @@ class HoaDons extends Seeder
      */
     public function run()
     {
-        $PhieuOrders = DB::table('PhieuOrders')->get()->pluck('id')->toArray();
+        $PhieuOrders = DB::table('phieuorders')->get()->pluck('id')->toArray();
 
         $faker = Faker\Factory::create();
 
@@ -20,7 +20,7 @@ class HoaDons extends Seeder
         $limit = 100;
 
         for ($i = 0; $i < $limit; $i++) {
-            DB::table('HoaDons')->insert([
+            DB::table('hoadons')->insert([
                 'idphieu' =>  $faker->randomElement($PhieuOrders),
               	'tongtien'=> '0',
               	'trangthai'=>rand(0, 1)

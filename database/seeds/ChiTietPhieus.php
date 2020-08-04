@@ -11,9 +11,9 @@ class ChiTietPhieus extends Seeder
      */
     public function run()
     {
-        $phieu = DB::table('PhieuOrders')->get()->pluck('id')->toArray();
+        $phieu = DB::table('phieuorders')->get()->pluck('id')->toArray();
 
-    	$thucdon = DB::table('ThucDons')->get()->pluck('id')->toArray();
+    	$thucdon = DB::table('thucdons')->get()->pluck('id')->toArray();
 
         $faker = Faker\Factory::create();
 
@@ -22,7 +22,7 @@ class ChiTietPhieus extends Seeder
         $limit = 100;
 
         for ($i = 0; $i < $limit; $i++) {
-            DB::table('ChiTietPhieus')->insert([
+            DB::table('chitietphieus')->insert([
                 'idphieuorder' =>  $faker->randomElement($phieu),
                 'idmon' =>  $faker->randomElement($thucdon),
                 'soluong'=>rand(1, 10),

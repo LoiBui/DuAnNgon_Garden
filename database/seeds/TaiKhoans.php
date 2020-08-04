@@ -15,7 +15,7 @@ class TaiKhoans extends Seeder
 
         $limit = 100;
         
-        DB::table('TaiKhoans')->insert([
+        DB::table('taikhoans')->insert([
             'username' => 'admin',
             'password' => Hash::make('12345678'),
             'tennguoidung' => 'admin',
@@ -27,7 +27,7 @@ class TaiKhoans extends Seeder
             'quyen' => '0',
         ]);
 
-        DB::table('TaiKhoans')->insert([
+        DB::table('taikhoans')->insert([
             'username' => 'tester1',
             'password' => Hash::make('12345678'),
             'tennguoidung' => 'tester1',
@@ -41,7 +41,7 @@ class TaiKhoans extends Seeder
        
 
         for ($i = 0; $i < $limit; $i++) {
-            DB::table('TaiKhoans')->insert([
+            DB::table('taikhoans')->insert([
                 'username' =>  $faker->unique()->username,
                 'password' => Hash::make(Str::random(8)),
                 'tennguoidung' => $faker->name,

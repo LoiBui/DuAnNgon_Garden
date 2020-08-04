@@ -37,19 +37,17 @@ class Bans extends Seeder
             // 'ghichu' => '',
             // 'trangthai' => '1',
         // ]);
-        $faker = Faker\Factory::create();
-
         $limit = 100;
         $array = array("Khu A", "Khu B", "Khu C");
 
         for ($i = 0; $i < $limit; $i++) {
             $loaiban = rand(0, 1);
-            DB::table('Bans')->insert([
+            DB::table('bans')->insert([
                     'sochongoi' => rand(1, 20),
                     'loaiban' => $loaiban,
                     'mota' => $array[rand(0, 2)],
-                    'phuphi' => $loaiban=0?0:rand(100000, 500000),
-                    'ghichu' => $faker->text,
+                    'phuphi' => $loaiban==0?0:rand(100000, 500000),
+                    'ghichu' => 'khong',
                     'trangthai' => 0,
             ]);
         }

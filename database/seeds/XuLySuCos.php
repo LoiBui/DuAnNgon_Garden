@@ -11,7 +11,7 @@ class XuLySuCos extends Seeder
      */
     public function run()
     {
-        $hd = DB::table('HoaDons')->get()->pluck('id')->toArray();
+        $hd = DB::table('hoadons')->get()->pluck('id')->toArray();
 
         $faker = Faker\Factory::create();
 
@@ -20,7 +20,7 @@ class XuLySuCos extends Seeder
         $limit = 100;
 
         for ($i = 0; $i < $limit; $i++) {
-            DB::table('XuLySuCos')->insert([
+            DB::table('xulysucos')->insert([
                 'idhoadon' =>  $faker->randomElement($hd),
                 'mieuta' =>  $faker->text,
 

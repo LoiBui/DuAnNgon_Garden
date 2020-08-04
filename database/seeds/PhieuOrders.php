@@ -12,9 +12,9 @@ class PhieuOrders extends Seeder
      */
     public function run()
     {
-    	$bans = DB::table('Bans')->get()->pluck('id')->toArray();
+    	$bans = DB::table('bans')->get()->pluck('id')->toArray();
 
-    	$tks = DB::table('TaiKhoans')->get()->pluck('id')->toArray();
+    	$tks = DB::table('taikhoans')->get()->pluck('id')->toArray();
 
         $faker = Faker\Factory::create();
 
@@ -23,7 +23,7 @@ class PhieuOrders extends Seeder
         $limit = 100;
 
         for ($i = 0; $i < $limit; $i++) {
-            DB::table('PhieuOrders')->insert([
+            DB::table('phieuoders')->insert([
                 'idban' =>  $faker->randomElement($bans),
                 'idnhanvien' =>  $faker->randomElement($tks),
 
